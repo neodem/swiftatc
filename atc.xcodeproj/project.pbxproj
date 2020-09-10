@@ -16,6 +16,9 @@
 		03FF45A62508383E00F1561D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FF45A42508383E00F1561D /* Main.storyboard */; };
 		03FF45AF2509331300F1561D /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45AE2509331300F1561D /* Plane.swift */; };
 		03FF45B125093BF900F1561D /* Letters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45B025093BF900F1561D /* Letters.swift */; };
+		03FF45B6250A82DB00F1561D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45B5250A82DB00F1561D /* Globals.swift */; };
+		03FF45B8250A84CD00F1561D /* IdentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45B7250A84CD00F1561D /* IdentService.swift */; };
+		03FF45BA250A88FC00F1561D /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45B9250A88FC00F1561D /* GameManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		03FF45A82508383E00F1561D /* atc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = atc.entitlements; sourceTree = "<group>"; };
 		03FF45AE2509331300F1561D /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		03FF45B025093BF900F1561D /* Letters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letters.swift; sourceTree = "<group>"; };
+		03FF45B5250A82DB00F1561D /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		03FF45B7250A84CD00F1561D /* IdentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentService.swift; sourceTree = "<group>"; };
+		03FF45B9250A88FC00F1561D /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 		03FF45972508383C00F1561D /* atc */ = {
 			isa = PBXGroup;
 			children = (
+				03FF45B2250A7F9300F1561D /* common */,
 				03FF45982508383C00F1561D /* AppDelegate.swift */,
 				03FF459A2508383C00F1561D /* GameScene.sks */,
 				03FF459C2508383C00F1561D /* Actions.sks */,
@@ -74,8 +81,18 @@
 				03FF45A82508383E00F1561D /* atc.entitlements */,
 				03FF45AE2509331300F1561D /* Plane.swift */,
 				03FF45B025093BF900F1561D /* Letters.swift */,
+				03FF45B7250A84CD00F1561D /* IdentService.swift */,
+				03FF45B9250A88FC00F1561D /* GameManager.swift */,
 			);
 			path = atc;
+			sourceTree = "<group>";
+		};
+		03FF45B2250A7F9300F1561D /* common */ = {
+			isa = PBXGroup;
+			children = (
+				03FF45B5250A82DB00F1561D /* Globals.swift */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,10 +168,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FF45A12508383C00F1561D /* ViewController.swift in Sources */,
+				03FF45BA250A88FC00F1561D /* GameManager.swift in Sources */,
 				03FF45B125093BF900F1561D /* Letters.swift in Sources */,
 				03FF459F2508383C00F1561D /* GameScene.swift in Sources */,
 				03FF45AF2509331300F1561D /* Plane.swift in Sources */,
 				03FF45992508383C00F1561D /* AppDelegate.swift in Sources */,
+				03FF45B8250A84CD00F1561D /* IdentService.swift in Sources */,
+				03FF45B6250A82DB00F1561D /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

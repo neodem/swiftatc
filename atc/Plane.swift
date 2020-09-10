@@ -8,53 +8,30 @@
 
 import SpriteKit
 
-enum PlaneType {
-    case PROP, JET
-}
-
-enum FlightLevel {
-    case UP, DOWN, STABLE
-}
-
-enum Direction {
-    case N, NE, E, SE, S, SW, W, NW
-}
-
-enum Destination {
-    case Airport, Exit
-}
-
 class Plane: SKSpriteNode {
     var initialSize: CGSize = CGSize(width: 28, height: 24)
     let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
     
-    var planeType = PlaneType.PROP
-    var flightLevel = FlightLevel.STABLE
-    var heading = Direction.N
+    var planeType = G.GameObjectType.PROP
+    var flightLevel = G.FlightLevel.STABLE
+    var heading = G.Direction.N
     var altitude = 7000
-    var ident = 0
+    var ident: Character = "A"
     var clock = 0
     var planeLocationX = 0
     var planeLocationY = 0
-    var destination = Destination.Airport
+    var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
     
     // 0-26 for identifier
-    init(type planeType: PlaneType, identifier: Int) {
-        super.init(texture: nil, color: .clear, size: initialSize)
-        
-        guard identifier >= 0 && identifier <= 26 else {
-            return
-        }
-        
+    init(type planeType: G.GameObjectType, identifier: Character) {
         self.ident = identifier
-        
-        //        let planeTexture
-        
-        
-        
         self.planeType = planeType
+        
+        let planeTexture: SKTexture = Letters.getTextureForString(identifier)
+        
+        super.init(texture: planeTexture, color: .clear, size: initialSize)
     }
     
     func update() {
@@ -66,9 +43,9 @@ class Plane: SKSpriteNode {
         updateAltitude()
         
         if clock == 10 || clock == 20 {
-            if planeType == PlaneType.JET {
+            if planeType == G.GameObjectType.JET {
                 movePlane()
-            } else if clock == 20 && planeType == PlaneType.PROP{
+            } else if clock == 20 && planeType == G.GameObjectType.PROP {
                 movePlane()
             }
             
@@ -81,11 +58,11 @@ class Plane: SKSpriteNode {
     }
     
     func updateAltitude() {
-        guard flightLevel == FlightLevel.STABLE else {
+        guard flightLevel == G.FlightLevel.STABLE else {
             return
         }
         if flying {
-            if flightLevel == FlightLevel.UP {
+            if flightLevel == G.FlightLevel.UP {
                 altitude += 100
             } else {
                 altitude -= 100
@@ -96,24 +73,24 @@ class Plane: SKSpriteNode {
     func movePlane() {
         if flying {
             switch heading {
-            case Direction.N:
+            case G.Direction.N:
                 planeLocationY += 1
-            case Direction.S:
+            case G.Direction.S:
                 planeLocationY -= 1
-            case Direction.E:
+            case G.Direction.E:
                 planeLocationX += 1
-            case Direction.W:
+            case G.Direction.W:
                 planeLocationX -= 1
-            case Direction.NE:
+            case G.Direction.NE:
                 planeLocationY += 1
                 planeLocationX += 1
-            case Direction.NW:
+            case G.Direction.NW:
                 planeLocationY += 1
                 planeLocationX -= 1
-            case Direction.SE:
+            case G.Direction.SE:
                 planeLocationY -= 1
                 planeLocationX += 1
-            case Direction.SW:
+            case G.Direction.SW:
                 planeLocationY -= 1
                 planeLocationX -= 1
             }
