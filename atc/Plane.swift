@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Plane: SKSpriteNode {
+class Plane: BaseGameObject {
     var initialSize: CGSize = CGSize(width: 28, height: 24)
     let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
     
@@ -16,22 +16,27 @@ class Plane: SKSpriteNode {
     var flightLevel = G.FlightLevel.STABLE
     var heading = G.Direction.N
     var altitude = 7000
-    var ident: Character = "A"
     var clock = 0
-    var planeLocationX = 0
-    var planeLocationY = 0
     var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
     
     // 0-26 for identifier
-    init(type planeType: G.GameObjectType, identifier: Character) {
-        self.ident = identifier
+    init(type planeType: G.GameObjectType, identifier: Character, flying: Bool) {
         self.planeType = planeType
+        self.flying = flying
         
-        let planeTexture: SKTexture = Letters.getTextureForString(identifier)
+        // all flying planes default to 7k
+//        var altString = "0"
+//        if flying {
+//            altString = "7"
+//        }
+//
+      //  let identString = String(identifier) + altString
         
-        super.init(texture: planeTexture, color: .clear, size: initialSize)
+       // let planeTexture = Lettters.getTextureForString(string: identString)
+    
+        super.init(identifier: identifier, locX: 0, locY: 0, sprite: nil)
     }
     
     func update() {
@@ -74,30 +79,26 @@ class Plane: SKSpriteNode {
         if flying {
             switch heading {
             case G.Direction.N:
-                planeLocationY += 1
+                locationY += 1
             case G.Direction.S:
-                planeLocationY -= 1
+                locationY -= 1
             case G.Direction.E:
-                planeLocationX += 1
+                locationX += 1
             case G.Direction.W:
-                planeLocationX -= 1
+                locationX -= 1
             case G.Direction.NE:
-                planeLocationY += 1
-                planeLocationX += 1
+                locationY += 1
+                locationX += 1
             case G.Direction.NW:
-                planeLocationY += 1
-                planeLocationX -= 1
+                locationY += 1
+                locationX -= 1
             case G.Direction.SE:
-                planeLocationY -= 1
-                planeLocationX += 1
+                locationY -= 1
+                locationX += 1
             case G.Direction.SW:
-                planeLocationY -= 1
-                planeLocationX -= 1
+                locationY -= 1
+                locationX -= 1
             }
         }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 }

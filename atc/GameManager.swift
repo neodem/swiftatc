@@ -15,6 +15,8 @@ protocol GameManager {
 class DefaultGameManager : GameManager {
     
     var planes: [Plane]
+    var exits : [Exit]
+
     var gameState: G.GameState
     
     let identService: IdentService
@@ -27,9 +29,17 @@ class DefaultGameManager : GameManager {
         
         // load the board/game smarts
         
+        // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        planes[0] = Plane(type: planeType, identifier: ident)
+        let fakePlane = Plane(type: planeType, identifier: ident, flying: true)
+        
+        fakePlane.destination = G.Destination.Exit
+        fakePlane.locationX = 13
+        fakePlane.locationY = 13
+        
+        planes[0] = fakePlane
+        
     }
     
     func update() {
