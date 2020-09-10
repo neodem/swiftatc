@@ -14,6 +14,8 @@
 		03FF45A12508383C00F1561D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45A02508383C00F1561D /* ViewController.swift */; };
 		03FF45A32508383E00F1561D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FF45A22508383E00F1561D /* Assets.xcassets */; };
 		03FF45A62508383E00F1561D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FF45A42508383E00F1561D /* Main.storyboard */; };
+		03FF45AF2509331300F1561D /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45AE2509331300F1561D /* Plane.swift */; };
+		03FF45B125093BF900F1561D /* Letters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45B025093BF900F1561D /* Letters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		03FF45A52508383E00F1561D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		03FF45A72508383E00F1561D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03FF45A82508383E00F1561D /* atc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = atc.entitlements; sourceTree = "<group>"; };
+		03FF45AE2509331300F1561D /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		03FF45B025093BF900F1561D /* Letters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				03FF45A42508383E00F1561D /* Main.storyboard */,
 				03FF45A72508383E00F1561D /* Info.plist */,
 				03FF45A82508383E00F1561D /* atc.entitlements */,
+				03FF45AE2509331300F1561D /* Plane.swift */,
+				03FF45B025093BF900F1561D /* Letters.swift */,
 			);
 			path = atc;
 			sourceTree = "<group>";
@@ -145,7 +151,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FF45A12508383C00F1561D /* ViewController.swift in Sources */,
+				03FF45B125093BF900F1561D /* Letters.swift in Sources */,
 				03FF459F2508383C00F1561D /* GameScene.swift in Sources */,
+				03FF45AF2509331300F1561D /* Plane.swift in Sources */,
 				03FF45992508383C00F1561D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

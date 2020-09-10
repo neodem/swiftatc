@@ -1,0 +1,96 @@
+//
+//  Letters.swift
+//  atc
+//
+//  Created by Vincent Fumo on 9/9/20.
+//  Copyright © 2020 Vincent Fumo. All rights reserved.
+//
+
+import SpriteKit
+
+class Lettters {
+    
+    static let space: UInt8 = 32
+    static let bang: UInt8 = 33
+    static let oparen: UInt8 = 40
+    static let cparen: UInt8 = 41
+    static let zero: UInt8 = 48
+    static let colon: UInt8 = 58
+    static let uca: UInt8 = 65
+    static let ucz: UInt8 = 90
+    static let lca: UInt8 = 97
+    static let lcz: UInt8 = 122
+ 
+    static func getLetter(ascii: Int) -> String? {
+        guard ascii >= 0 && ascii <= 26 else {
+            return nil
+        }
+        
+        return String(UnicodeScalar(UInt8(ascii)))
+    }
+    
+    // for a given string, return a Texture composed of the string values
+    // only letters and numbers are allowed
+    static func getTextureForString(string: String) -> SKTexture? {
+//
+//        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
+//        var composition: [SKTexture]
+//
+//        for letter in string {
+//
+//        }
+//
+//        string.forEach({
+//            var texture: SKTexture = textureAtlas.textureNamed(String($0))
+//            composition.append(texture)
+//        })
+        
+        return nil
+    }
+
+    
+    
+    // valid values are
+    // 32 - space
+    // 33 - !
+    // 40 - (
+    // 41 - )
+    // 48-57 : numbers 0-9
+    // 58 - :
+    // 65-90 : uc letters A-Z
+    // 97-122 : lc letters a-z
+    static func isValid(character: Character) -> Bool {
+        guard character.isASCII else {
+            return false
+        }
+        
+        let ascii = character.asciiValue!
+        
+        if ascii < space || ascii > 122 {
+            return false
+        }
+        
+        if ascii >= space && ascii <= bang {
+            return true
+        }
+        
+        if ascii >= oparen && ascii <= cparen {
+            return true
+        }
+        
+        if ascii >= zero && ascii <= colon {
+            return true
+        }
+        
+        if ascii >= uca && ascii <= ucz {
+            return true
+        }
+        
+        if ascii >= lca && ascii <= lcz {
+            return true
+        }
+        
+        return false
+        
+    }
+}
