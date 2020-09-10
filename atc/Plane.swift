@@ -20,23 +20,28 @@ class Plane: BaseGameObject {
     var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
+    var moved = false
     
-    // 0-26 for identifier
-    init(type planeType: G.GameObjectType, identifier: Character, flying: Bool) {
+    init(type planeType: G.GameObjectType, identifier: Character, flying: Bool, x: Int, y: Int) {
         self.planeType = planeType
         self.flying = flying
         
         // all flying planes default to 7k
-//        var altString = "0"
-//        if flying {
-//            altString = "7"
-//        }
-//
-      //  let identString = String(identifier) + altString
+        var altString = "0"
+        if flying {
+            altString = "7"
+        }
+
+        let identString = String(identifier) + altString
         
-       // let planeTexture = Lettters.getTextureForString(string: identString)
+        let planeTexture = Lettters.getTextureForString(string: identString)
     
-        super.init(identifier: identifier, locX: 0, locY: 0, sprite: nil)
+        super.init(identifier: identifier, locX: x, locY: y, sprite: SKSpriteNode(texture: planeTexture))
+        
+        sprite?.zPosition = 100
+        
+        print("plane \(ident) starting at: \(locationX),\(locationY)")
+        moved = true
     }
     
     func update() {
@@ -63,7 +68,7 @@ class Plane: BaseGameObject {
     }
     
     func updateAltitude() {
-        guard flightLevel == G.FlightLevel.STABLE else {
+        guard flightLevel != G.FlightLevel.STABLE else {
             return
         }
         if flying {
@@ -72,6 +77,8 @@ class Plane: BaseGameObject {
             } else {
                 altitude -= 100
             }
+            
+            print("plane \(ident) altitude changed to: \(altitude)")
         }
     }
     
@@ -99,6 +106,9 @@ class Plane: BaseGameObject {
                 locationY -= 1
                 locationX -= 1
             }
+            
+            moved = true
+            print("plane \(ident) moved to: \(locationX),\(locationY)")
         }
     }
 }

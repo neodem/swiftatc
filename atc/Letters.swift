@@ -20,6 +20,8 @@ class Lettters {
     static let ucz: UInt8 = 90
     static let lca: UInt8 = 97
     static let lcz: UInt8 = 122
+    
+    static let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
  
     static func getLetter(ascii: Int) -> String? {
         guard ascii >= 0 && ascii <= 26 else {
@@ -45,7 +47,7 @@ class Lettters {
 //            composition.append(texture)
 //        })
         
-        return nil
+        return textureAtlas.textureNamed("A")
     }
 
     

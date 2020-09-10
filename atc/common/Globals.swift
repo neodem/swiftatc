@@ -7,7 +7,6 @@
 //
 
 struct G {
-    static let kColor_Seperator = "s"
     
     enum GameObjectType : CaseIterable {
         case PROP, JET, AIRPORT, BEACON, AIRWAY
@@ -27,6 +26,13 @@ struct G {
     
     enum GameState {
         case active, preActive
+    }
+    
+    struct Radar {
+        static let xMin: Float = 75
+        static let xMax: Float = 715
+        static let yMin: Float = 248
+        static let yMax: Float = 888
     }
     
 }
