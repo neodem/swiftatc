@@ -9,7 +9,7 @@
 struct G {
     
     enum GameObjectType : CaseIterable {
-        case PROP, JET, AIRPORT, BEACON, AIRWAY
+        case PROP, JET, AIRPORT, BEACON, AIRWAY, DISPLAY
     }
     
     enum FlightLevel {

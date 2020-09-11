@@ -21,6 +21,7 @@ class DefaultIdentService : IdentService {
         nextIdent[G.GameObjectType.AIRWAY] = "0"
         nextIdent[G.GameObjectType.JET] = "a"
         nextIdent[G.GameObjectType.PROP] = "A"
+        nextIdent[G.GameObjectType.DISPLAY] = "A"
     }
     
     func getIdent(type: G.GameObjectType) -> Character {
@@ -48,6 +49,6 @@ class DefaultIdentService : IdentService {
     }
     
     func returnIdent(type: G.GameObjectType, ident: Character) {
-        // not implemtned yet.. for now we simply overflow/loop 
+        // not implemtned yet.. for now we simply overflow/loop
     }
 }

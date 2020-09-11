@@ -14,6 +14,8 @@ class Lettters {
     static let bang: UInt8 = 33
     static let oparen: UInt8 = 40
     static let cparen: UInt8 = 41
+    static let dash: UInt8 = 45
+    static let period: UInt8 = 46
     static let zero: UInt8 = 48
     static let colon: UInt8 = 58
     static let uca: UInt8 = 65
@@ -21,10 +23,74 @@ class Lettters {
     static let lca: UInt8 = 97
     static let lcz: UInt8 = 122
     
+    // used in error casses where we cna't draw the character
+    static let bash: UInt8 = 126
+    
+    static let up: UInt8 = 123
+    static let down: UInt8 = 125
+    
     static let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
- 
-    static func getLetter(ascii: Int) -> String? {
-        guard ascii >= 0 && ascii <= 26 else {
+    
+    static func getLetterString(string: String, x: Int, y: Int) -> [SKSpriteNode] {
+        var spriteString = [SKSpriteNode]()
+        
+        guard !string.isEmpty else {
+            return spriteString
+        }
+        
+        var xPos = x
+        
+        for letter in string {
+            
+            var texture: SKTexture
+            
+            if !isValid(character: letter) {
+                texture = getTextureForLetter(letter: "~")
+            } else {
+                texture = getTextureForLetter(letter: letter)
+            }
+            
+            let sprite = SKSpriteNode(texture: texture)
+            sprite.anchorPoint = .zero
+            sprite.position = CGPoint(x: xPos, y: y)
+            
+            spriteString.append(sprite)
+            
+            xPos += 10
+        }
+        
+        return spriteString
+    }
+    
+    static func getTextureForLetter(letter: Character) -> SKTexture {
+        let ascii = letter.asciiValue!
+        
+        if ascii == space {
+            return textureAtlas.textureNamed("space")
+        } else if ascii == bash {
+            return textureAtlas.textureNamed("bash")
+        } else if ascii == bang {
+            return textureAtlas.textureNamed("bang")
+        } else if ascii == oparen {
+            return textureAtlas.textureNamed("oparen")
+        } else if ascii == cparen {
+            return textureAtlas.textureNamed("cparen")
+        } else if ascii == dash {
+            return textureAtlas.textureNamed("dash")
+        } else if ascii == period {
+            return textureAtlas.textureNamed("period")
+        }  else if ascii == up {
+            return textureAtlas.textureNamed("up")
+        }  else if ascii == down {
+            return textureAtlas.textureNamed("down")
+        }
+        
+        return textureAtlas.textureNamed(String(UnicodeScalar(UInt8(ascii))))
+        
+    }
+    
+    static func getLetterAsString(ascii: Int) -> String? {
+        guard ascii < 0 && ascii > 26 else {
             return nil
         }
         
@@ -34,22 +100,22 @@ class Lettters {
     // for a given string, return a Texture composed of the string values
     // only letters and numbers are allowed
     static func getTextureForString(string: String) -> SKTexture? {
-//
-//        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
-//        var composition: [SKTexture]
-//
-//        for letter in string {
-//
-//        }
-//
-//        string.forEach({
-//            var texture: SKTexture = textureAtlas.textureNamed(String($0))
-//            composition.append(texture)
-//        })
+        //
+        //        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
+        //        var composition: [SKTexture]
+        //
+        //        for letter in string {
+        //
+        //        }
+        //
+        //        string.forEach({
+        //            var texture: SKTexture = textureAtlas.textureNamed(String($0))
+        //            composition.append(texture)
+        //        })
         
         return textureAtlas.textureNamed("A")
     }
-
+    
     
     
     // valid values are
@@ -57,10 +123,14 @@ class Lettters {
     // 33 - !
     // 40 - (
     // 41 - )
+    // 45 - -
+    // 46 - .
     // 48-57 : numbers 0-9
     // 58 - :
     // 65-90 : uc letters A-Z
     // 97-122 : lc letters a-z
+    // 123 : up
+    // 125 : down
     static func isValid(character: Character) -> Bool {
         guard character.isASCII else {
             return false
@@ -80,6 +150,10 @@ class Lettters {
             return true
         }
         
+        if ascii >= dash && ascii <= period {
+            return true
+        }
+        
         if ascii >= zero && ascii <= colon {
             return true
         }
@@ -89,6 +163,14 @@ class Lettters {
         }
         
         if ascii >= lca && ascii <= lcz {
+            return true
+        }
+        
+        if ascii == up {
+            return true
+        }
+        
+        if ascii == down {
             return true
         }
         

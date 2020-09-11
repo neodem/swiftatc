@@ -16,19 +16,17 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
         
-        let objects = gameManager.getDrawableGameObjects()
-        for object in objects {
-            if let sprite = object.sprite {
-                self.addChild(sprite)
-            }
+        let objects = gameManager.getSprites()
+        for sprite in objects {
+            self.addChild(sprite)
         }
     }
-
+    
     override func update(_ currentTime: TimeInterval) {
         let delta = currentTime - lastFrameTime
-        if delta > 0.4 {
+        if delta > 0.1 {
             lastFrameTime = currentTime
-            // approx every 0.4 second...
+            // approx every 0.1 second...
             
             gameManager.update()
         }

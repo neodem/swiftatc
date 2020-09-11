@@ -6,7 +6,7 @@
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
 
 protocol GameManager {
     func update()
@@ -16,6 +16,8 @@ class DefaultGameManager : GameManager {
     
     var planes: [Plane]
     var exits : [Exit]
+    
+    let planeDisplay: DisplayModule
 
     var gameState: G.GameState
     
@@ -24,20 +26,24 @@ class DefaultGameManager : GameManager {
     var boardScale: Int
     
     init() {
+        
         identService = DefaultIdentService()
         
         gameState = G.GameState.preActive
         planes = [Plane]()
         exits = [Exit]()
         
+        planeDisplay = DisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY), x: 900, y: 900, rows: 12, cols: 25)
+        planeDisplay.write(string: "HELLO", row: 0)
+        
         // load the board/game smarts
         
-        boardScale = 14
+        boardScale = 140
         
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        let fakePlane = Plane(type: planeType, identifier: ident, flying: true, x: 14, y: 14)
+        let fakePlane = Plane(type: planeType, identifier: ident, flying: true, x: 140, y: 140)
         
         fakePlane.destination = G.Destination.Exit
         fakePlane.heading = G.Direction.SW
@@ -47,8 +53,26 @@ class DefaultGameManager : GameManager {
         gameState = G.GameState.active
     }
     
-    func getDrawableGameObjects() -> [GameObject] {
-        return planes + exits
+    func getSprites() -> [SKSpriteNode] {
+        var allSprites = [SKSpriteNode]()
+        
+        for plane in planes {
+            if let sprite = plane.sprite {
+                allSprites.append(sprite)
+            }
+        }
+        
+        for exit in exits {
+            if let sprite = exit.sprite {
+                allSprites.append(sprite)
+            }
+        }
+        
+        for displaySprite in planeDisplay.getSprites() {
+            allSprites.append(displaySprite)
+        }
+        
+        return allSprites
     }
     
     func update() {
