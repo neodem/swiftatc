@@ -15,11 +15,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
-        
-        let objects = gameManager.getSprites()
-        for sprite in objects {
-            self.addChild(sprite)
-        }
+        gameManager.initialize(scene: self)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -28,7 +24,14 @@ class GameScene: SKScene {
             lastFrameTime = currentTime
             // approx every 0.1 second...
             
-            gameManager.update()
+            gameManager.tick()
+            
+//            let objects = gameManager.getSprites()
+//            for sprite in objects {
+//                if !sprite.inParentHierarchy(self) {
+//                    self.addChild(sprite)
+//                }
+//            }
         }
     }
 

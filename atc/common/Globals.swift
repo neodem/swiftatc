@@ -21,7 +21,7 @@ struct G {
     }
     
     enum Destination {
-        case Airport, Exit
+        case Airport, Exit, Beacon
     }
     
     enum GameState {
@@ -31,6 +31,16 @@ struct G {
     struct PlaneDisplay {
         static let x: Int = 1030
         static let y: Int = 1130
+    }
+    
+    struct ScoreDisplay {
+        static let x: Int = 1030
+        static let y: Int = 600
+    }
+    
+    struct LetterSize {
+        static let width = 20
+        static let height = 34
     }
     
     struct Radar {

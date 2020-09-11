@@ -16,7 +16,7 @@ class Plane: BaseGameObject {
     var flightLevel = G.FlightLevel.STABLE
     var heading = G.Direction.N
     var altitude = 7000
-    var clock = 0
+ 
     var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
@@ -44,18 +44,28 @@ class Plane: BaseGameObject {
         moved = true
     }
     
-    func update() {
-        clock += 1
-        if clock == 21 {
-            clock = 0
+    override func initialize(scene: SKScene) {
+        super.initialize(scene: scene)
+        if let sprite = self.sprite {
+            scene.addChild(sprite)
+        }
+    }
+    
+    var ticks = 0
+    
+    // on 10 ticks we move the jet, on 20 ticks we move the plane, we update altitude every tick
+    func tick() {
+        ticks += 1
+        if ticks == 21 {
+            ticks = 0
         }
         
         updateAltitude()
         
-        if clock == 10 || clock == 20 {
+        if ticks == 10 || ticks == 20 {
             if planeType == G.GameObjectType.JET {
                 movePlane()
-            } else if clock == 20 && planeType == G.GameObjectType.PROP {
+            } else if ticks == 20 && planeType == G.GameObjectType.PROP {
                 movePlane()
             }
             
