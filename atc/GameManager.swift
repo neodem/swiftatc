@@ -18,12 +18,15 @@ class DefaultGameManager : GameManager {
     var exits : [Exit]
     
     let planeDisplay: DisplayModule
-
+    
     var gameState: G.GameState
     
     let identService: IdentService
     
     var boardScale: Int
+    
+    var time = 0
+    var safe = 0
     
     init() {
         
@@ -33,8 +36,12 @@ class DefaultGameManager : GameManager {
         planes = [Plane]()
         exits = [Exit]()
         
-        planeDisplay = DisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY), x: 900, y: 900, rows: 12, cols: 25)
-        planeDisplay.write(string: "HELLO", row: 0)
+        let planeDisplayX = G.PlaneDisplay.x
+        let planeDisplayY = G.PlaneDisplay.y - 34
+        
+        planeDisplay = DisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY),x: planeDisplayX, y: planeDisplayY, rows: 12, cols: 25)
+        planeDisplay.write(string: "TIME: \(time)", row: 0)
+        planeDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
         
         // load the board/game smarts
         
@@ -75,7 +82,10 @@ class DefaultGameManager : GameManager {
         return allSprites
     }
     
+    var actualTime = 0
+    
     func update() {
+        actualTime += 1
         if gameState == G.GameState.active {
             for plane in planes {
                 plane.update()
@@ -84,6 +94,12 @@ class DefaultGameManager : GameManager {
                     plane.moved = false
                 }
             }
+            
+            if actualTime % 4 == 0 {
+                time += 1
+                planeDisplay.overWrite(string: "\(time)", row: 0, col: 7)
+            }
+            
         }
     }
     

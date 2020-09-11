@@ -47,20 +47,21 @@ class DisplayModule : BaseGameObject {
 //        }
 //    }
     
-//    // write a string to a row starting at col 0 but don't clear first
-//    func overWrite(string: String, row: Int) {
-//        self.overWrite(string: string, row: row, col: 0)
-//    }
-//
-//    // write a string to a row starting at a specific col but don't clear first
-//    func overWrite(string: String, row: Int, col: Int) {
-//        guard row >= 0 && row < rows else {
-//            return
-//        }
-//        guard col >= 0 && col < cols else {
-//            return
-//        }
-//    }
+    // write a string to a row starting at col 0 but don't clear first
+    func overWrite(string: String, row: Int) {
+        self.overWrite(string: string, row: row, col: 0)
+    }
+
+    // write a string to a row starting at a specific col but don't clear first
+    func overWrite(string: String, row: Int, col: Int) {
+        guard row >= 0 && row < rows else {
+            return
+        }
+        guard col >= 0 && col < cols else {
+            return
+        }
+         makeSprites(col, row, string)
+    }
     
     // write a string to a row starting at col 0 and clear entire row first
     func write(string: String, row: Int) {
@@ -68,19 +69,29 @@ class DisplayModule : BaseGameObject {
     }
     
     // write a string to a row starting at a specific col and clear entire row first
+    fileprivate func makeSprites(_ col: Int, _ row: Int, _ string: String) {
+        let xPos = self.locationX + (col * 20)
+        let yPos = self.locationY - (row * 34)
+        
+        let spriteRow = Lettters.getLetterString(string: string, x: xPos, y: yPos)
+        
+        var stored = sprites[row]
+        if stored == nil {
+            stored = spriteRow
+        } else {
+            stored!.append(contentsOf: spriteRow)
+        }
+        
+        sprites[row] = stored
+    }
+    
     func write(string: String, row: Int, col: Int) {
         guard row >= 0 && row < rows else {
             return
         }
         
         clear(row: row)
-        
-        let xPos = self.locationX - 20 - (row * 20)
-        let yPos = self.locationY + 5 + (col * 10)
-        
-        let spriteRow = Lettters.getLetterString(string: string, x: xPos, y: yPos)
-        
-        sprites[row] = spriteRow
+        makeSprites(col, row, string)
     }
     
     func getSprites() -> [SKSpriteNode] {

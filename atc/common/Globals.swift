@@ -28,11 +28,16 @@ struct G {
         case active, preActive
     }
     
+    struct PlaneDisplay {
+        static let x: Int = 1030
+        static let y: Int = 1130
+    }
+    
     struct Radar {
-        static let xMin: Float = 75
-        static let xMax: Float = 715
-        static let yMin: Float = 248
-        static let yMax: Float = 888
+        static let xMin: Float = 90
+        static let xMax: Float = 898
+        static let yMin: Float = 320
+        static let yMax: Float = 1112
     }
     
 }

@@ -50,13 +50,14 @@ class Lettters {
                 texture = getTextureForLetter(letter: letter)
             }
             
-            let sprite = SKSpriteNode(texture: texture)
+            let sprite = SKSpriteNode(texture: texture, size: CGSize(width: 20, height: 34))
+            sprite.zPosition = 100
             sprite.anchorPoint = .zero
             sprite.position = CGPoint(x: xPos, y: y)
             
             spriteString.append(sprite)
             
-            xPos += 10
+            xPos += 20
         }
         
         return spriteString
@@ -83,6 +84,8 @@ class Lettters {
             return textureAtlas.textureNamed("up")
         }  else if ascii == down {
             return textureAtlas.textureNamed("down")
+        } else if ascii == colon {
+            return textureAtlas.textureNamed("colon")
         }
         
         return textureAtlas.textureNamed(String(UnicodeScalar(UInt8(ascii))))
