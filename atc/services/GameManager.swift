@@ -77,9 +77,10 @@ class DefaultGameManager : GameManager {
         if gameState == G.GameState.active {
             for plane in planes {
                 plane.tick()
-                if plane.moved {
+                if plane.updated {
                     updatePlaneSprite(sprite: plane)
-                    plane.moved = false
+                    planeDisplay.updatePlane(plane: plane)
+                    plane.updated = false
                 }
             }
             

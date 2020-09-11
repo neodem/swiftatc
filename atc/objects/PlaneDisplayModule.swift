@@ -11,6 +11,9 @@ import SpriteKit
 class PlaneDisplayModule : DisplayModule {
     var nextRow = 1
     
+    // plane ident : row
+    var planes = [Character : Int]()
+    
     override init(ident: Character, x: Int, y: Int, rows: Int, cols: Int) {
         super.init(ident: ident, x: x, y: y, rows: rows, cols: cols)
     }
@@ -21,19 +24,24 @@ class PlaneDisplayModule : DisplayModule {
     }
     
     func addPlane(plane: Plane) {
-        var dest: String
-        if plane.destination == G.Destination.Airport {
-            dest = "A\(plane.destinationId)"
-        } else if plane.destination == G.Destination.Exit {
-            dest = "E\(plane.destinationId)"
-        } else if plane.destination == G.Destination.Beacon {
-            dest = "B\(plane.destinationId)"
-        } else {
-            dest = ""
+        planes[plane.ident] = nextRow
+        self.write(string: plane.getStatusLine(), row: nextRow)
+        nextRow += 1
+    }
+    
+    func removePlane(ident: Character) {
+        if let row = planes[ident] {
+            self.clear(row: row)
         }
         
-        self.write(string: "\(plane.ident)  \(plane.altitude)  \(dest)", row: nextRow)
+        planes[ident] = nil
         
-        nextRow += 1
+        // TODO shift things up and reset `nextRow`
+    }
+    
+    func updatePlane(plane: Plane) {
+        if let row = planes[plane.ident] {
+            self.write(string: plane.getStatusLine(), row: row)
+        }
     }
 }

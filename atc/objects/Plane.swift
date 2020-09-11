@@ -20,7 +20,7 @@ class Plane: BaseGameObject {
     var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
-    var moved = false
+    var updated = true
     
     init(type planeType: G.GameObjectType, identifier: Character, flying: Bool, x: Int, y: Int) {
         self.planeType = planeType
@@ -41,7 +41,6 @@ class Plane: BaseGameObject {
         sprite?.zPosition = 100
         
         print("plane \(ident) starting at: \(locationX),\(locationY)")
-        moved = true
     }
     
     override func initialize(scene: SKScene) {
@@ -49,6 +48,21 @@ class Plane: BaseGameObject {
         if let sprite = self.sprite {
             scene.addChild(sprite)
         }
+    }
+    
+    func getStatusLine() -> String {
+        var dest: String
+        if destination == G.Destination.Airport {
+            dest = "A\(destinationId)"
+        } else if destination == G.Destination.Exit {
+            dest = "E\(destinationId)"
+        } else if destination == G.Destination.Beacon {
+            dest = "B\(destinationId)"
+        } else {
+            dest = ""
+        }
+        
+        return "\(ident)  \(altitude)  \(dest)"
     }
     
     var ticks = 0
@@ -88,6 +102,7 @@ class Plane: BaseGameObject {
                 altitude -= 100
             }
             
+            updated = true
             print("plane \(ident) altitude changed to: \(altitude)")
         }
     }
@@ -117,7 +132,7 @@ class Plane: BaseGameObject {
                 locationX -= 1
             }
             
-            moved = true
+            updated = true
             print("plane \(ident) moved to: \(locationX),\(locationY)")
         }
     }

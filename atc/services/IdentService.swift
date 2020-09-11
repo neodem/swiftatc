@@ -14,6 +14,11 @@ protocol IdentService {
 class DefaultIdentService : IdentService {
     
     var nextIdent = [G.GameObjectType: Character]()
+   
+    
+    // TODO fix this so that the idents for jets/planes are sequential
+    // and just vary in case.. eg: A, b, c, D, etc
+    
     
     init() {
         nextIdent[G.GameObjectType.AIRPORT] = "0"
