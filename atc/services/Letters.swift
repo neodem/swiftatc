@@ -63,6 +63,16 @@ class Lettters {
         return spriteString
     }
     
+    static func isNumber(_ letter: Character) -> Bool {
+        // todo
+        return true;
+    }
+    
+//    static func uppercase(_ letter: Character) -> Character {
+//        // todo
+//        return letter;
+//    }
+    
     static func getTextureForLetter(letter: Character) -> SKTexture {
         let ascii = letter.asciiValue!
         

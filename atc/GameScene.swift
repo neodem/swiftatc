@@ -23,16 +23,21 @@ class GameScene: SKScene {
         if delta > 0.1 {
             lastFrameTime = currentTime
             // approx every 0.1 second...
-            
             gameManager.tick()
-            
-//            let objects = gameManager.getSprites()
-//            for sprite in objects {
-//                if !sprite.inParentHierarchy(self) {
-//                    self.addChild(sprite)
-//                }
-//            }
         }
     }
+    
+    override func didFinishUpdate() {
+        Keyboard.instance.update()
+    }
 
+    override func keyUp(with event: NSEvent) {
+//        print("keyUp: \(event)")
+        Keyboard.instance.handleKey(event: event, isDown: false)
+    }
+    
+    override func keyDown(with event: NSEvent) {
+//        print("keyDown: \(event)")
+        Keyboard.instance.handleKey(event: event, isDown: true)
+    }
 }

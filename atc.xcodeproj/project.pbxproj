@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0326692A250D2FBC0010CCB5 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03266929250D2FBC0010CCB5 /* Keyboard.swift */; };
+		0326692C250D36640010CCB5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326692B250D36640010CCB5 /* Queue.swift */; };
+		0326692E250D3B970010CCB5 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326692D250D3B970010CCB5 /* LinkedList.swift */; };
+		03266930250ECEC70010CCB5 /* CommandModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326692F250ECEC70010CCB5 /* CommandModule.swift */; };
+		03266932250ED4250010CCB5 /* AltitudeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03266931250ED4250010CCB5 /* AltitudeCommand.swift */; };
+		03266935250ED8A80010CCB5 /* MarkCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03266934250ED8A80010CCB5 /* MarkCommand.swift */; };
+		03266937250ED8B30010CCB5 /* IgnoreCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03266936250ED8B30010CCB5 /* IgnoreCommand.swift */; };
+		03266939250ED8BD0010CCB5 /* UnmarkCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03266938250ED8BD0010CCB5 /* UnmarkCommand.swift */; };
+		0326693B250ED8CE0010CCB5 /* CircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693A250ED8CE0010CCB5 /* CircleCommand.swift */; };
+		0326693D250ED8DB0010CCB5 /* TurnCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693C250ED8DB0010CCB5 /* TurnCommand.swift */; };
+		0326693F250ED8E70010CCB5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693E250ED8E70010CCB5 /* Command.swift */; };
 		03FF45992508383C00F1561D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45982508383C00F1561D /* AppDelegate.swift */; };
 		03FF459B2508383C00F1561D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459A2508383C00F1561D /* GameScene.sks */; };
 		03FF459D2508383C00F1561D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459C2508383C00F1561D /* Actions.sks */; };
@@ -26,6 +37,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03266929250D2FBC0010CCB5 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
+		0326692B250D36640010CCB5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		0326692D250D3B970010CCB5 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		0326692F250ECEC70010CCB5 /* CommandModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandModule.swift; sourceTree = "<group>"; };
+		03266931250ED4250010CCB5 /* AltitudeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeCommand.swift; sourceTree = "<group>"; };
+		03266934250ED8A80010CCB5 /* MarkCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkCommand.swift; sourceTree = "<group>"; };
+		03266936250ED8B30010CCB5 /* IgnoreCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreCommand.swift; sourceTree = "<group>"; };
+		03266938250ED8BD0010CCB5 /* UnmarkCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmarkCommand.swift; sourceTree = "<group>"; };
+		0326693A250ED8CE0010CCB5 /* CircleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCommand.swift; sourceTree = "<group>"; };
+		0326693C250ED8DB0010CCB5 /* TurnCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnCommand.swift; sourceTree = "<group>"; };
+		0326693E250ED8E70010CCB5 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		03FF45952508383C00F1561D /* atc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = atc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FF45982508383C00F1561D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03FF459A2508383C00F1561D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -58,6 +80,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03266933250ED88E0010CCB5 /* commands */ = {
+			isa = PBXGroup;
+			children = (
+				0326692F250ECEC70010CCB5 /* CommandModule.swift */,
+				03266931250ED4250010CCB5 /* AltitudeCommand.swift */,
+				03266934250ED8A80010CCB5 /* MarkCommand.swift */,
+				03266936250ED8B30010CCB5 /* IgnoreCommand.swift */,
+				03266938250ED8BD0010CCB5 /* UnmarkCommand.swift */,
+				0326693A250ED8CE0010CCB5 /* CircleCommand.swift */,
+				0326693C250ED8DB0010CCB5 /* TurnCommand.swift */,
+				0326693E250ED8E70010CCB5 /* Command.swift */,
+			);
+			path = commands;
+			sourceTree = "<group>";
+		};
 		03FF458C2508383C00F1561D = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +114,7 @@
 		03FF45972508383C00F1561D /* atc */ = {
 			isa = PBXGroup;
 			children = (
+				03266933250ED88E0010CCB5 /* commands */,
 				03FF45A72508383E00F1561D /* Info.plist */,
 				03FF45C3250C056000F1561D /* applecrap */,
 				03FF45C2250C055700F1561D /* services */,
@@ -105,6 +143,8 @@
 				03FF45BF250BC3EC00F1561D /* DisplayModule.swift */,
 				03FF45BB250A8E2E00F1561D /* Exit.swift */,
 				03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */,
+				0326692B250D36640010CCB5 /* Queue.swift */,
+				0326692D250D3B970010CCB5 /* LinkedList.swift */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -115,6 +155,7 @@
 				03FF45B7250A84CD00F1561D /* IdentService.swift */,
 				03FF45B9250A88FC00F1561D /* GameManager.swift */,
 				03FF45B025093BF900F1561D /* Letters.swift */,
+				03266929250D2FBC0010CCB5 /* Keyboard.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -204,17 +245,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FF45A12508383C00F1561D /* ViewController.swift in Sources */,
+				0326692C250D36640010CCB5 /* Queue.swift in Sources */,
 				03FF45BA250A88FC00F1561D /* GameManager.swift in Sources */,
+				03266930250ECEC70010CCB5 /* CommandModule.swift in Sources */,
+				0326693D250ED8DB0010CCB5 /* TurnCommand.swift in Sources */,
 				03FF45B125093BF900F1561D /* Letters.swift in Sources */,
 				03FF459F2508383C00F1561D /* GameScene.swift in Sources */,
 				03FF45BE250A8E7800F1561D /* GameObject.swift in Sources */,
+				0326692A250D2FBC0010CCB5 /* Keyboard.swift in Sources */,
 				03FF45AF2509331300F1561D /* Plane.swift in Sources */,
 				03FF45992508383C00F1561D /* AppDelegate.swift in Sources */,
+				03266935250ED8A80010CCB5 /* MarkCommand.swift in Sources */,
+				03266939250ED8BD0010CCB5 /* UnmarkCommand.swift in Sources */,
 				03FF45C5250C1A2500F1561D /* PlaneDisplayModule.swift in Sources */,
 				03FF45B8250A84CD00F1561D /* IdentService.swift in Sources */,
 				03FF45C0250BC3EC00F1561D /* DisplayModule.swift in Sources */,
+				0326692E250D3B970010CCB5 /* LinkedList.swift in Sources */,
+				0326693B250ED8CE0010CCB5 /* CircleCommand.swift in Sources */,
 				03FF45BC250A8E2E00F1561D /* Exit.swift in Sources */,
+				0326693F250ED8E70010CCB5 /* Command.swift in Sources */,
+				03266937250ED8B30010CCB5 /* IgnoreCommand.swift in Sources */,
 				03FF45B6250A82DB00F1561D /* Globals.swift in Sources */,
+				03266932250ED4250010CCB5 /* AltitudeCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

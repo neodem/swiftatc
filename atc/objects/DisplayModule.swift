@@ -36,7 +36,7 @@ class DisplayModule : BaseGameObject {
             return
         }
         
-        var spriteRow = sprites[row]
+        let spriteRow = sprites[row]
         for(col, sprite) in spriteRow.enumerated() {
             sprite?.removeFromParent()
             sprites[row][col] = nil
