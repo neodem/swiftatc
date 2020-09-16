@@ -18,7 +18,7 @@ public struct Queue<T> {
             return nil
         }
         
-        list.remove(node: element)
+        _ = list.remove(node: element)
         
         return element.value
     }

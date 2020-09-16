@@ -24,85 +24,108 @@ class CommandModule : DisplayModule {
         command = nil
     }
     
-    public func inputCharacter(_ character: Character) {
+    public func inputKey(_ key: Key) -> Command? {
         
-        if character == "x" {
-            // TODO replace "x" with ESCAPE char
+       // print("command key: \(key)")
+        
+        if key == Key.Escape {
             reset()
-        } else if character == "x" {
-            // TODO replace "x" with BACKSPACE char
+        } else if key == Key.Delete {
             if planeIdent == nil {
                 // do nothing
             } else if command == nil {
                 reset()
             } else {
-                command = nil
-                // clear all of the command line except the ident
+                _ = command!.inputCharacter(key)
+                if let commandString = command!.getCommandString() {
+                    // print command on screen
+                    self.overWriteToEnd(string: commandString, row: 0, col: 3)
+                } else {
+                    //beep
+                }
             }
-        } else if character == "x" {
-            // TODO replace "x" with "return/enter"
-            handleEnter()
+        } else if key == Key.Return {
+            if handleEnter() {
+                let cmd = command
+                reset()
+                return cmd
+            }
         } else if planeIdent == nil {
-            createItent(character)
+            createItent(key)
         } else if command == nil {
-            createCommand(character)
+            createCommand(key)
         } else {
-            let accepted = command!.inputCharacter(character)
-            
+            let accepted = command!.inputCharacter(key)
             if !accepted {
                 // beep
+            } else {
+                if let commandString = command!.getCommandString() {
+                    // print command on screen
+                    self.overWrite(string: commandString, row: 0, col: 3)
+                } else {
+                    //beep
+                }
             }
         }
+        
+        return nil
     }
     
-    func createCommand(_ character: Character) {
-        if character == "a" {
+    func createCommand(_ key: Key) {
+        if key == Key.A {
             command = AltitudeCommand(ident: planeIdent!)
-        } else if character == "m" {
+        } else if key == Key.M {
             command = MarkCommand(ident: planeIdent!)
-        } else if character == "i" {
+        } else if key == Key.I {
             command = IgnoreCommand(ident: planeIdent!)
-        } else if character == "u" {
+        } else if key == Key.U {
             command = UnmarkCommand(ident: planeIdent!)
-        } else if character == "c" {
+        } else if key == Key.C {
             command = CircleCommand(ident: planeIdent!)
-        } else if character == "t" {
+        } else if key == Key.T {
             command = TurnCommand(ident: planeIdent!)
         }
         
-        // print command on screen
-        self.overWrite(string: command.getCommandString(), row: 0, col: 3)
+        if let commandString = command!.getCommandString() {
+            // print command on screen
+            self.overWrite(string: commandString, row: 0, col: 3)
+        } else {
+            //beep
+        }
+        
     }
     
-    func createItent(_ character: Character) {
+    func createItent(_ key: Key) {
         // check to see if we have a valid letter from a-z
         // if not, we beep
         
-        planeIdent = character
+        let enumString = "\(key)"
         
+        planeIdent = Character(enumString)
+        
+        drawIdent()
+    }
+    
+    func drawIdent() {
         // draw on screen (ex: "a: ")
-        let string = "\(character):"
-        
-        self.write(string: string, row: 0)
+        self.write(string: "\(planeIdent!):", row: 0)
     }
     
-    func processCommand() {
-        // check for errors
-        if let errorMessage = command!.getErrorMessage() {
-            // print error message on next line down
-            return
-        }
-        
-        // dispatch command
-        
-        reset()
-    }
     
-    func handleEnter() {
+    
+    func handleEnter() -> Bool {
         if let _ = command?.complete {
-            processCommand()
+            // check for errors
+            if let errorMessage = command!.getErrorMessage() {
+                // print error message on next line down
+                self.write(string: errorMessage, row: 1)
+            } else {
+                return true
+            }
         } else {
             // beep
         }
+        
+        return false
     }
 }

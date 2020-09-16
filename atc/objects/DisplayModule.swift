@@ -41,18 +41,34 @@ class DisplayModule : BaseGameObject {
             sprite?.removeFromParent()
             sprites[row][col] = nil
         }
-        
     }
-    //
-    //    // clear one character -- maybe not impl?
-    //    func clear(row: Int, col: Int) {
-    //        guard row >= 0 && row < rows else {
-    //            return
-    //        }
-    //        guard col >= 0 && col < cols else {
-    //            return
-    //        }
-    //    }
+    
+    func clear(row: Int, colStart: Int, colEnd: Int) {
+        guard row >= 0 && row < rows else {
+            return
+        }
+        
+        for col in colStart..<colEnd {
+            if let sprite = sprites[row][col] {
+                sprite.removeFromParent()
+                sprites[row][col] = nil
+            }
+        }
+    }
+    
+    func overWriteToEnd(string: String, row: Int, col: Int) {
+        guard row >= 0 && row < rows else {
+            return
+        }
+        guard col >= 0 && col < cols else {
+            return
+        }
+        guard string.count > 0 else {
+            return
+        }
+        clear(row: row, colStart: col, colEnd: cols)
+        makeSprites(col, row, string)
+    }
     
     // write a string to a row starting at col 0 but don't clear first
     func overWrite(string: String, row: Int) {
@@ -67,7 +83,11 @@ class DisplayModule : BaseGameObject {
         guard col >= 0 && col < cols else {
             return
         }
+        guard string.count > 0 else {
+            return
+        }
         
+        clear(row: row, colStart: col, colEnd: col + string.count)
         makeSprites(col, row, string)
     }
     

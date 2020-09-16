@@ -38,6 +38,11 @@ struct G {
         static let y: Int = 600
     }
     
+    struct CommandDisplay {
+        static let x: Int = 69
+        static let y: Int = 170
+    }
+    
     struct LetterSize {
         static let width = 20
         static let height = 34

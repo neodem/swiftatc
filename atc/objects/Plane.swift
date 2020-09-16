@@ -16,26 +16,35 @@ class Plane: BaseGameObject {
     var flightLevel = G.FlightLevel.STABLE
     var heading = G.Direction.N
     var altitude = 7000
- 
+    let altDelta: Int
+    
     var destination = G.Destination.Airport
     var destinationId = 1
     var flying = false
     var updated = true
     
+    var currentAltitudeCommand: AltitudeCommand?
+    
     init(type planeType: G.GameObjectType, identifier: Character, flying: Bool, x: Int, y: Int) {
         self.planeType = planeType
         self.flying = flying
+        
+        if planeType == G.GameObjectType.JET {
+            self.altDelta = 20
+        } else {
+            self.altDelta = 10
+        }
         
         // all flying planes default to 7k
         var altString = "0"
         if flying {
             altString = "7"
         }
-
+        
         let identString = String(identifier) + altString
         
         let planeTexture = Lettters.getTextureForString(string: identString)
-    
+        
         super.init(identifier: identifier, locX: x, locY: y, sprite: SKSpriteNode(texture: planeTexture))
         
         sprite?.zPosition = 100
@@ -47,6 +56,27 @@ class Plane: BaseGameObject {
         super.initialize(scene: scene)
         if let sprite = self.sprite {
             scene.addChild(sprite)
+        }
+    }
+    
+    func command(_ cmd: Command) {
+        if let alt = cmd as? AltitudeCommand {
+            currentAltitudeCommand = alt
+        }
+    }
+    
+    func handleCommand() {
+        if let alt = currentAltitudeCommand {
+            
+            let desiredAltitude = alt.desiredAltitude!
+            
+            if desiredAltitude > altitude {
+                flightLevel = G.FlightLevel.UP
+            } else if desiredAltitude < altitude {
+                flightLevel = G.FlightLevel.DOWN
+            } else if desiredAltitude == altitude {
+                flightLevel = G.FlightLevel.STABLE
+            }
         }
     }
     
@@ -74,6 +104,8 @@ class Plane: BaseGameObject {
             ticks = 0
         }
         
+        handleCommand()
+        
         updateAltitude()
         
         if ticks == 10 || ticks == 20 {
@@ -97,9 +129,9 @@ class Plane: BaseGameObject {
         }
         if flying {
             if flightLevel == G.FlightLevel.UP {
-                altitude += 100
+                altitude += altDelta
             } else {
-                altitude -= 100
+                altitude -= altDelta
             }
             
             updated = true

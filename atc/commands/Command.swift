@@ -12,10 +12,11 @@ protocol Command {
     var complete: Bool { get }
     
     // return true if accepted
-    func inputCharacter(_ char: Character) -> Bool
+    func inputCharacter(_ key: Key) -> Bool
     
     // return nil if no errors
     func getErrorMessage() -> String?
     
+    // make a string of the command
     func getCommandString() -> String?
 }

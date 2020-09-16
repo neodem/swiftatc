@@ -16,11 +16,15 @@ class CircleCommand : Command {
         self.ident = ident
     }
     
-    public func inputCharacter(_ char: Character) -> Bool {
+    public func inputCharacter(_ key: Key) -> Bool {
         return false
     }
     
     public func getErrorMessage() -> String? {
+        return nil
+    }
+    
+    public func getCommandString() -> String? {
         return nil
     }
     

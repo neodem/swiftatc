@@ -144,19 +144,25 @@ class Keyboard {
     
     var prev: KeyState
     var curr: KeyState
+    var keysPressed: Queue<Key>
     
     init() {
         prev = KeyState()
         curr = KeyState()
+        keysPressed = Queue()
     }
     
     func handleKey(event: NSEvent, isDown: Bool) {
         if (isDown) {
-            print("down: \(event.keyCode)")
+          //  print("down: \(event.keyCode)")
             curr.keys[Int(event.keyCode)] = true
         } else {
-            print("up: \(event.keyCode)")
+          //  print("up: \(event.keyCode)")
             curr.keys[Int(event.keyCode)] = false
+            
+            if let key = Key(rawValue: event.keyCode) {
+                keysPressed.enqueue(key)
+            }
         }
     }
     

@@ -25,6 +25,10 @@ class GameScene: SKScene {
             // approx every 0.1 second...
             gameManager.tick()
         }
+        
+        if let key = Keyboard.instance.keysPressed.dequeue() {
+            gameManager.handleKey(key)
+        }
     }
     
     override func didFinishUpdate() {

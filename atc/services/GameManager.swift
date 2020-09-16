@@ -26,6 +26,9 @@ class DefaultGameManager : GameManager {
     
     var planeDisplay: PlaneDisplayModule
     var scoreDisplay: DisplayModule
+    var commandDisplay: CommandModule
+    
+    var commandToDispatch: Command?
     
     init() {
         identService = DefaultIdentService()
@@ -37,6 +40,12 @@ class DefaultGameManager : GameManager {
         
         scoreDisplay = DisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY),x: G.ScoreDisplay.x, y: G.ScoreDisplay.y - G.LetterSize.height, rows: 3, cols: 25)
         
+        commandDisplay = CommandModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY),x: G.CommandDisplay.x, y: G.CommandDisplay.y - G.LetterSize.height, rows: 3, cols: 75)
+        
+    }
+    
+    public func handleKey(_ key: Key) {
+        commandToDispatch = commandDisplay.inputKey(key)
     }
     
     func initialize(scene: SKScene) {
@@ -52,6 +61,7 @@ class DefaultGameManager : GameManager {
         
         planeDisplay.initialize(scene: scene!)
         scoreDisplay.initialize(scene: scene!)
+        commandDisplay.initialize(scene: scene!)
         
         scoreDisplay.write(string: "TIME: \(gameClock)", row: 0)
         scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
@@ -76,6 +86,12 @@ class DefaultGameManager : GameManager {
         ticks += 1
         if gameState == G.GameState.active {
             for plane in planes {
+                if let cmd = commandToDispatch {
+                    if cmd.ident == plane.ident {
+                        plane.command(cmd)
+                    }
+                }
+                
                 plane.tick()
                 if plane.updated {
                     updatePlaneSprite(sprite: plane)
