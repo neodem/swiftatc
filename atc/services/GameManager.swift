@@ -45,6 +45,7 @@ class DefaultGameManager : GameManager {
     }
     
     public func handleKey(_ key: Key) {
+        // will return a valid command if command is complete, else nil
         commandToDispatch = commandDisplay.inputKey(key)
     }
     
@@ -74,7 +75,7 @@ class DefaultGameManager : GameManager {
         let fakePlane = Plane(type: planeType, identifier: ident, flying: true, x: 140, y: 140)
         
         fakePlane.destination = G.Destination.Exit
-        fakePlane.heading = G.Direction.SW
+        fakePlane.currentHeading = Direction.SW
         fakePlane.initialize(scene: scene!)
         planes.append(fakePlane)
         

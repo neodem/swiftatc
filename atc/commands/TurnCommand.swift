@@ -9,12 +9,9 @@
 class TurnCommand : Command {
     let ident: Character
     
-    var direction: G.Direction?
+    var direction: Direction?
     
     var complete = false
-    
-    // the default case where we expect an absolute direction to be entered
-    var immediate = true
     
     // relative turns
     var left = false
@@ -87,49 +84,49 @@ class TurnCommand : Command {
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.NE
+                direction = Direction.NE
                 complete = true
             case Key.W:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.N
+                direction = Direction.N
                 complete = true
             case Key.Q:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.NW
+                direction = Direction.NW
                 complete = true
             case Key.D:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.E
+                direction = Direction.E
                 complete = true
             case Key.A:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.W
+                direction = Direction.W
                 complete = true
             case Key.Z:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.SW
+                direction = Direction.SW
                 complete = true
             case Key.X:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.S
+                direction = Direction.S
                 complete = true
             case Key.C:
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
-                direction = G.Direction.SE
+                direction = Direction.SE
                 complete = true
             case Key.T:
                 towards = true

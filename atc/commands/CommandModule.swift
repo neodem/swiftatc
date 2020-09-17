@@ -129,8 +129,6 @@ class CommandModule : DisplayModule {
         self.write(string: "\(planeIdent!):", row: 0)
     }
     
-    
-    
     func handleEnter() -> Bool {
         if let _ = command?.complete {
             // check for errors
