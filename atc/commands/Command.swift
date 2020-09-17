@@ -8,7 +8,6 @@
 
 protocol Command {
     var ident: Character { get }
-    var commandText: String { get }
     var complete: Bool { get }
     
     // return true if accepted

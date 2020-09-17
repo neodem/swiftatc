@@ -8,9 +8,7 @@
 
 class IgnoreCommand : Command {
     let ident: Character
-    let commandText = "ignore"
-    
-    var complete = false
+    var complete = true
     
     init(ident: Character) {
         self.ident = ident
@@ -25,7 +23,8 @@ class IgnoreCommand : Command {
     }
     
     public func getCommandString() -> String? {
-        return nil
+        let commandString = "ignore"
+        
+        return commandString
     }
-    
 }

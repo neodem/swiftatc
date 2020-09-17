@@ -8,9 +8,7 @@
 
 class UnmarkCommand : Command {
     let ident: Character
-    let commandText = "unmark"
-    
-    var complete = false
+    var complete = true
     
     init(ident: Character) {
         self.ident = ident
@@ -25,7 +23,9 @@ class UnmarkCommand : Command {
     }
     
     public func getCommandString() -> String? {
-        return nil
+        let commandString = "unmark"
+        
+        return commandString
     }
     
 }

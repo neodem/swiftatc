@@ -24,6 +24,8 @@ class Plane: BaseGameObject {
     var flying = false
     var updated = true
     
+    var ignore = false
+    
     var currentAltitudeCommand: AltitudeCommand?
     
     init(type planeType: G.GameObjectType, identifier: Character, flying: Bool, x: Int, y: Int) {
@@ -63,6 +65,14 @@ class Plane: BaseGameObject {
     func command(_ cmd: Command) {
         if let alt = cmd as? AltitudeCommand {
             currentAltitudeCommand = alt
+        } else if let _ = cmd as? MarkCommand {
+            ignore = false
+        } else if let _ = cmd as? IgnoreCommand {
+            ignore = true
+        } else if let _ = cmd as? UnmarkCommand {
+            
+            // TODO more to impl when we do Delayed commands
+            ignore = true
         }
     }
     
@@ -94,7 +104,14 @@ class Plane: BaseGameObject {
             dest = ""
         }
         
-        return "\(ident)  \(currentAltitude)  \(dest)"
+        var cmd: String
+        if ignore {
+            cmd = "------"
+        } else {
+            cmd = ""
+        }
+        
+        return "\(ident)  \(currentAltitude)  \(dest) \(cmd)"
     }
     
     var ticks = 0

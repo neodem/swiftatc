@@ -8,9 +8,7 @@
 
 class MarkCommand : Command {
     let ident: Character
-    let commandText = "mark"
-    
-    var complete = false
+    var complete = true
     
     init(ident: Character) {
         self.ident = ident
@@ -25,7 +23,9 @@ class MarkCommand : Command {
     }
     
     public func getCommandString() -> String? {
-        return nil
+        let commandString = "mark"
+        
+        return commandString
     }
     
 }
