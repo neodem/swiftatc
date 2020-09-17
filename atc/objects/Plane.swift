@@ -15,7 +15,8 @@ class Plane: BaseGameObject {
     var planeType = G.GameObjectType.PROP
     var flightLevel = G.FlightLevel.STABLE
     var heading = G.Direction.N
-    var altitude = 7000
+    var currentAltitude = 7000
+    var desiredAltitude = 7000
     let altDelta: Int
     
     var destination = G.Destination.Airport
@@ -67,16 +68,17 @@ class Plane: BaseGameObject {
     
     func handleCommand() {
         if let alt = currentAltitudeCommand {
-            
-            let desiredAltitude = alt.desiredAltitude!
-            
-            if desiredAltitude > altitude {
-                flightLevel = G.FlightLevel.UP
-            } else if desiredAltitude < altitude {
-                flightLevel = G.FlightLevel.DOWN
-            } else if desiredAltitude == altitude {
-                flightLevel = G.FlightLevel.STABLE
+            if alt.climb {
+                self.desiredAltitude = currentAltitude + alt.desiredAltitude!
+            } else if alt.descend {
+                self.desiredAltitude = currentAltitude - alt.desiredAltitude!
+                if self.desiredAltitude < 0 {
+                    self.desiredAltitude = 0
+                }
+            } else {
+                self.desiredAltitude = alt.desiredAltitude!
             }
+            self.currentAltitudeCommand = nil
         }
     }
     
@@ -92,7 +94,7 @@ class Plane: BaseGameObject {
             dest = ""
         }
         
-        return "\(ident)  \(altitude)  \(dest)"
+        return "\(ident)  \(currentAltitude)  \(dest)"
     }
     
     var ticks = 0
@@ -124,19 +126,22 @@ class Plane: BaseGameObject {
     }
     
     func updateAltitude() {
-        guard flightLevel != G.FlightLevel.STABLE else {
+        if desiredAltitude == currentAltitude {
+            flightLevel = G.FlightLevel.STABLE
             return
         }
-        if flying {
-            if flightLevel == G.FlightLevel.UP {
-                altitude += altDelta
-            } else {
-                altitude -= altDelta
-            }
-            
-            updated = true
-            print("plane \(ident) altitude changed to: \(altitude)")
+        
+        if desiredAltitude > currentAltitude {
+            flightLevel = G.FlightLevel.UP
+            self.currentAltitude += altDelta
+        } else if desiredAltitude < currentAltitude {
+            flightLevel = G.FlightLevel.DOWN
+            self.currentAltitude -= altDelta
         }
+        
+        updated = true
+        print("plane \(ident) altitude changed to: \(currentAltitude)")
+        
     }
     
     func movePlane() {

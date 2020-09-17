@@ -86,7 +86,7 @@ class CommandModule : DisplayModule {
             command = TurnCommand(ident: planeIdent!)
         }
         
-        if let commandString = command!.getCommandString() {
+        if let commandString = command?.getCommandString() {
             // print command on screen
             self.overWrite(string: commandString, row: 0, col: 3)
         } else {

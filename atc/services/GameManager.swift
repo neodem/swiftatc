@@ -89,6 +89,7 @@ class DefaultGameManager : GameManager {
                 if let cmd = commandToDispatch {
                     if cmd.ident == plane.ident {
                         plane.command(cmd)
+                        commandToDispatch = nil
                     }
                 }
                 
