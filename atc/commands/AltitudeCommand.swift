@@ -20,6 +20,8 @@ class AltitudeCommand : Command {
     }
     
     public func inputCharacter(_ key: Key) -> CommandInputResult {
+
+        
         // check for number or c or d
         switch key {
         case Key.Delete:

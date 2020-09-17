@@ -64,8 +64,12 @@ class Lettters {
     }
     
     static func isNumber(_ letter: Character) -> Bool {
-        // todo
-        return true;
+        let ascii = letter.asciiValue!
+        
+        if ascii <= 57 || ascii >= 48 {
+            return true
+        }
+        return false
     }
     
 //    static func uppercase(_ letter: Character) -> Character {
@@ -74,7 +78,7 @@ class Lettters {
 //    }
     
     static func getTextureForLetter(letter: Character) -> SKTexture {
-        let ascii = letter.asciiValue!
+        var ascii = letter.asciiValue!
         
         if ascii == space {
             return textureAtlas.textureNamed("space")
@@ -98,36 +102,45 @@ class Lettters {
             return textureAtlas.textureNamed("colon")
         }
         
-        return textureAtlas.textureNamed(String(UnicodeScalar(UInt8(ascii))))
-        
-    }
-    
-    static func getLetterAsString(ascii: Int) -> String? {
-        guard ascii < 0 && ascii > 26 else {
-            return nil
+        // for now we only have UC letter textures so we convert lc to uc
+        if ascii >= lca && ascii <= lcz {
+           ascii = ascii - 32
         }
         
-        return String(UnicodeScalar(UInt8(ascii)))
+        let unit8 = UInt8(ascii)
+        let scalar = UnicodeScalar(unit8)
+        let textureName = String(scalar)
+        
+        return textureAtlas.textureNamed(textureName)
+        
     }
     
-    // for a given string, return a Texture composed of the string values
-    // only letters and numbers are allowed
-    static func getTextureForString(string: String) -> SKTexture? {
-        //
-        //        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
-        //        var composition: [SKTexture]
-        //
-        //        for letter in string {
-        //
-        //        }
-        //
-        //        string.forEach({
-        //            var texture: SKTexture = textureAtlas.textureNamed(String($0))
-        //            composition.append(texture)
-        //        })
-        
-        return textureAtlas.textureNamed("A")
-    }
+//    static func getLetterAsString(ascii: Int) -> String? {
+//        guard ascii < 0 && ascii > 26 else {
+//            return nil
+//        }
+//
+//        return String(UnicodeScalar(UInt8(ascii)))
+//    }
+//
+//    // for a given string, return a Texture composed of the string values
+//    // only letters and numbers are allowed
+//    static func getTextureForString(string: String) -> SKTexture? {
+//        //
+//        //        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
+//        //        var composition: [SKTexture]
+//        //
+//        //        for letter in string {
+//        //
+//        //        }
+//        //
+//        //        string.forEach({
+//        //            var texture: SKTexture = textureAtlas.textureNamed(String($0))
+//        //            composition.append(texture)
+//        //        })
+//
+//        return textureAtlas.textureNamed("A")
+//    }
     
     
     

@@ -16,8 +16,15 @@ struct G {
         case UP, DOWN, STABLE
     }
     
-    enum Direction {
-        case N, NE, E, SE, S, SW, W, NW
+    enum Direction : String {
+        case N = "0"
+        case NE = "45"
+        case E = "90"
+        case SE = "135"
+        case S = "180"
+        case SW = "225"
+        case W = "270"
+        case NW = "315"
     }
     
     enum Destination {

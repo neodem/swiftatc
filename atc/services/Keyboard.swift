@@ -134,6 +134,22 @@ enum Key: CUnsignedShort {
     case Count = 0x7F
 }
 
+extension Key {
+    func isNumber() -> Bool {
+        if self.rawValue <= 0x1D && self.rawValue >= 0x12 {
+            return true
+        }
+        return false
+    }
+    
+    func numberAsInt() -> Int {
+        if self.rawValue == 0x1D {
+            return 0
+        }
+        return Int(self.rawValue - 0x11)
+    }
+}
+
 struct KeyState {
     var keys = [Bool](repeating: false, count: Int(Key.Count.rawValue))
 }

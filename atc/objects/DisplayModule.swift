@@ -32,17 +32,15 @@ class DisplayModule : BaseGameObject {
     
     // clear an entire row
     func clear(row: Int) {
-        guard row >= 0 && row < rows else {
-            return
-        }
+        self.clear(row: row, colStart: 0, colEnd: cols)
+    }
         
-        let spriteRow = sprites[row]
-        for(col, sprite) in spriteRow.enumerated() {
-            sprite?.removeFromParent()
-            sprites[row][col] = nil
-        }
+    // clear to end of row starting at col
+    func clearToEnd(row: Int, col: Int) {
+        clear(row: row, colStart: col, colEnd: cols)
     }
     
+    // clear from some col to some other col
     func clear(row: Int, colStart: Int, colEnd: Int) {
         guard row >= 0 && row < rows else {
             return
@@ -56,6 +54,7 @@ class DisplayModule : BaseGameObject {
         }
     }
     
+    // will clear from col -> end and write string starting at col
     func overWriteToEnd(string: String, row: Int, col: Int) {
         guard row >= 0 && row < rows else {
             return
@@ -119,20 +118,4 @@ class DisplayModule : BaseGameObject {
             sprites[row][columIndex] = sprite
         }
     }
-    
-    
-    //    func getSprites() -> [SKSpriteNode] {
-    //        var allSprites = [SKSpriteNode]()
-    //
-    //        for row in 0..<rows {
-    //            for col in 0..<cols {
-    //                if let sprite = sprites[row][col] {
-    //                    allSprites.append(sprite)
-    //                }
-    //            }
-    //        }
-    //
-    //        return allSprites
-    //    }
-    
 }

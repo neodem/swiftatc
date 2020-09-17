@@ -39,14 +39,15 @@ class Plane: BaseGameObject {
         }
         
         // all flying planes default to 7k
-        var altString = "0"
-        if flying {
-            altString = "7"
-        }
+//        var altString = "0"
+//        if flying {
+//            altString = "7"
+//        }
         
-        let identString = String(identifier) + altString
+      //  let identString = String(identifier) + altString
         
-        let planeTexture = Lettters.getTextureForString(string: identString)
+        // TODO fix this to be variable and based on ident
+        let planeTexture = textureAtlas.textureNamed("A")
         
         super.init(identifier: identifier, locX: x, locY: y, sprite: SKSpriteNode(texture: planeTexture))
         
