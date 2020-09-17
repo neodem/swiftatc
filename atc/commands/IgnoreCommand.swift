@@ -14,8 +14,8 @@ class IgnoreCommand : Command {
         self.ident = ident
     }
     
-    public func inputCharacter(_ key: Key) -> Bool {
-        return false
+    public func inputCharacter(_ key: Key) -> CommandInputResult {
+        return CommandInputResult.Illegal
     }
     
     public func getErrorMessage() -> String? {

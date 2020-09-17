@@ -10,7 +10,6 @@ import Foundation
 
 class AltitudeCommand : Command {
     let ident: Character
-    let commandText = "altitude:"
     var complete = false
     var desiredAltitude: Int?
     var climb = false
@@ -20,7 +19,7 @@ class AltitudeCommand : Command {
         self.ident = ident
     }
     
-    public func inputCharacter(_ key: Key) -> Bool {
+    public func inputCharacter(_ key: Key) -> CommandInputResult {
         // check for number or c or d
         switch key {
         case Key.Delete:
@@ -32,6 +31,8 @@ class AltitudeCommand : Command {
             }
             else if descend == true {
                 descend = false
+            } else {
+                return CommandInputResult.Delete
             }
         case Key.Zero:
             desiredAltitude = 0
@@ -65,21 +66,21 @@ class AltitudeCommand : Command {
             complete = true
         case Key.C:
             if climb == true || descend == true {
-                return false
+             return CommandInputResult.Illegal
             }
             climb = true
             descend = false
         case Key.D:
             if climb == true || descend == true {
-                return false
+             return CommandInputResult.Illegal
             }
             climb = false
             descend = true
         default:
-            return false
+          return CommandInputResult.Illegal
         }
         
-        return true
+        return CommandInputResult.OK
     }
     
     public func getErrorMessage() -> String? {

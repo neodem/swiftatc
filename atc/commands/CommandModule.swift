@@ -26,7 +26,7 @@ class CommandModule : DisplayModule {
     
     public func inputKey(_ key: Key) -> Command? {
         
-       // print("command key: \(key)")
+        // print("command key: \(key)")
         
         if key == Key.Escape {
             reset()
@@ -36,13 +36,22 @@ class CommandModule : DisplayModule {
             } else if command == nil {
                 reset()
             } else {
-                _ = command!.inputCharacter(key)
-                if let commandString = command!.getCommandString() {
-                    // print command on screen
-                    self.overWriteToEnd(string: commandString, row: 0, col: 3)
-                } else {
-                    //beep
+               let result = command!.inputCharacter(key)
+                switch result {
+                case CommandInputResult.Illegal:
+                    beep()
+                case CommandInputResult.Delete:
+                    command = nil
+                    self.clearToEnd(row: 0, col: 3)
+                default:
+                    if let commandString = command!.getCommandString() {
+                        // print command on screen
+                        self.overWriteToEnd(string: commandString, row: 0, col: 3)
+                    } else {
+                        beep()
+                    }
                 }
+
             }
         } else if key == Key.Return {
             if handleEnter() {
@@ -55,20 +64,29 @@ class CommandModule : DisplayModule {
         } else if command == nil {
             createCommand(key)
         } else {
-            let accepted = command!.inputCharacter(key)
-            if !accepted {
-                // beep
-            } else {
+            let result = command!.inputCharacter(key)
+            
+            switch result {
+            case CommandInputResult.Illegal:
+                beep()
+            default:
                 if let commandString = command!.getCommandString() {
                     // print command on screen
-                    self.overWrite(string: commandString, row: 0, col: 3)
+                    self.overWriteToEnd(string: commandString, row: 0, col: 3)
                 } else {
-                    //beep
+                    beep()
                 }
             }
+            
         }
         
         return nil
+    }
+
+    
+    // on keyboard error we should beep
+    func beep() {
+        
     }
     
     func createCommand(_ key: Key) {
@@ -90,7 +108,7 @@ class CommandModule : DisplayModule {
             // print command on screen
             self.overWrite(string: commandString, row: 0, col: 3)
         } else {
-            //beep
+            beep()
         }
         
     }
