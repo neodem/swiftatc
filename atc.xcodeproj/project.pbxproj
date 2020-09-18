@@ -18,6 +18,8 @@
 		0326693B250ED8CE0010CCB5 /* CircleCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693A250ED8CE0010CCB5 /* CircleCommand.swift */; };
 		0326693D250ED8DB0010CCB5 /* TurnCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693C250ED8DB0010CCB5 /* TurnCommand.swift */; };
 		0326693F250ED8E70010CCB5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693E250ED8E70010CCB5 /* Command.swift */; };
+		036A21242513E74E00CCFBAF /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036A21232513E74E00CCFBAF /* Directions.swift */; };
+		036A21412513F52C00CCFBAF /* DirectionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036A21402513F52C00CCFBAF /* DirectionsTest.swift */; };
 		03FF45992508383C00F1561D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45982508383C00F1561D /* AppDelegate.swift */; };
 		03FF459B2508383C00F1561D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459A2508383C00F1561D /* GameScene.sks */; };
 		03FF459D2508383C00F1561D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459C2508383C00F1561D /* Actions.sks */; };
@@ -36,6 +38,16 @@
 		03FF45C5250C1A2500F1561D /* PlaneDisplayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		036A21392513F4CD00CCFBAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03FF458D2508383C00F1561D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03FF45942508383C00F1561D;
+			remoteInfo = atc;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		03266929250D2FBC0010CCB5 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		0326692B250D36640010CCB5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -48,6 +60,10 @@
 		0326693A250ED8CE0010CCB5 /* CircleCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCommand.swift; sourceTree = "<group>"; };
 		0326693C250ED8DB0010CCB5 /* TurnCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnCommand.swift; sourceTree = "<group>"; };
 		0326693E250ED8E70010CCB5 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		036A21232513E74E00CCFBAF /* Directions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
+		036A21342513F4CD00CCFBAF /* atcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = atcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		036A21382513F4CD00CCFBAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036A21402513F52C00CCFBAF /* DirectionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsTest.swift; sourceTree = "<group>"; };
 		03FF45952508383C00F1561D /* atc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = atc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FF45982508383C00F1561D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03FF459A2508383C00F1561D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -70,6 +86,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		036A21312513F4CD00CCFBAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03FF45922508383C00F1561D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,10 +118,20 @@
 			path = commands;
 			sourceTree = "<group>";
 		};
+		036A21352513F4CD00CCFBAF /* atcTests */ = {
+			isa = PBXGroup;
+			children = (
+				036A21402513F52C00CCFBAF /* DirectionsTest.swift */,
+				036A21382513F4CD00CCFBAF /* Info.plist */,
+			);
+			path = atcTests;
+			sourceTree = "<group>";
+		};
 		03FF458C2508383C00F1561D = {
 			isa = PBXGroup;
 			children = (
 				03FF45972508383C00F1561D /* atc */,
+				036A21352513F4CD00CCFBAF /* atcTests */,
 				03FF45962508383C00F1561D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -107,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				03FF45952508383C00F1561D /* atc.app */,
+				036A21342513F4CD00CCFBAF /* atcTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,6 +186,7 @@
 		03FF45C2250C055700F1561D /* services */ = {
 			isa = PBXGroup;
 			children = (
+				036A21232513E74E00CCFBAF /* Directions.swift */,
 				03FF45B7250A84CD00F1561D /* IdentService.swift */,
 				03FF45B9250A88FC00F1561D /* GameManager.swift */,
 				03FF45B025093BF900F1561D /* Letters.swift */,
@@ -175,6 +210,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		036A21332513F4CD00CCFBAF /* atcTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 036A213B2513F4CD00CCFBAF /* Build configuration list for PBXNativeTarget "atcTests" */;
+			buildPhases = (
+				036A21302513F4CD00CCFBAF /* Sources */,
+				036A21312513F4CD00CCFBAF /* Frameworks */,
+				036A21322513F4CD00CCFBAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				036A213A2513F4CD00CCFBAF /* PBXTargetDependency */,
+			);
+			name = atcTests;
+			productName = atcTests;
+			productReference = 036A21342513F4CD00CCFBAF /* atcTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		03FF45942508383C00F1561D /* atc */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03FF45AB2508383E00F1561D /* Build configuration list for PBXNativeTarget "atc" */;
@@ -198,10 +251,14 @@
 		03FF458D2508383C00F1561D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1170;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Vincent Fumo";
 				TargetAttributes = {
+					036A21332513F4CD00CCFBAF = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 03FF45942508383C00F1561D;
+					};
 					03FF45942508383C00F1561D = {
 						CreatedOnToolsVersion = 11.7;
 					};
@@ -221,11 +278,19 @@
 			projectRoot = "";
 			targets = (
 				03FF45942508383C00F1561D /* atc */,
+				036A21332513F4CD00CCFBAF /* atcTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		036A21322513F4CD00CCFBAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03FF45932508383C00F1561D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -240,6 +305,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		036A21302513F4CD00CCFBAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036A21412513F52C00CCFBAF /* DirectionsTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03FF45912508383C00F1561D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +324,7 @@
 				0326693D250ED8DB0010CCB5 /* TurnCommand.swift in Sources */,
 				03FF45B125093BF900F1561D /* Letters.swift in Sources */,
 				03FF459F2508383C00F1561D /* GameScene.swift in Sources */,
+				036A21242513E74E00CCFBAF /* Directions.swift in Sources */,
 				03FF45BE250A8E7800F1561D /* GameObject.swift in Sources */,
 				0326692A250D2FBC0010CCB5 /* Keyboard.swift in Sources */,
 				03FF45AF2509331300F1561D /* Plane.swift in Sources */,
@@ -272,6 +346,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		036A213A2513F4CD00CCFBAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03FF45942508383C00F1561D /* atc */;
+			targetProxy = 036A21392513F4CD00CCFBAF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		03FF45A42508383E00F1561D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -284,6 +366,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		036A213C2513F4CD00CCFBAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UCQZ67PF38;
+				INFOPLIST_FILE = atcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.neodem.atcTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/atc.app/Contents/MacOS/atc";
+			};
+			name = Debug;
+		};
+		036A213D2513F4CD00CCFBAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UCQZ67PF38;
+				INFOPLIST_FILE = atcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.neodem.atcTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/atc.app/Contents/MacOS/atc";
+			};
+			name = Release;
+		};
 		03FF45A92508383E00F1561D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -444,6 +566,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		036A213B2513F4CD00CCFBAF /* Build configuration list for PBXNativeTarget "atcTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036A213C2513F4CD00CCFBAF /* Debug */,
+				036A213D2513F4CD00CCFBAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		03FF45902508383C00F1561D /* Build configuration list for PBXProject "atc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

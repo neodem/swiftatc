@@ -94,7 +94,7 @@ class DefaultGameManager : GameManager {
                 
                 plane.tick()
                 if plane.updated {
-                    updatePlaneSprite(sprite: plane)
+                    updatePlaneSprite(sprite: plane, label: plane.planeLabel)
                     planeDisplay.updatePlane(plane: plane)
                     plane.updated = false
                 }
@@ -109,7 +109,7 @@ class DefaultGameManager : GameManager {
         }
     }
     
-    func updatePlaneSprite(sprite: BaseGameObject) {
+    func updatePlaneSprite(sprite: BaseGameObject, label: SKLabelNode) {
         let xLoc = Float(sprite.locationX) / Float(boardScale)
         let yLoc = Float(sprite.locationY) / Float(boardScale)
         
@@ -119,5 +119,6 @@ class DefaultGameManager : GameManager {
         //print("updatePlaneSprite \(sprite.ident): \(xVal), \(yVal)")
         
         sprite.sprite?.position = CGPoint(x: CGFloat(xVal), y: CGFloat(yVal))
+        label.position = CGPoint(x: CGFloat(xVal+50), y: CGFloat(yVal+30))
     }
 }

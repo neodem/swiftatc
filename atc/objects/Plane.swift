@@ -10,7 +10,9 @@ import SpriteKit
 
 class Plane: BaseGameObject {
     var initialSize: CGSize = CGSize(width: 28, height: 24)
-    let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
+    let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "planes")
+    
+    var planeLabel: SKLabelNode
     
     var planeType: G.GameObjectType
     
@@ -49,11 +51,21 @@ class Plane: BaseGameObject {
         }
         
         // TODO fix this to be variable and based on ident
-        let planeTexture = textureAtlas.textureNamed("A")
+        let planeTexture = textureAtlas.textureNamed("plane3")
         
-        super.init(identifier: identifier, locX: x, locY: y, sprite: SKSpriteNode(texture: planeTexture))
+        let planeSprite = SKSpriteNode(texture: planeTexture, color: NSColor.systemRed, size: CGSize(width: 53, height: 26))
+        planeSprite.colorBlendFactor = 1.0
+        planeSprite.alpha = 0.75
+        planeSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         
-        sprite?.zPosition = 100
+        planeLabel = SKLabelNode(fontNamed: "Andale Mono 14.0")
+        
+        super.init(identifier: identifier, locX: x, locY: y, sprite: planeSprite)
+        
+        planeLabel.text = "\(ident)\(currentAltitude)"
+        planeLabel.fontColor = NSColor.white
+        planeLabel.fontSize = 14
+//        planeLabel.color = NSColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         print("plane \(ident) starting at: \(locationX),\(locationY)")
     }
@@ -63,6 +75,7 @@ class Plane: BaseGameObject {
         if let sprite = self.sprite {
             scene.addChild(sprite)
         }
+        scene.addChild(planeLabel)
     }
     
     func command(_ cmd: Command) {
@@ -202,6 +215,7 @@ class Plane: BaseGameObject {
             self.currentAltitude -= altDelta
         }
         
+        planeLabel.text = "\(ident)\(currentAltitude)"
         updated = true
         print("plane \(ident) altitude changed to: \(currentAltitude)")
     }
