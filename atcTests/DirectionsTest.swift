@@ -54,14 +54,15 @@ class DirectionsTest: XCTestCase {
         XCTAssertEqual(Direction.N.sub(), Direction.NW)
         XCTAssertEqual(Direction.NW.sub(), Direction.W)
         XCTAssertEqual(Direction.NE.sub(), Direction.N)
+        XCTAssertEqual(Direction.W.sub(), Direction.SW)
     }
 
     func testSubTimesShouldWork() throws {
-        XCTAssertEqual(Direction.W.sub(times: 2), Direction.N)
-        XCTAssertEqual(Direction.NW.sub(times: 2), Direction.NE)
+        XCTAssertEqual(Direction.W.sub(times: 2), Direction.S)
+        XCTAssertEqual(Direction.NW.sub(times: 2), Direction.SW)
 
         XCTAssertEqual(Direction.N.sub(times: 8), Direction.N)
-        XCTAssertEqual(Direction.N.sub(times: 9), Direction.NE)
-        XCTAssertEqual(Direction.N.sub(times: 17), Direction.NE)
+        XCTAssertEqual(Direction.N.sub(times: 9), Direction.NW)
+        XCTAssertEqual(Direction.N.sub(times: 17), Direction.NW)
     }
 }

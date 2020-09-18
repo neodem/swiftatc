@@ -75,13 +75,15 @@ extension Direction {
     }
     
     func sub(times: Int) -> Direction {
-   
-        
         var next = self.rawValue - (45 * times)
         
         if next < 0 {
-            let mult = abs(next) / 360
-            next = next + (360 * mult)
+            let mult = (abs(next)) / 360 + 1
+            next = (360 * mult) + next
+        }
+        
+        if next == 360 {
+            next = 0
         }
       
         return Direction(rawValue: next)!
