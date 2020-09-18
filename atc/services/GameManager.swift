@@ -52,20 +52,37 @@ class DefaultGameManager : GameManager {
     func initialize(scene: SKScene) {
         self.scene = scene
         
+        drawDisplay()
+        initDisplayModules()
+        
         setupTest()
         
         gameState = G.GameState.active
     }
     
-    func setupTest() {
-        boardScale = 140
+    func drawDisplay() {
+        let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "background")
+        let mainDisplaySprite = SKSpriteNode(texture: textureAtlas.textureNamed("main-newnew"))
+        mainDisplaySprite.size = CGSize(width: 1600, height: 1200)
+        mainDisplaySprite.anchorPoint = .zero
+        mainDisplaySprite.position = .zero
+        mainDisplaySprite.zPosition = 50
         
+        scene?.addChild(mainDisplaySprite)
+    }
+    
+    func initDisplayModules() {
         planeDisplay.initialize(scene: scene!)
         scoreDisplay.initialize(scene: scene!)
         commandDisplay.initialize(scene: scene!)
         
         scoreDisplay.write(string: "TIME: \(gameClock)", row: 0)
         scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
+    }
+
+    
+    func setupTest() {
+        boardScale = 140
         
         // load the board/game smarts
         

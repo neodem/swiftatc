@@ -44,18 +44,20 @@ class Plane: BaseGameObject {
         self.destinationId = destinationId
         self.planeType = planeType
         
+        var planeColor: NSColor
         if planeType == G.GameObjectType.JET {
             self.altDelta = 20
+            planeColor = NSColor.systemRed
         } else {
             self.altDelta = 10
+            planeColor = NSColor.systemGreen
         }
         
-        // TODO fix this to be variable and based on ident
         let planeTexture = textureAtlas.textureNamed("plane3")
         
-        let planeSprite = SKSpriteNode(texture: planeTexture, color: NSColor.systemRed, size: CGSize(width: 53, height: 26))
+        let planeSprite = SKSpriteNode(texture: planeTexture, color: planeColor, size: CGSize(width: 53, height: 26))
         planeSprite.colorBlendFactor = 1.0
-        planeSprite.alpha = 0.75
+        planeSprite.alpha = 1.0
         planeSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono 14.0")
@@ -65,7 +67,6 @@ class Plane: BaseGameObject {
         planeLabel.text = "\(ident)\(currentAltitude)"
         planeLabel.fontColor = NSColor.white
         planeLabel.fontSize = 14
-//        planeLabel.color = NSColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         print("plane \(ident) starting at: \(locationX),\(locationY)")
     }
