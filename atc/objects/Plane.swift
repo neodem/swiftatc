@@ -12,29 +12,35 @@ class Plane: BaseGameObject {
     var initialSize: CGSize = CGSize(width: 28, height: 24)
     let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "letters")
     
-    var planeType = G.GameObjectType.PROP
-    var flightLevel = G.FlightLevel.STABLE
+    var planeType: G.GameObjectType
     
     var currentAltitudeCommand: AltitudeCommand?
     var currentAltitude = 7000
     var desiredAltitude = 7000
     // the amount to change altitude on update (varies by plane type)
     let altDelta: Int
+    var flightLevel = G.FlightLevel.STABLE
     
     var currentTurnCommand: TurnCommand?
-    var currentHeading = Direction.N
-    var desiredHeading = Direction.N
+    private var currentHeading = Direction.N
+    private var desiredHeading = Direction.N
     
-    var destination = G.Destination.Airport
-    var destinationId = 1
+    private var destination: G.Destination
+    private var destinationId: Character
     
     var flying = false
     var updated = true
     var ignore = false
     
-    init(type planeType: G.GameObjectType, identifier: Character, flying: Bool, x: Int, y: Int) {
+    init(type planeType: G.GameObjectType, heading: Direction, destinationType: G.Destination, destinationId : Character, identifier: Character, flying: Bool, x: Int, y: Int) {
+        
         self.planeType = planeType
         self.flying = flying
+        self.currentHeading = heading
+        self.desiredHeading = heading
+        self.destination = destinationType
+        self.destinationId = destinationId
+        self.planeType = planeType
         
         if planeType == G.GameObjectType.JET {
             self.altDelta = 20
@@ -87,7 +93,7 @@ class Plane: BaseGameObject {
     
     func handleTurnCommand(_ trn: TurnCommand) {
         if trn.towards {
-            
+            // TODO
         } else {
             if let dir = trn.direction {
                 if trn.left {
@@ -204,17 +210,24 @@ class Plane: BaseGameObject {
         if flying {
             if desiredHeading != currentHeading {
                 let numAddsClock = currentHeading.distance(to: desiredHeading)
-                let numAddsCounter = currentHeading.distance(to: desiredHeading)
+                let numAddsCounter = currentHeading.distanceCounter(to: desiredHeading)
+                
                 var numAdds = 0
+                
+                // use more efficient route
                 if(numAddsClock > numAddsCounter) {
-                 //   numAdds
+                    numAdds = numAddsCounter
+                    if numAdds > 2 {
+                        numAdds = 2
+                    }
+                    currentHeading = currentHeading.sub(times: numAdds)
+                } else {
+                    numAdds = numAddsClock
+                    if numAdds > 2 {
+                        numAdds = 2
+                    }
+                    currentHeading = currentHeading.add(times: numAdds)
                 }
-                
-                if numAdds > 2 {
-                    numAdds = 2
-                }
-                
-               currentHeading = currentHeading.add(times: numAdds)
             }
         }
     }

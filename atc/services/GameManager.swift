@@ -72,10 +72,8 @@ class DefaultGameManager : GameManager {
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        let fakePlane = Plane(type: planeType, identifier: ident, flying: true, x: 140, y: 140)
+        let fakePlane = Plane(type: planeType, heading: Direction.SW, destinationType: G.Destination.Exit, destinationId: "1", identifier: ident, flying: true, x: 140, y: 140)
         
-        fakePlane.destination = G.Destination.Exit
-        fakePlane.currentHeading = Direction.SW
         fakePlane.initialize(scene: scene!)
         planes.append(fakePlane)
         
