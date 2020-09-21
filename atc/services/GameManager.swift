@@ -80,16 +80,32 @@ class DefaultGameManager : GameManager {
         scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
     }
 
-    
     func setupTest() {
-        boardScale = 140
+        self.boardScale = 140
         
         // load the board/game smarts
+        
+        // exits
+        let exit0 = Exit(ident: "0", x: 70, y: 140, direction: Direction.S)
+        exit0.initialize(scene: scene!)
+        exits.append(exit0)
+        
+        let exit1 = Exit(ident: "1", x: 140, y: 140, direction: Direction.SW)
+        exit1.initialize(scene: scene!)
+        exits.append(exit1)
+        
+        let exit2 = Exit(ident: "2", x: 120, y: 0, direction: Direction.N)
+        exit2.initialize(scene: scene!)
+        exits.append(exit2)
+        
+        let exit3 = Exit(ident: "3", x: 0, y: 0, direction: Direction.NE)
+        exit3.initialize(scene: scene!)
+        exits.append(exit3)
         
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        let fakePlane = Plane(type: planeType, heading: Direction.SW, destinationType: G.Destination.Exit, destinationId: "1", identifier: ident, flying: true, x: 140, y: 140)
+        let fakePlane = Plane(type: planeType, heading: Direction.SW, destinationType: G.Destination.Exit, destinationId: "1", identifier: ident, flying: true, x: boardScale, y: boardScale)
         
         fakePlane.initialize(scene: scene!)
         planes.append(fakePlane)
@@ -110,6 +126,7 @@ class DefaultGameManager : GameManager {
                 }
                 
                 plane.tick()
+                
                 if plane.updated {
                     updatePlaneSprite(sprite: plane, label: plane.planeLabel)
                     planeDisplay.updatePlane(plane: plane)
@@ -126,6 +143,11 @@ class DefaultGameManager : GameManager {
         }
     }
     
+    func checkPlaneBounds(_ plane: Plane) {
+        
+    }
+    
+    // TODO move into the Plane class
     func updatePlaneSprite(sprite: BaseGameObject, label: SKLabelNode) {
         let xLoc = Float(sprite.locationX) / Float(boardScale)
         let yLoc = Float(sprite.locationY) / Float(boardScale)

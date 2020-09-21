@@ -244,6 +244,8 @@ class Plane: BaseGameObject {
                     currentHeading = currentHeading.add(times: numAdds)
                 }
             }
+            
+            updated = true
         }
     }
     
