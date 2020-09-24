@@ -45,10 +45,10 @@ struct G {
     }
     
     struct Radar {
-        static let xMin: Float = 90
-        static let xMax: Float = 898
-        static let yMin: Float = 320
-        static let yMax: Float = 1112
+        static let xMin: Float = 71
+        static let xMax: Float = 910
+        static let yMin: Float = 290
+        static let yMax: Float = 1128
     }
     
 }

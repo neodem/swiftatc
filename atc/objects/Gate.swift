@@ -1,0 +1,24 @@
+//
+//  Gate.swift
+//  atc
+//
+//  Created by Vincent Fumo on 9/24/20.
+//  Copyright © 2020 Vincent Fumo. All rights reserved.
+//
+
+import SpriteKit
+
+class Gate {
+    
+    let gateSprite: SKSpriteNode
+    
+    init(len: Double, cutoff: Double, alpha: CGFloat, rotation: CGFloat, x: CGFloat, y: CGFloat) {
+        let gateLength = len * cutoff
+        gateSprite = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: gateLength))
+        gateSprite.colorBlendFactor = 1.0
+        gateSprite.alpha = alpha
+        gateSprite.zRotation = rotation
+        gateSprite.anchorPoint = CGPoint(x: 0.5, y: 1)
+        gateSprite.position = CGPoint(x: x, y: y)
+    }
+}

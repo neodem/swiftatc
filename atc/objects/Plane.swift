@@ -5,7 +5,9 @@
 //  Created by Vincent Fumo on 9/9/20.
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
-
+// on 10 ticks we move the jet, on 20 ticks we move the plane, we update altitude every tick
+// a "move" is one unit on the x,y axis
+// an altitude change is set by `altDelta` which by default is 10' for prop, 20' for jet
 import SpriteKit
 
 class Plane: BaseGameObject {
