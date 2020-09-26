@@ -35,8 +35,12 @@ class Plane: BaseGameObject {
     private var currentHeading = Direction.N
     private var desiredHeading = Direction.N
     
-    var destination: G.Destination?
-    var destinationId: Character?
+    private var destination: G.Destination
+    private var destinationId: Character
+    
+    func getDestination() -> (G.Destination, Character) {
+        return (destination, destinationId)
+    }
     
     var flying = false
     var turning = false
@@ -46,7 +50,7 @@ class Plane: BaseGameObject {
     
     let boardScale: Int
     
-    init(type planeType: G.GameObjectType, heading: Direction, identifier: Character, flying: Bool, x: Int, y: Int, boardScale: Int) {
+    init(type planeType: G.GameObjectType, heading: Direction, identifier: Character, flying: Bool, x: Int, y: Int, boardScale: Int, destination: G.Destination, destinationId: Character) {
         
         self.planeType = planeType
         self.flying = flying
@@ -54,6 +58,8 @@ class Plane: BaseGameObject {
         self.desiredHeading = heading
         self.planeType = planeType
         self.boardScale = boardScale
+        self.destination = destination
+        self.destinationId = destinationId
         
         var planeColor: NSColor
         if planeType == G.GameObjectType.JET {
@@ -117,7 +123,7 @@ class Plane: BaseGameObject {
     func tick(clock: Bool) {
         ticks += 1
         
-        print("plane tick:\(ticks)")
+//        print("plane tick:\(ticks)")
    
 //        if clock {
             startCommands()
@@ -154,9 +160,7 @@ class Plane: BaseGameObject {
     }
     
     func redrawSprite() {
-        let xVal: Float
-        let yVal: Float
-        (xVal, yVal) = Grid.convertToRadarCoords(gridX: locationX, gridY: locationY, gridScale: boardScale)
+        let (xVal, yVal) = Grid.convertToRadarCoords(gridX: locationX, gridY: locationY, gridScale: boardScale)
         
         //print("updatePlaneSprite \(sprite.ident): \(xVal), \(yVal)")
         
@@ -228,11 +232,11 @@ class Plane: BaseGameObject {
     func getStatusLine() -> String {
         var dest: String
         if destination == G.Destination.Airport {
-            dest = "A\(destinationId!)"
+            dest = "A\(destinationId)"
         } else if destination == G.Destination.Exit {
-            dest = "E\(destinationId!)"
+            dest = "E\(destinationId)"
         } else if destination == G.Destination.Beacon {
-            dest = "B\(destinationId!)"
+            dest = "B\(destinationId)"
         } else {
             dest = ""
         }

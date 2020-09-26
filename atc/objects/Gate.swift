@@ -18,8 +18,8 @@ class Gate {
         gateSprite.colorBlendFactor = 1.0
         gateSprite.alpha = alpha
         gateSprite.zRotation = rotation
-        gateSprite.zPosition = G.ZPos.exit
-        gateSprite.anchorPoint = CGPoint(x: 0.5, y: 1)
+        gateSprite.zPosition = G.ZPos.debug
+        gateSprite.anchorPoint = CGPoint(x: 1, y: 1)
         gateSprite.position = CGPoint(x: x, y: y)
     }
 }
