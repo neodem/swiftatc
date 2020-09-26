@@ -33,6 +33,7 @@ class Plane: BaseGameObject {
     private var destinationId: Character
     
     var flying = false
+    var turning = false
     var updated = true
     var ignore = false
     
@@ -84,16 +85,21 @@ class Plane: BaseGameObject {
     func command(_ cmd: Command) {
         if let alt = cmd as? AltitudeCommand {
             currentAltitudeCommand = alt
+            updated = true
         } else if let _ = cmd as? MarkCommand {
             ignore = false
+            updated = true
         } else if let _ = cmd as? IgnoreCommand {
             ignore = true
+            updated = true
         } else if let _ = cmd as? UnmarkCommand {
             
             // TODO more to impl when we do Delayed commands
             ignore = true
+            updated = true
         } else if let trn = cmd as? TurnCommand {
             currentTurnCommand = trn
+            updated = true
         }
     }
     
@@ -166,13 +172,17 @@ class Plane: BaseGameObject {
         }
         
         var cmd: String
-        if ignore {
-            cmd = "------"
+        if turning {
+            cmd = "\(desiredHeading.rawValue)"
         } else {
             cmd = ""
         }
         
-        return "\(ident)  \(currentAltitude)  \(dest) \(cmd)"
+        if ignore {
+            cmd = "------"
+        }
+        
+        return "\(ident)  \(currentAltitude)  \(dest)   \(cmd)"
     }
     
     var ticks = 0
@@ -226,6 +236,8 @@ class Plane: BaseGameObject {
     func updateDirection() {
         if flying {
             if desiredHeading != currentHeading {
+                turning = true
+                
                 let numAddsClock = currentHeading.distance(to: desiredHeading)
                 let numAddsCounter = currentHeading.distanceCounter(to: desiredHeading)
                 
@@ -245,6 +257,8 @@ class Plane: BaseGameObject {
                     }
                     currentHeading = currentHeading.add(times: numAdds)
                 }
+            } else {
+                turning = false
             }
             
             updated = true
