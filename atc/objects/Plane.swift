@@ -5,9 +5,14 @@
 //  Created by Vincent Fumo on 9/9/20.
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
-// on 10 ticks we move the jet, on 20 ticks we move the plane, we update altitude every tick
+// plane should get 10 ticks per game clock
+// queued commands are applied every tick
+// alt changes every tick
+// jet moves and updates direction every 5 ticks
+// prop moves and updates direction every 10 ticks
+//
 // a "move" is one unit on the x,y axis
-// an altitude change is set by `altDelta` which by default is 10' for prop, 20' for jet
+// an altitude change is set by `altDelta` which by default is 50' for prop, 100' for jet
 import SpriteKit
 
 class Plane: BaseGameObject {
@@ -15,6 +20,7 @@ class Plane: BaseGameObject {
     let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "planes")
     
     var planeLabel: SKLabelNode
+    var planeSprite: SKSpriteNode
     
     var planeType: G.GameObjectType
     
@@ -29,60 +35,61 @@ class Plane: BaseGameObject {
     private var currentHeading = Direction.N
     private var desiredHeading = Direction.N
     
-    private var destination: G.Destination
-    private var destinationId: Character
+    var destination: G.Destination?
+    var destinationId: Character?
     
     var flying = false
     var turning = false
     var updated = true
     var ignore = false
     
-    init(type planeType: G.GameObjectType, heading: Direction, destinationType: G.Destination, destinationId : Character, identifier: Character, flying: Bool, x: Int, y: Int) {
+    let boardScale: Int
+    
+    init(type planeType: G.GameObjectType, heading: Direction, identifier: Character, flying: Bool, x: Int, y: Int, boardScale: Int) {
         
         self.planeType = planeType
         self.flying = flying
         self.currentHeading = heading
         self.desiredHeading = heading
-        self.destination = destinationType
-        self.destinationId = destinationId
         self.planeType = planeType
+        self.boardScale = boardScale
         
         var planeColor: NSColor
         if planeType == G.GameObjectType.JET {
-            self.altDelta = 20
+            self.altDelta = 100
             planeColor = NSColor.systemRed
         } else {
-            self.altDelta = 10
+            self.altDelta = 50
             planeColor = NSColor.systemGreen
         }
         
         let planeTexture = textureAtlas.textureNamed("plane3")
         
-        let planeSprite = SKSpriteNode(texture: planeTexture, color: planeColor, size: CGSize(width: 53, height: 26))
+        planeSprite = SKSpriteNode(texture: planeTexture, color: planeColor, size: CGSize(width: 53, height: 26))
         planeSprite.colorBlendFactor = 1.0
         planeSprite.alpha = 1.0
+        planeSprite.zPosition = G.ZPos.plane
         planeSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono 14.0")
         
-        super.init(identifier: identifier, locX: x, locY: y, sprite: planeSprite)
+        super.init(identifier: identifier, locX: x, locY: y)
         
         planeLabel.text = "\(ident)\(currentAltitude)"
         planeLabel.fontColor = NSColor.white
         planeLabel.fontSize = 14
+        planeLabel.zPosition = G.ZPos.plane
         
         print("plane \(ident) starting at: \(locationX),\(locationY)")
     }
     
     override func initialize(scene: SKScene) {
         super.initialize(scene: scene)
-        if let sprite = self.sprite {
-            scene.addChild(sprite)
-        }
+        scene.addChild(planeSprite)
         scene.addChild(planeLabel)
     }
     
-    func command(_ cmd: Command) {
+    func queueCommand(_ cmd: Command) {
         if let alt = cmd as? AltitudeCommand {
             currentAltitudeCommand = alt
             updated = true
@@ -101,6 +108,56 @@ class Plane: BaseGameObject {
             currentTurnCommand = trn
             updated = true
         }
+    }
+    
+    var ticks = 0
+    
+    // jet moves every 70 ticks, prop every 140
+    // command processed every tick
+    // alt every 7 ticks
+    func tick() {
+        ticks += 1
+        handleCommand()
+        updateAltitude()
+        
+        if ticks % 1 == 0 {
+            if planeType == G.GameObjectType.JET {
+                movePlane()
+                updateDirection()
+            }
+        }
+        
+        if ticks % 2 == 0 {
+            if planeType == G.GameObjectType.PROP {
+                movePlane()
+                updateDirection()
+            }
+        }
+        
+        if updated {
+            redrawSprite()
+        }
+        
+        
+        
+        
+        
+        // TODO
+        // check location of plane to see if it lands or moves off
+        // or crashes. Check for 0 altitude also. Check also for
+        // collision with another plane
+        
+    }
+    
+    func redrawSprite() {
+        let xVal: Float
+        let yVal: Float
+        (xVal, yVal) = Grid.convertToRadarCoords(gridX: locationX, gridY: locationY, gridScale: boardScale)
+        
+        //print("updatePlaneSprite \(sprite.ident): \(xVal), \(yVal)")
+        
+        planeSprite.position = CGPoint(x: CGFloat(xVal), y: CGFloat(yVal))
+        planeLabel.position = CGPoint(x: CGFloat(xVal+50), y: CGFloat(yVal+30))
     }
     
     func handleCommand() {
@@ -162,11 +219,11 @@ class Plane: BaseGameObject {
     func getStatusLine() -> String {
         var dest: String
         if destination == G.Destination.Airport {
-            dest = "A\(destinationId)"
+            dest = "A\(destinationId!)"
         } else if destination == G.Destination.Exit {
-            dest = "E\(destinationId)"
+            dest = "E\(destinationId!)"
         } else if destination == G.Destination.Beacon {
-            dest = "B\(destinationId)"
+            dest = "B\(destinationId!)"
         } else {
             dest = ""
         }
@@ -183,35 +240,6 @@ class Plane: BaseGameObject {
         }
         
         return "\(ident)  \(currentAltitude)  \(dest)   \(cmd)"
-    }
-    
-    var ticks = 0
-    
-    // on 10 ticks we move the jet, on 20 ticks we move the plane, we update altitude every tick
-    func tick() {
-        ticks += 1
-        if ticks == 21 {
-            ticks = 0
-        }
-        
-        handleCommand()
-        
-        updateAltitude()
-        
-        if ticks == 10 || ticks == 20 {
-            if planeType == G.GameObjectType.JET {
-                movePlane()
-                updateDirection()
-            } else if ticks == 20 && planeType == G.GameObjectType.PROP {
-                movePlane()
-                updateDirection()
-            }
-            
-            // TODO
-            // check location of plane to see if it lands or moves off
-            // or crashes. Check for 0 altitude also. Check also for
-            // collision with another plane
-        }
     }
     
     func updateAltitude() {

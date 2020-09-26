@@ -20,6 +20,8 @@
 		0326693F250ED8E70010CCB5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0326693E250ED8E70010CCB5 /* Command.swift */; };
 		036A21242513E74E00CCFBAF /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036A21232513E74E00CCFBAF /* Directions.swift */; };
 		036A21412513F52C00CCFBAF /* DirectionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036A21402513F52C00CCFBAF /* DirectionsTest.swift */; };
+		037CFE27251A4BB900C86932 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CFE26251A4BB900C86932 /* Grid.swift */; };
+		037CFE2F251D221600C86932 /* Gate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CFE2E251D221600C86932 /* Gate.swift */; };
 		03FF45992508383C00F1561D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45982508383C00F1561D /* AppDelegate.swift */; };
 		03FF459B2508383C00F1561D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459A2508383C00F1561D /* GameScene.sks */; };
 		03FF459D2508383C00F1561D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 03FF459C2508383C00F1561D /* Actions.sks */; };
@@ -64,6 +66,8 @@
 		036A21342513F4CD00CCFBAF /* atcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = atcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		036A21382513F4CD00CCFBAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		036A21402513F52C00CCFBAF /* DirectionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsTest.swift; sourceTree = "<group>"; };
+		037CFE26251A4BB900C86932 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		037CFE2E251D221600C86932 /* Gate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gate.swift; sourceTree = "<group>"; };
 		03FF45952508383C00F1561D /* atc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = atc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FF45982508383C00F1561D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03FF459A2508383C00F1561D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -106,7 +110,6 @@
 		03266933250ED88E0010CCB5 /* commands */ = {
 			isa = PBXGroup;
 			children = (
-				0326692F250ECEC70010CCB5 /* CommandModule.swift */,
 				03266931250ED4250010CCB5 /* AltitudeCommand.swift */,
 				03266934250ED8A80010CCB5 /* MarkCommand.swift */,
 				03266936250ED8B30010CCB5 /* IgnoreCommand.swift */,
@@ -125,6 +128,16 @@
 				036A21382513F4CD00CCFBAF /* Info.plist */,
 			);
 			path = atcTests;
+			sourceTree = "<group>";
+		};
+		037CFE32251FC0E400C86932 /* displayModules */ = {
+			isa = PBXGroup;
+			children = (
+				03FF45BF250BC3EC00F1561D /* DisplayModule.swift */,
+				0326692F250ECEC70010CCB5 /* CommandModule.swift */,
+				03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */,
+			);
+			path = displayModules;
 			sourceTree = "<group>";
 		};
 		03FF458C2508383C00F1561D = {
@@ -148,6 +161,7 @@
 		03FF45972508383C00F1561D /* atc */ = {
 			isa = PBXGroup;
 			children = (
+				037CFE32251FC0E400C86932 /* displayModules */,
 				03266933250ED88E0010CCB5 /* commands */,
 				03FF45A72508383E00F1561D /* Info.plist */,
 				03FF45C3250C056000F1561D /* applecrap */,
@@ -155,6 +169,7 @@
 				03FF45C1250C054600F1561D /* objects */,
 				03FF45B2250A7F9300F1561D /* common */,
 				03FF459A2508383C00F1561D /* GameScene.sks */,
+				03FF45B5250A82DB00F1561D /* Globals.swift */,
 				03FF459E2508383C00F1561D /* GameScene.swift */,
 				03FF45A22508383E00F1561D /* Assets.xcassets */,
 			);
@@ -164,7 +179,8 @@
 		03FF45B2250A7F9300F1561D /* common */ = {
 			isa = PBXGroup;
 			children = (
-				03FF45B5250A82DB00F1561D /* Globals.swift */,
+				0326692D250D3B970010CCB5 /* LinkedList.swift */,
+				0326692B250D36640010CCB5 /* Queue.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -174,11 +190,8 @@
 			children = (
 				03FF45BD250A8E7800F1561D /* GameObject.swift */,
 				03FF45AE2509331300F1561D /* Plane.swift */,
-				03FF45BF250BC3EC00F1561D /* DisplayModule.swift */,
 				03FF45BB250A8E2E00F1561D /* Exit.swift */,
-				03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */,
-				0326692B250D36640010CCB5 /* Queue.swift */,
-				0326692D250D3B970010CCB5 /* LinkedList.swift */,
+				037CFE2E251D221600C86932 /* Gate.swift */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -191,6 +204,7 @@
 				03FF45B9250A88FC00F1561D /* GameManager.swift */,
 				03FF45B025093BF900F1561D /* Letters.swift */,
 				03266929250D2FBC0010CCB5 /* Keyboard.swift */,
+				037CFE26251A4BB900C86932 /* Grid.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -322,10 +336,12 @@
 				03FF45BA250A88FC00F1561D /* GameManager.swift in Sources */,
 				03266930250ECEC70010CCB5 /* CommandModule.swift in Sources */,
 				0326693D250ED8DB0010CCB5 /* TurnCommand.swift in Sources */,
+				037CFE27251A4BB900C86932 /* Grid.swift in Sources */,
 				03FF45B125093BF900F1561D /* Letters.swift in Sources */,
 				03FF459F2508383C00F1561D /* GameScene.swift in Sources */,
 				036A21242513E74E00CCFBAF /* Directions.swift in Sources */,
 				03FF45BE250A8E7800F1561D /* GameObject.swift in Sources */,
+				037CFE2F251D221600C86932 /* Gate.swift in Sources */,
 				0326692A250D2FBC0010CCB5 /* Keyboard.swift in Sources */,
 				03FF45AF2509331300F1561D /* Plane.swift in Sources */,
 				03FF45992508383C00F1561D /* AppDelegate.swift in Sources */,

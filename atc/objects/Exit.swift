@@ -128,6 +128,7 @@ class Exit : BaseGameObject {
         gateLine.colorBlendFactor = 1.0
         gateLine.alpha = lineAlpha
         gateLine.zRotation = gateRotation
+        gateLine.zPosition = G.ZPos.exit
         gateLine.anchorPoint = CGPoint(x: 0.5, y: 1)
         gateLine.position = CGPoint(x: CGFloat(xOrigin), y: CGFloat(yOrigin))
         
@@ -136,9 +137,10 @@ class Exit : BaseGameObject {
         exitLabel.fontColor = NSColor.white
         exitLabel.alpha = labelAlpha
         exitLabel.fontSize = 14
+        exitLabel.zPosition = G.ZPos.exit
         exitLabel.position = CGPoint(x: CGFloat(labelXloc), y: CGFloat(labelYloc))
         
-        super.init(identifier: ident, locX: Int(xOrigin), locY: Int(yOrigin), sprite: nil)
+        super.init(identifier: ident, locX: Int(xOrigin), locY: Int(yOrigin))
     }
     
     override func initialize(scene: SKScene) {

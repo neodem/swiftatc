@@ -23,7 +23,7 @@ class DisplayModule : BaseGameObject {
         
         self.sprites = Array(repeating: Array(repeating: nil, count: cols), count: rows)
         
-        super.init(identifier: ident, locX: x, locY: y, sprite: nil)
+        super.init(identifier: ident, locX: x, locY: y)
     }
     
     override func initialize(scene: SKScene) {

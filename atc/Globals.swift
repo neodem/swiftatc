@@ -6,6 +6,8 @@
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
 
+import SpriteKit
+
 struct G {
     
     enum GameObjectType : CaseIterable {
@@ -45,10 +47,17 @@ struct G {
     }
     
     struct Radar {
-        static let xMin: Float = 71
+        static let xMin: Float = 70
         static let xMax: Float = 910
         static let yMin: Float = 290
-        static let yMax: Float = 1128
+        static let yMax: Float = 1130
+    }
+    
+    struct ZPos {
+        static let exit: CGFloat = 5
+        static let plane: CGFloat = 10
+        static let overlay: CGFloat = 100
+        static let debug: CGFloat = 1000
     }
     
 }

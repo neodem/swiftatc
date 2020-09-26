@@ -60,7 +60,9 @@ class CommandModule : DisplayModule {
                 return cmd
             }
         } else if planeIdent == nil {
-            createItent(key)
+            if key != Key.Space {
+                createItent(key)
+            }
         } else if command == nil {
             createCommand(key)
         } else {
