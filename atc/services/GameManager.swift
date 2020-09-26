@@ -20,7 +20,7 @@ class DefaultGameManager : GameManager {
     var exits : [Exit]
     var gameState: G.GameState
     var boardScale = 0
-    var gameClock = 0
+
     var safe = 0
     var scene: SKScene?
     
@@ -155,12 +155,26 @@ class DefaultGameManager : GameManager {
     }
     
     var ticks = 0
+    var gameClock = 0
     
     // called by GameScene every 0.1s
     func tick() {
         ticks += 1
+//        print("tick:\(ticks)")
+        
         if gameState == G.GameState.active {
             
+            var clock = false
+            
+            // every 5s the game clock advances
+            if ticks % 50 == 0 {
+                gameClock += 1
+                clock = true
+                print("clock: \(gameClock)")
+                scoreDisplay.overWrite(string: "\(gameClock)", row: 0, col: 6)
+            }
+            
+            // on every tick, if there is a command to dispatch, we send it to the plane's queue
             if let cmd = commandToDispatch {
                 if let planeForCommand = planes[cmd.ident] {
                     planeForCommand.queueCommand(cmd)
@@ -169,10 +183,10 @@ class DefaultGameManager : GameManager {
                 commandToDispatch = nil
             }
             
-            // every 0.7s the the planes get a tick (1/10 of the game clock rate)
-            if ticks % 7 == 0 {
+            // every 0.5s the the planes get a tick (1/10 of the game clock rate)
+            if ticks % 5 == 0 {
                 for (_,plane) in planes {
-                    plane.tick()
+                    plane.tick(clock: clock)
                     
                     if plane.updated {
                         planeDisplay.updatePlane(plane: plane)
@@ -181,12 +195,7 @@ class DefaultGameManager : GameManager {
                 }
             }
             
-            // every 7s the game clock advances
-            if ticks % 70 == 0 {
-                gameClock += 1
-                print("clock: \(gameClock)")
-                scoreDisplay.overWrite(string: "\(gameClock)", row: 0, col: 6)
-            }
+
         }
     }
     

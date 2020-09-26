@@ -42,6 +42,7 @@ class Plane: BaseGameObject {
     var turning = false
     var updated = true
     var ignore = false
+    var changingAltitude = false
     
     let boardScale: Int
     
@@ -71,7 +72,7 @@ class Plane: BaseGameObject {
         planeSprite.zPosition = G.ZPos.plane
         planeSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         
-        planeLabel = SKLabelNode(fontNamed: "Andale Mono 14.0")
+        planeLabel = SKLabelNode(fontNamed: "Andale Mono")
         
         super.init(identifier: identifier, locX: x, locY: y)
         
@@ -90,6 +91,8 @@ class Plane: BaseGameObject {
     }
     
     func queueCommand(_ cmd: Command) {
+        print("plane command queued: \(cmd)")
+        
         if let alt = cmd as? AltitudeCommand {
             currentAltitudeCommand = alt
             updated = true
@@ -111,23 +114,24 @@ class Plane: BaseGameObject {
     }
     
     var ticks = 0
-    
-    // jet moves every 70 ticks, prop every 140
-    // command processed every tick
-    // alt every 7 ticks
-    func tick() {
+    func tick(clock: Bool) {
         ticks += 1
-        handleCommand()
-        updateAltitude()
         
-        if ticks % 1 == 0 {
+        print("plane tick:\(ticks)")
+   
+//        if clock {
+            startCommands()
+//        }
+        updateAltitude()
+ 
+        if ticks % 2 == 0 {
             if planeType == G.GameObjectType.JET {
                 movePlane()
                 updateDirection()
             }
         }
         
-        if ticks % 2 == 0 {
+        if ticks % 4 == 0 {
             if planeType == G.GameObjectType.PROP {
                 movePlane()
                 updateDirection()
@@ -160,7 +164,8 @@ class Plane: BaseGameObject {
         planeLabel.position = CGPoint(x: CGFloat(xVal+50), y: CGFloat(yVal+30))
     }
     
-    func handleCommand() {
+    // start any queued commands
+    func startCommands() {
         if let alt = currentAltitudeCommand {
             handleAltitudeCommand(alt)
         }
@@ -171,6 +176,8 @@ class Plane: BaseGameObject {
     }
     
     func handleTurnCommand(_ trn: TurnCommand) {
+        print("plane start turn")
+        
         if trn.towards {
             // TODO
         } else {
@@ -203,6 +210,8 @@ class Plane: BaseGameObject {
     }
     
     func handleAltitudeCommand(_ alt: AltitudeCommand) {
+        print("plane start alt adjust")
+        
         if alt.climb {
             self.desiredAltitude = currentAltitude + alt.desiredAltitude!
         } else if alt.descend {
@@ -243,6 +252,7 @@ class Plane: BaseGameObject {
     }
     
     func updateAltitude() {
+   
         if desiredAltitude == currentAltitude {
             flightLevel = G.FlightLevel.STABLE
             return
@@ -259,6 +269,7 @@ class Plane: BaseGameObject {
         planeLabel.text = "\(ident)\(currentAltitude)"
         updated = true
         print("plane \(ident) altitude changed to: \(currentAltitude)")
+        
     }
     
     func updateDirection() {

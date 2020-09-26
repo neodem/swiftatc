@@ -132,7 +132,7 @@ class Exit : BaseGameObject {
         gateLine.anchorPoint = CGPoint(x: 0.5, y: 1)
         gateLine.position = CGPoint(x: CGFloat(xOrigin), y: CGFloat(yOrigin))
         
-        exitLabel = SKLabelNode(fontNamed: "Andale Mono 14.0")
+        exitLabel = SKLabelNode(fontNamed: "Andale Mono")
         exitLabel.text = "\(ident)"
         exitLabel.fontColor = NSColor.white
         exitLabel.alpha = labelAlpha
