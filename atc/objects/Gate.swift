@@ -12,9 +12,9 @@ class Gate {
     
     let gateSprite: SKSpriteNode
     
-    init(len: Double, cutoff: Double, alpha: CGFloat, rotation: CGFloat, x: CGFloat, y: CGFloat) {
+    init(len: Float, cutoff: Float, alpha: CGFloat, rotation: CGFloat, x: CGFloat, y: CGFloat) {
         let gateLength = len * cutoff
-        gateSprite = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: gateLength))
+        gateSprite = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: Double(gateLength)))
         gateSprite.colorBlendFactor = 1.0
         gateSprite.alpha = alpha
         gateSprite.zRotation = rotation

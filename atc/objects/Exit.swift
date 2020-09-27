@@ -17,8 +17,12 @@ class Exit : BaseGameObject {
     
     
     // todo these may change based on gridScale
-    let gateOffset: Int = 25
+    let gateOffset: Float = 25
     let exitBoundOffset: Float = 5
+    
+    let gateAlpha: CGFloat = 1.0
+    let lineAlpha: CGFloat = 0.2
+    let labelAlpha: CGFloat = 0.4
     
     let leftXloc: Float
     let leftYloc: Float
@@ -38,13 +42,9 @@ class Exit : BaseGameObject {
         
         let (xOrigin, yOrigin) = Grid.convertToRadarCoords(gridX: x,gridY: y, gridScale: gridScale)
         
-        let gateLen: Double = 30
-        var gateCutoff = 1.0
-        
-        let gateAlpha: CGFloat = 1.0
-        let lineAlpha: CGFloat = 0.2
-        let labelAlpha: CGFloat = 0.5
-        
+//        let gateLen: Double = 30
+        var gateCutoff: Float = 1.0
+                
         var labelXloc: Float
         var labelYloc: Float
         
@@ -55,8 +55,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin
             rightXloc = xOrigin + Float(gateOffset)
             rightYloc = yOrigin
-            labelXloc = xOrigin - 60
-            labelYloc = yOrigin - 15
+            labelXloc = xOrigin
+            labelYloc = yOrigin - 30
             exitBoundXMin = Float(x) - exitBoundOffset
             exitBoundXMax = Float(x) + exitBoundOffset
             exitBoundYMin = Float(y) - exitBoundOffset
@@ -67,8 +67,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin
             rightXloc = xOrigin
             rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin - 75
-            labelYloc = yOrigin - 15
+            labelXloc = xOrigin - 30
+            labelYloc = yOrigin - 30
             gateCutoff = 2/3
             exitBoundXMin = Float(x)
             exitBoundXMax = Float(x) + exitBoundOffset
@@ -80,8 +80,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin + Float(gateOffset)
             rightXloc = xOrigin
             rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin - 15
-            labelYloc = yOrigin + 60
+            labelXloc = xOrigin - 30
+            labelYloc = yOrigin
             exitBoundXMin = Float(x) - exitBoundOffset
             exitBoundXMax = Float(x)
             exitBoundYMin = Float(y) - exitBoundOffset
@@ -92,8 +92,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin
             rightXloc = xOrigin
             rightYloc = yOrigin + Float(gateOffset)
-            labelXloc = xOrigin - 15
-            labelYloc = yOrigin + 75
+            labelXloc = xOrigin - 30
+            labelYloc = yOrigin + 30
             gateCutoff = 2/3
             exitBoundXMin = Float(x)
             exitBoundXMax = Float(x) + exitBoundOffset
@@ -105,8 +105,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin
             rightXloc = xOrigin + Float(gateOffset)
             rightYloc = yOrigin
-            labelXloc = xOrigin - 60
-            labelYloc = yOrigin + 5
+            labelXloc = xOrigin
+            labelYloc = yOrigin + 30
             exitBoundXMin = Float(x) - exitBoundOffset
             exitBoundXMax = Float(x) + exitBoundOffset
             exitBoundYMin = Float(y)
@@ -117,8 +117,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin + Float(gateOffset)
             rightXloc = xOrigin + Float(gateOffset)
             rightYloc = yOrigin
-            labelXloc = xOrigin + 15
-            labelYloc = yOrigin + 75
+            labelXloc = xOrigin + 30
+            labelYloc = yOrigin + 30
             gateCutoff = 2/3
             exitBoundXMin = Float(x)
             exitBoundXMax = Float(x) + exitBoundOffset
@@ -130,8 +130,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin + Float(gateOffset)
             rightXloc = xOrigin
             rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin + 15
-            labelYloc = yOrigin + 60
+            labelXloc = xOrigin + 30
+            labelYloc = yOrigin
             exitBoundXMin = Float(x)
             exitBoundXMax = Float(x) + exitBoundOffset
             exitBoundYMin = Float(y) - exitBoundOffset
@@ -142,8 +142,8 @@ class Exit : BaseGameObject {
             leftYloc = yOrigin - Float(gateOffset)
             rightXloc = xOrigin + Float(gateOffset)
             rightYloc = yOrigin
-            labelXloc = xOrigin + 75
-            labelYloc = yOrigin - 15
+            labelXloc = xOrigin + 30
+            labelYloc = yOrigin - 30
             gateCutoff = 2/3
             exitBoundXMin = Float(x)
             exitBoundXMax = Float(x) + exitBoundOffset
@@ -151,8 +151,8 @@ class Exit : BaseGameObject {
             exitBoundYMax = Float(y) + exitBoundOffset
         }
         
-        leftGate = Gate(len: gateLen, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(leftXloc), y: CGFloat(leftYloc)).gateSprite
-        rightGate = Gate(len: gateLen, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(rightXloc), y: CGFloat(rightYloc)).gateSprite
+        leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(leftXloc), y: CGFloat(leftYloc)).gateSprite
+        rightGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(rightXloc), y: CGFloat(rightYloc)).gateSprite
         
         gateLine = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: 100))
         gateLine.colorBlendFactor = 1.0
@@ -164,9 +164,10 @@ class Exit : BaseGameObject {
         
         exitLabel = SKLabelNode(fontNamed: "Andale Mono")
         exitLabel.text = "\(ident)"
-        exitLabel.fontColor = NSColor.white
+        exitLabel.fontColor = NSColor.systemGreen
         exitLabel.alpha = labelAlpha
-        exitLabel.fontSize = 14
+        exitLabel.fontSize = 34
+        exitLabel.zRotation = gateRotation
         exitLabel.zPosition = G.ZPos.exit
         exitLabel.position = CGPoint(x: CGFloat(labelXloc), y: CGFloat(labelYloc))
         
