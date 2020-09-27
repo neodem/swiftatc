@@ -76,7 +76,7 @@ class Plane: BaseGameObject {
         planeSprite.colorBlendFactor = 1.0
         planeSprite.alpha = 1.0
         planeSprite.zPosition = G.ZPos.plane
-        planeSprite.anchorPoint = CGPoint(x: 0.0, y: 0.0)
+        planeSprite.anchorPoint = CGPoint(x: 0.22, y: 0.0)
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono")
         

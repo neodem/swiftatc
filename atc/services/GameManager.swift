@@ -99,10 +99,10 @@ class DefaultGameManager : GameManager {
     func setupTest() {
         
         // test dots for radar bounds
-        drawDot(x: G.Radar.xMin, y: G.Radar.yMin, scene: scene!, color: NSColor.systemYellow)
-        drawDot(x: G.Radar.xMin, y: G.Radar.yMax, scene: scene!, color: NSColor.systemYellow)
-        drawDot(x: G.Radar.xMax, y: G.Radar.yMin, scene: scene!, color: NSColor.systemYellow)
-        drawDot(x: G.Radar.xMax, y: G.Radar.yMax, scene: scene!, color: NSColor.systemYellow)
+//        drawDot(x: G.Radar.xMin, y: G.Radar.yMin, scene: scene!, color: NSColor.systemYellow)
+//        drawDot(x: G.Radar.xMin, y: G.Radar.yMax, scene: scene!, color: NSColor.systemYellow)
+//        drawDot(x: G.Radar.xMax, y: G.Radar.yMin, scene: scene!, color: NSColor.systemYellow)
+//        drawDot(x: G.Radar.xMax, y: G.Radar.yMax, scene: scene!, color: NSColor.systemYellow)
         
         self.boardScale = 150
         
@@ -148,7 +148,7 @@ class DefaultGameManager : GameManager {
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        let fakePlane = Plane(type: planeType, heading: Direction.SW, identifier: ident, flying: true, x: boardScale, y: boardScale, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "8")
+        let fakePlane = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, x: boardScale/2, y: boardScale-20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "8")
         
         fakePlane.initialize(scene: scene!)
         planes[fakePlane.ident] = fakePlane
