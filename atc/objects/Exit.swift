@@ -15,144 +15,119 @@ class Exit : BaseGameObject {
     let rightGate: SKSpriteNode
     let exitLabel: SKLabelNode
     
-    
     // todo these may change based on gridScale
     let gateOffset: Float = 25
     let exitBoundOffset: Float = 5
+    let labelOffset: Float = 30
     
     let gateAlpha: CGFloat = 1.0
     let lineAlpha: CGFloat = 0.2
     let labelAlpha: CGFloat = 0.4
     
-    let leftXloc: Float
-    let leftYloc: Float
-    
-    let rightXloc: Float
-    let rightYloc: Float
-    
-    let gateRotation: CGFloat
-    
-    let exitBoundXMin: Float
-    let exitBoundXMax: Float
-    let exitBoundYMin: Float
-    let exitBoundYMax: Float
+    let boundingBox : Box
     
     // outbound direction of the exit is `direction`
     init(ident: Character, x: Int, y: Int, direction: Direction, gridScale: Int) {
         
         let (xOrigin, yOrigin) = Grid.convertToRadarCoords(gridX: x,gridY: y, gridScale: gridScale)
         
-//        let gateLen: Double = 30
+        // the origins of the Left/Right Gates
+        let leftGateX: Float
+        let leftGateY: Float
+        let rightGateX: Float
+        let rightGateY: Float
+        
+        // the rotation of the gates
+        let gateRotation: CGFloat
+        
+        // the cutoff factor of the gate lines (relevant in the Diagnal exits)
         var gateCutoff: Float = 1.0
                 
+        // label location
         var labelXloc: Float
         var labelYloc: Float
         
         switch direction {
         case Direction.N:
             gateRotation = 0
-            leftXloc = xOrigin - Float(gateOffset)
-            leftYloc = yOrigin
-            rightXloc = xOrigin + Float(gateOffset)
-            rightYloc = yOrigin
+            leftGateX = xOrigin - gateOffset
+            leftGateY = yOrigin
+            rightGateX = xOrigin + gateOffset
+            rightGateY = yOrigin
             labelXloc = xOrigin
-            labelYloc = yOrigin - 30
-            exitBoundXMin = Float(x) - exitBoundOffset
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y)
+            labelYloc = yOrigin - labelOffset
+            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin, x2: xOrigin + gateOffset, y2: yOrigin-gateOffset)
         case Direction.NE:
             gateRotation = 7 * .pi / 4
-            leftXloc = xOrigin - Float(gateOffset)
-            leftYloc = yOrigin
-            rightXloc = xOrigin
-            rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin - 30
-            labelYloc = yOrigin - 30
+            leftGateX = xOrigin - gateOffset
+            leftGateY = yOrigin
+            rightGateX = xOrigin
+            rightGateY = yOrigin - gateOffset
+            labelXloc = xOrigin - labelOffset
+            labelYloc = yOrigin - labelOffset
             gateCutoff = 2/3
-            exitBoundXMin = Float(x)
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin, x2: xOrigin + gateOffset, y2: yOrigin-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
         case Direction.E:
             gateRotation = .pi * 3 / 2
-            leftXloc = xOrigin
-            leftYloc = yOrigin + Float(gateOffset)
-            rightXloc = xOrigin
-            rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin - 30
+            leftGateX = xOrigin
+            leftGateY = yOrigin + gateOffset
+            rightGateX = xOrigin
+            rightGateY = yOrigin - gateOffset
+            labelXloc = xOrigin - labelOffset
             labelYloc = yOrigin
-            exitBoundXMin = Float(x) - exitBoundOffset
-            exitBoundXMax = Float(x)
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin + gateOffset, x2: xOrigin, y2: yOrigin - gateOffset)
         case Direction.SE:
             gateRotation = 5 * .pi / 4
-            leftXloc = xOrigin - Float(gateOffset)
-            leftYloc = yOrigin
-            rightXloc = xOrigin
-            rightYloc = yOrigin + Float(gateOffset)
-            labelXloc = xOrigin - 30
-            labelYloc = yOrigin + 30
+            leftGateX = xOrigin - gateOffset
+            leftGateY = yOrigin
+            rightGateX = xOrigin
+            rightGateY = yOrigin + gateOffset
+            labelXloc = xOrigin - labelOffset
+            labelYloc = yOrigin + labelOffset
             gateCutoff = 2/3
-            exitBoundXMin = Float(x)
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
         case Direction.S:
             gateRotation = .pi
-            leftXloc = xOrigin - Float(gateOffset)
-            leftYloc = yOrigin
-            rightXloc = xOrigin + Float(gateOffset)
-            rightYloc = yOrigin
+            leftGateX = xOrigin - gateOffset
+            leftGateY = yOrigin
+            rightGateX = xOrigin + gateOffset
+            rightGateY = yOrigin
             labelXloc = xOrigin
-            labelYloc = yOrigin + 30
-            exitBoundXMin = Float(x) - exitBoundOffset
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y)
-            exitBoundYMax = Float(y) + exitBoundOffset
+            labelYloc = yOrigin + labelOffset
+            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin + gateOffset, x2: xOrigin + gateOffset, y2: yOrigin)
         case Direction.SW:
             gateRotation = 3 * .pi / 4
-            leftXloc = xOrigin
-            leftYloc = yOrigin + Float(gateOffset)
-            rightXloc = xOrigin + Float(gateOffset)
-            rightYloc = yOrigin
-            labelXloc = xOrigin + 30
-            labelYloc = yOrigin + 30
+            leftGateX = xOrigin
+            leftGateY = yOrigin + gateOffset
+            rightGateX = xOrigin + gateOffset
+            rightGateY = yOrigin
+            labelXloc = xOrigin + labelOffset
+            labelYloc = yOrigin + labelOffset
             gateCutoff = 2/3
-            exitBoundXMin = Float(x)
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
         case Direction.W:
             gateRotation = .pi / 2
-            leftXloc = xOrigin
-            leftYloc = yOrigin + Float(gateOffset)
-            rightXloc = xOrigin
-            rightYloc = yOrigin - Float(gateOffset)
-            labelXloc = xOrigin + 30
+            leftGateX = xOrigin
+            leftGateY = yOrigin + gateOffset
+            rightGateX = xOrigin
+            rightGateY = yOrigin - gateOffset
+            labelXloc = xOrigin + labelOffset
             labelYloc = yOrigin
-            exitBoundXMin = Float(x)
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: xOrigin, y1: yOrigin + gateOffset, x2: xOrigin + gateOffset, y2: yOrigin - gateOffset)
         case Direction.NW:
             gateRotation = .pi / 4
-            leftXloc = xOrigin
-            leftYloc = yOrigin - Float(gateOffset)
-            rightXloc = xOrigin + Float(gateOffset)
-            rightYloc = yOrigin
-            labelXloc = xOrigin + 30
-            labelYloc = yOrigin - 30
+            leftGateX = xOrigin
+            leftGateY = yOrigin - gateOffset
+            rightGateX = xOrigin + gateOffset
+            rightGateY = yOrigin
+            labelXloc = xOrigin + labelOffset
+            labelYloc = yOrigin - labelOffset
             gateCutoff = 2/3
-            exitBoundXMin = Float(x)
-            exitBoundXMax = Float(x) + exitBoundOffset
-            exitBoundYMin = Float(y) - exitBoundOffset
-            exitBoundYMax = Float(y) + exitBoundOffset
+            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
         }
         
-        leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(leftXloc), y: CGFloat(leftYloc)).gateSprite
-        rightGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(rightXloc), y: CGFloat(rightYloc)).gateSprite
+        leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(leftGateX), y: CGFloat(leftGateY)).gateSprite
+        rightGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(rightGateX), y: CGFloat(rightGateY)).gateSprite
         
         gateLine = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: 100))
         gateLine.colorBlendFactor = 1.0
