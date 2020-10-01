@@ -77,6 +77,7 @@ class Plane: BaseGameObject {
         planeSprite.alpha = 1.0
         planeSprite.zPosition = G.ZPos.plane
         planeSprite.anchorPoint = CGPoint(x: 0.22, y: 0.0)
+        planeSprite.physicsBody?.categoryBitMask = PhysicsCategory.plane.rawValue
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono")
         

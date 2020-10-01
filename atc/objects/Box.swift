@@ -8,28 +8,32 @@
 
 // a bounding box
 
+import SpriteKit
+
 class Box {
     
+    let boxSprite: SKSpriteNode
+    
     // top left
-    let x1: Float
-    let y1: Float
+    let x1: CGFloat
+    let y1: CGFloat
     
     // bottom right
-    let x2: Float
-    let y2: Float
+    let x2: CGFloat
+    let y2: CGFloat
     
     // bottom left
-    let x3: Float
-    let y3: Float
+    let x3: CGFloat
+    let y3: CGFloat
     
     // bottom right
-    let x4: Float
-    let y4: Float
+    let x4: CGFloat
+    let y4: CGFloat
     
     let rect: Bool
     
     // init with 2 points for rectangle
-    init(x1: Float, y1: Float, x2: Float, y2: Float) {
+    init(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) {
         rect = true
         if x1 < x2 {
             self.x1 = x1
@@ -53,10 +57,23 @@ class Box {
             self.y4 = y2
         }
         
+        boxSprite = SKSpriteNode()
+        let path = CGMutablePath()
+        path.addLines(between: [
+            CGPoint(x: x1, y: y1),
+            CGPoint(x: x2, y: y2),
+            CGPoint(x: x3, y: y3),
+            CGPoint(x: x4, y: x4),
+            CGPoint(x: x1, y: y1)
+        ])
+        path.closeSubpath()
+        boxSprite.physicsBody = SKPhysicsBody(polygonFrom: path)
+        boxSprite.physicsBody?.categoryBitMask = PhysicsCategory.exit.rawValue
+        
     }
     
     // init with the four points for non-rectangular
-    init(x1: Float, y1: Float, x2: Float, y2: Float, x3: Float, y3: Float, x4: Float, y4: Float) {
+    init(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat, x3: CGFloat, y3: CGFloat, x4: CGFloat, y4: CGFloat) {
         rect = false
         self.x1 = x1
         self.y1 = y1
@@ -66,6 +83,19 @@ class Box {
         self.y3 = y3
         self.x4 = x4
         self.y4 = y4
+        
+        boxSprite = SKSpriteNode()
+        let path = CGMutablePath()
+        path.addLines(between: [
+            CGPoint(x: x1, y: y1),
+            CGPoint(x: x2, y: y2),
+            CGPoint(x: x3, y: y3),
+            CGPoint(x: x4, y: x4),
+            CGPoint(x: x1, y: y1)
+        ])
+        path.closeSubpath()
+        boxSprite.physicsBody = SKPhysicsBody(polygonFrom: path)
+        boxSprite.physicsBody?.categoryBitMask = PhysicsCategory.exit.rawValue
     }
     
     func isInside(x: Float, y: Float) -> Bool {

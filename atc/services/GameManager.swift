@@ -205,7 +205,7 @@ class DefaultGameManager : GameManager {
                         //TODO not implemented yet
                     } else if destination == G.Destination.Exit {
                         if let exit = exits[destinationId] {
-                            if exit.inExit(x: plane.locationX, y: plane.locationY) {
+                            if exit.inExit(sprite: plane.planeSprite) {
                                 if plane.currentAltitude == 9000 {
                                     print("plane \(plane.ident) exited")
                                     safe += 1

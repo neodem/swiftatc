@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let gameManager = DefaultGameManager()
     var lastFrameTime = TimeInterval(0)
@@ -16,6 +16,29 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
         gameManager.initialize(scene: self)
+        self.physicsWorld.contactDelegate = self
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        // the only thing that moves is a plane. Lets see what it collided with
+        let otherBody: SKPhysicsBody
+        if (contact.bodyA.categoryBitMask & PhysicsCategory.plane.rawValue) > 0 {
+            otherBody = contact.bodyB
+        } else {
+            otherBody = contact.bodyA
+        }
+        switch otherBody.categoryBitMask {
+        case PhysicsCategory.exit.rawValue:
+            print("hit an exit")
+        case PhysicsCategory.airport.rawValue:
+            print("hit an airport")
+        case PhysicsCategory.beacon.rawValue:
+            print("hit an beacon")
+        case PhysicsCategory.exit.rawValue:
+            print("hit an exit")
+        default:
+            print("contact with no game logic")
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -34,14 +57,14 @@ class GameScene: SKScene {
     override func didFinishUpdate() {
         Keyboard.instance.update()
     }
-
+    
     override func keyUp(with event: NSEvent) {
-//        print("keyUp: \(event)")
+        //        print("keyUp: \(event)")
         Keyboard.instance.handleKey(event: event, isDown: false)
     }
     
     override func keyDown(with event: NSEvent) {
-//        print("keyDown: \(event)")
+        //        print("keyDown: \(event)")
         Keyboard.instance.handleKey(event: event, isDown: true)
     }
 }

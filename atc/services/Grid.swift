@@ -6,12 +6,14 @@
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
 
+import SpriteKit
+
 class Grid {
     
-    static func convertToRadarCoords(gridX: Int, gridY: Int, gridScale: Int) -> (radarX: Float, radarY: Float) {
+    static func convertToRadarCoords(gridX: Int, gridY: Int, gridScale: Int) -> (radarX: CGFloat, radarY: CGFloat) {
         // translate x,y into the xVal and yVal for radar screen
-        let xOrigin = ((G.Radar.xMax - G.Radar.xMin) * (Float(gridX) / Float(gridScale))) + G.Radar.xMin
-        let yOrigin = ((G.Radar.yMax - G.Radar.yMin) * (Float(gridY) / Float(gridScale))) + G.Radar.yMin
+        let xOrigin = ((G.Radar.xMax - G.Radar.xMin) * (CGFloat(gridX) / CGFloat(gridScale))) + G.Radar.xMin
+        let yOrigin = ((G.Radar.yMax - G.Radar.yMin) * (CGFloat(gridY) / CGFloat(gridScale))) + G.Radar.yMin
         
         return (radarX: xOrigin, radarY: yOrigin)
     }

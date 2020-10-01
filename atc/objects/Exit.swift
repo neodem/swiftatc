@@ -16,9 +16,9 @@ class Exit : BaseGameObject {
     let exitLabel: SKLabelNode
     
     // todo these may change based on gridScale
-    let gateOffset: Float = 25
-    let exitBoundOffset: Float = 5
-    let labelOffset: Float = 30
+    let gateOffset: CGFloat = 25
+    let exitBoundOffset: CGFloat = 5
+    let labelOffset: CGFloat = 30
     
     let gateAlpha: CGFloat = 1.0
     let lineAlpha: CGFloat = 0.2
@@ -32,20 +32,20 @@ class Exit : BaseGameObject {
         let (xOrigin, yOrigin) = Grid.convertToRadarCoords(gridX: x,gridY: y, gridScale: gridScale)
         
         // the origins of the Left/Right Gates
-        let leftGateX: Float
-        let leftGateY: Float
-        let rightGateX: Float
-        let rightGateY: Float
+        let leftGateX: CGFloat
+        let leftGateY: CGFloat
+        let rightGateX: CGFloat
+        let rightGateY: CGFloat
         
         // the rotation of the gates
         let gateRotation: CGFloat
         
         // the cutoff factor of the gate lines (relevant in the Diagnal exits)
-        var gateCutoff: Float = 1.0
+        var gateCutoff: CGFloat = 1.0
                 
         // label location
-        var labelXloc: Float
-        var labelYloc: Float
+        var labelXloc: CGFloat
+        var labelYloc: CGFloat
         
         switch direction {
         case Direction.N:
@@ -126,8 +126,8 @@ class Exit : BaseGameObject {
             boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
         }
         
-        leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(leftGateX), y: CGFloat(leftGateY)).gateSprite
-        rightGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: CGFloat(rightGateX), y: CGFloat(rightGateY)).gateSprite
+        leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: leftGateX, y: leftGateY).gateSprite
+        rightGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: rightGateX, y: rightGateY).gateSprite
         
         gateLine = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 1, height: 100))
         gateLine.colorBlendFactor = 1.0
@@ -157,7 +157,7 @@ class Exit : BaseGameObject {
         scene.addChild(exitLabel)
     }
     
-    func inExit(x: Int, y: Int) -> Bool {
+    func inExit(sprite: SKNode) -> Bool {
       //  print("checking exit bounds : \(ident) \(x),\(y) against \(exitBoundXMin) \(exitBoundXMax) \(exitBoundYMin) \(exitBoundYMax)")
         // todo compute bounding box with angles
      //   return x >= exitBoundXMin && x <= exitBoundXMax && y >= exitBoundYMin && y <= exitBoundYMax

@@ -8,6 +8,14 @@
 
 import SpriteKit
 
+enum PhysicsCategory: UInt32 {
+    case plane = 1
+    case border = 2
+    case airport = 4
+    case exit = 8
+    case beacon = 16
+}
+
 struct G {
     
     enum GameObjectType : CaseIterable {
@@ -47,10 +55,10 @@ struct G {
     }
     
     struct Radar {
-        static let xMin: Float = 70
-        static let xMax: Float = 910
-        static let yMin: Float = 290
-        static let yMax: Float = 1130
+        static let xMin: CGFloat = 70
+        static let xMax: CGFloat = 910
+        static let yMin: CGFloat = 290
+        static let yMax: CGFloat = 1130
     }
     
     struct ZPos {
