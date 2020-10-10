@@ -15,8 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
-        gameManager.initialize(scene: self)
         self.physicsWorld.contactDelegate = self
+        gameManager.initialize(scene: self)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

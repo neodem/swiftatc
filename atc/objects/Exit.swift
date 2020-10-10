@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Exit : BaseGameObject {
+class Exit : BaseSceneAware {
     
     let gateLine: SKSpriteNode
     let leftGate: SKSpriteNode
@@ -24,12 +24,16 @@ class Exit : BaseGameObject {
     let lineAlpha: CGFloat = 0.2
     let labelAlpha: CGFloat = 0.4
     
-    let boundingBox : Box
+    let boundingBox : BoundingBox
+    
+    let ident: Character
     
     // outbound direction of the exit is `direction`
-    init(ident: Character, x: Int, y: Int, direction: Direction, gridScale: Int) {
+    init(ident: Character, boardX: Int, boardY: Int, direction: Direction, gridScale: Int) {
         
-        let (xOrigin, yOrigin) = Grid.convertToRadarCoords(gridX: x,gridY: y, gridScale: gridScale)
+        self.ident = ident
+        
+        let (xOrigin, yOrigin) = Grid.convertToRadarCoords(gridX: boardX, gridY: boardY, gridScale: gridScale)
         
         // the origins of the Left/Right Gates
         let leftGateX: CGFloat
@@ -56,7 +60,10 @@ class Exit : BaseGameObject {
             rightGateY = yOrigin
             labelXloc = xOrigin
             labelYloc = yOrigin - labelOffset
-            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin, x2: xOrigin + gateOffset, y2: yOrigin-gateOffset)
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
         case Direction.NE:
             gateRotation = 7 * .pi / 4
             leftGateX = xOrigin - gateOffset
@@ -66,7 +73,12 @@ class Exit : BaseGameObject {
             labelXloc = xOrigin - labelOffset
             labelYloc = yOrigin - labelOffset
             gateCutoff = 2/3
-            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin, x2: xOrigin + gateOffset, y2: yOrigin-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
+            
+            //TODO fix this
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
         case Direction.E:
             gateRotation = .pi * 3 / 2
             leftGateX = xOrigin
@@ -75,8 +87,14 @@ class Exit : BaseGameObject {
             rightGateY = yOrigin - gateOffset
             labelXloc = xOrigin - labelOffset
             labelYloc = yOrigin
-            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin + gateOffset, x2: xOrigin, y2: yOrigin - gateOffset)
-        case Direction.SE:
+            
+            //TODO fix this
+             
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
+       case Direction.SE:
             gateRotation = 5 * .pi / 4
             leftGateX = xOrigin - gateOffset
             leftGateY = yOrigin
@@ -85,7 +103,12 @@ class Exit : BaseGameObject {
             labelXloc = xOrigin - labelOffset
             labelYloc = yOrigin + labelOffset
             gateCutoff = 2/3
-            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
+            
+            //TODO fix this
+             boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
         case Direction.S:
             gateRotation = .pi
             leftGateX = xOrigin - gateOffset
@@ -94,7 +117,14 @@ class Exit : BaseGameObject {
             rightGateY = yOrigin
             labelXloc = xOrigin
             labelYloc = yOrigin + labelOffset
-            boundingBox = Box(x1: xOrigin - gateOffset, y1: yOrigin + gateOffset, x2: xOrigin + gateOffset, y2: yOrigin)
+            
+            //TODO fix this
+             
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
+            
         case Direction.SW:
             gateRotation = 3 * .pi / 4
             leftGateX = xOrigin
@@ -104,7 +134,12 @@ class Exit : BaseGameObject {
             labelXloc = xOrigin + labelOffset
             labelYloc = yOrigin + labelOffset
             gateCutoff = 2/3
-            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
+            
+            //TODO fix this
+             boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
         case Direction.W:
             gateRotation = .pi / 2
             leftGateX = xOrigin
@@ -113,7 +148,14 @@ class Exit : BaseGameObject {
             rightGateY = yOrigin - gateOffset
             labelXloc = xOrigin + labelOffset
             labelYloc = yOrigin
-            boundingBox = Box(x1: xOrigin, y1: yOrigin + gateOffset, x2: xOrigin + gateOffset, y2: yOrigin - gateOffset)
+            
+            //TODO fix this
+             
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
+            
         case Direction.NW:
             gateRotation = .pi / 4
             leftGateX = xOrigin
@@ -123,7 +165,13 @@ class Exit : BaseGameObject {
             labelXloc = xOrigin + labelOffset
             labelYloc = yOrigin - labelOffset
             gateCutoff = 2/3
-            boundingBox = Box(x1: leftGateX, y1: leftGateY, x2: leftGateX, y2: leftGateY-gateOffset, x3: rightGateX, y3: leftGateY-gateOffset, x4: rightGateX, y4: leftGateY)
+            
+            //TODO fix this
+             
+            boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - gateOffset, y: yOrigin),
+                bottomRight: CGPoint(x: xOrigin + gateOffset, y: yOrigin-gateOffset)
+            )
         }
         
         leftGate = Gate(len: gateOffset, cutoff: gateCutoff, alpha: gateAlpha, rotation: gateRotation, x: leftGateX, y: leftGateY).gateSprite
@@ -135,7 +183,7 @@ class Exit : BaseGameObject {
         gateLine.zRotation = gateRotation
         gateLine.zPosition = G.ZPos.exit
         gateLine.anchorPoint = CGPoint(x: 0.5, y: 1)
-        gateLine.position = CGPoint(x: CGFloat(xOrigin), y: CGFloat(yOrigin))
+        gateLine.position = CGPoint(x: xOrigin, y: yOrigin)
         
         exitLabel = SKLabelNode(fontNamed: "Andale Mono")
         exitLabel.text = "\(ident)"
@@ -144,17 +192,17 @@ class Exit : BaseGameObject {
         exitLabel.fontSize = 34
         exitLabel.zRotation = gateRotation
         exitLabel.zPosition = G.ZPos.exit
-        exitLabel.position = CGPoint(x: CGFloat(labelXloc), y: CGFloat(labelYloc))
-        
-        super.init(identifier: ident, locX: x, locY: y)
+        exitLabel.position = CGPoint(x: labelXloc, y: labelYloc)
     }
     
-    override func initialize(scene: SKScene) {
-        super.initialize(scene: scene)
+    override func initializeScene(scene: SKScene) {
+        super.initializeScene(scene: scene)
         scene.addChild(gateLine)
         scene.addChild(leftGate)
         scene.addChild(rightGate)
         scene.addChild(exitLabel)
+        
+        boundingBox.initializeScene(scene: scene)
     }
     
     func inExit(sprite: SKNode) -> Bool {

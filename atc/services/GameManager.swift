@@ -109,50 +109,28 @@ class DefaultGameManager : GameManager {
         // load the board/game smarts
         
         // exits
-        let exit0 = Exit(ident: "0", x: boardScale/2, y: boardScale, direction: Direction.N, gridScale: boardScale)
-        exit0.initialize(scene: scene!)
-        exits["0"] = exit0
+        exits["0"] = Exit(ident: "0", boardX: boardScale/2, boardY: boardScale, direction: Direction.N, gridScale: boardScale)
+//        exits["1"] = Exit(ident: "1", boardX: boardScale, boardY: boardScale, direction: Direction.NE, gridScale: boardScale)
+//        exits["2"] = Exit(ident: "2", boardX: boardScale, boardY: boardScale/2, direction: Direction.E, gridScale: boardScale)
+//        exits["3"] = Exit(ident: "3", boardX: boardScale, boardY: 0, direction: Direction.SE, gridScale: boardScale)
+//        exits["4"] = Exit(ident: "4", boardX: boardScale/2, boardY: 0, direction: Direction.S, gridScale: boardScale)
+//        exits["5"] = Exit(ident: "5", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
+//        exits["6"] = Exit(ident: "6", boardX: 0, boardY: boardScale/2, direction: Direction.W, gridScale: boardScale)
+//        exits["7"] = Exit(ident: "7", boardX: 0, boardY: boardScale, direction: Direction.NW, gridScale: boardScale)
         
-        let exit1 = Exit(ident: "1", x: boardScale, y: boardScale, direction: Direction.NE, gridScale: boardScale)
-        exit1.initialize(scene: scene!)
-        exits["1"] = exit1
-        
-        let exit2 = Exit(ident: "2", x: boardScale, y: boardScale/2, direction: Direction.E, gridScale: boardScale)
-        exit2.initialize(scene: scene!)
-        exits["2"] = exit2
-        
-        let exit3 = Exit(ident: "3", x: boardScale, y: 0, direction: Direction.SE, gridScale: boardScale)
-        exit3.initialize(scene: scene!)
-        exits["3"] = exit3
-        
-        let exit4 = Exit(ident: "4", x: boardScale/2, y: 0, direction: Direction.S, gridScale: boardScale)
-        exit4.initialize(scene: scene!)
-        exits["4"] = exit4
-        
-        let exit5 = Exit(ident: "5", x: 0, y: 0, direction: Direction.SW, gridScale: boardScale)
-        exit5.initialize(scene: scene!)
-        exits["5"] = exit5
-        
-        let exit6 = Exit(ident: "6", x: 0, y: boardScale/2, direction: Direction.W, gridScale: boardScale)
-        exit6.initialize(scene: scene!)
-        exits["6"] = exit6
-        
-        let exit7 = Exit(ident: "7", x: 0, y: boardScale, direction: Direction.NW, gridScale: boardScale)
-        exit7.initialize(scene: scene!)
-        exits["7"] = exit7
-
-//        let exit8 = Exit(ident: "8", x: 135, y: boardScale, direction: Direction.N, gridScale: boardScale)
-//        exit8.initialize(scene: scene!)
-//        exits["8"] = exit8
+        for (_,exit) in exits {
+            exit.initializeScene(scene: scene!)
+        }
         
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        let fakePlane = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, x: boardScale/2, y: boardScale-20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "8")
+        planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale/2, startBoardY: boardScale-10, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "8")
         
-        fakePlane.initialize(scene: scene!)
-        planes[fakePlane.ident] = fakePlane
-        planeDisplay.addPlane(plane: fakePlane)
+        for (_,plane) in planes {
+            plane.initializeScene(scene: scene!)
+            planeDisplay.addPlane(plane: plane)
+        }
     }
     
     var ticks = 0

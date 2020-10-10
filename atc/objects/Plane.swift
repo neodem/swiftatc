@@ -15,7 +15,7 @@
 // an altitude change is set by `altDelta` which by default is 50' for prop, 100' for jet
 import SpriteKit
 
-class Plane: BaseGameObject {
+class Plane : BaseSceneAware {
     var initialSize: CGSize = CGSize(width: 28, height: 24)
     let textureAtlas: SKTextureAtlas = SKTextureAtlas(named: "planes")
     
@@ -38,6 +38,9 @@ class Plane: BaseGameObject {
     private var destination: G.Destination
     private var destinationId: Character
     
+    var boardLocX: Int
+    var boardLocY: Int
+    
     func getDestination() -> (G.Destination, Character) {
         return (destination, destinationId)
     }
@@ -50,7 +53,16 @@ class Plane: BaseGameObject {
     
     let boardScale: Int
     
-    init(type planeType: G.GameObjectType, heading: Direction, identifier: Character, flying: Bool, x: Int, y: Int, boardScale: Int, destination: G.Destination, destinationId: Character) {
+    let ident: Character
+    
+    /**
+            starttBoardX and startBoardY are the locations in board coordinates that the plane starts
+     */
+    init(type planeType: G.GameObjectType, heading: Direction, identifier: Character, flying: Bool, startBoardX: Int, startBoardY: Int, boardScale: Int, destination: G.Destination, destinationId: Character) {
+        
+        self.boardLocX = startBoardX
+        self.boardLocY = startBoardY
+        self.ident = identifier
         
         self.planeType = planeType
         self.flying = flying
@@ -72,29 +84,35 @@ class Plane: BaseGameObject {
         
         let planeTexture = textureAtlas.textureNamed("plane3")
         
-        planeSprite = SKSpriteNode(texture: planeTexture, color: planeColor, size: CGSize(width: 53, height: 26))
+        let planeSpriteSize = CGSize(width: 53, height: 26)
+        
+        planeSprite = SKSpriteNode(texture: planeTexture, color: planeColor, size: planeSpriteSize)
         planeSprite.colorBlendFactor = 1.0
         planeSprite.alpha = 1.0
         planeSprite.zPosition = G.ZPos.plane
         planeSprite.anchorPoint = CGPoint(x: 0.22, y: 0.0)
-        planeSprite.physicsBody?.categoryBitMask = PhysicsCategory.plane.rawValue
+        planeSprite.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        planeSprite.physicsBody!.affectedByGravity = false
+        planeSprite.physicsBody!.allowsRotation = false
+        planeSprite.physicsBody!.isDynamic = true
+        planeSprite.physicsBody!.categoryBitMask = PhysicsCategory.plane.rawValue
+        
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono")
-        
-        super.init(identifier: identifier, locX: x, locY: y)
-        
         planeLabel.text = "\(ident)\(currentAltitude)"
         planeLabel.fontColor = NSColor.white
         planeLabel.fontSize = 14
         planeLabel.zPosition = G.ZPos.plane
         
-        print("plane \(ident) starting at: \(locationX),\(locationY)")
+        print("plane \(ident) starting at: \(boardLocX),\(boardLocY)")
     }
     
-    override func initialize(scene: SKScene) {
-        super.initialize(scene: scene)
+    override func initializeScene(scene: SKScene) {
+        super.initializeScene(scene: scene)
         scene.addChild(planeSprite)
         scene.addChild(planeLabel)
+        
+
     }
     
     func queueCommand(_ cmd: Command) {
@@ -161,12 +179,12 @@ class Plane: BaseGameObject {
     }
     
     func redrawSprite() {
-        let (xVal, yVal) = Grid.convertToRadarCoords(gridX: locationX, gridY: locationY, gridScale: boardScale)
+        let (xVal, yVal) = Grid.convertToRadarCoords(gridX: boardLocX, gridY: boardLocY, gridScale: boardScale)
         
         //print("updatePlaneSprite \(sprite.ident): \(xVal), \(yVal)")
         
-        planeSprite.position = CGPoint(x: CGFloat(xVal), y: CGFloat(yVal))
-        planeLabel.position = CGPoint(x: CGFloat(xVal+50), y: CGFloat(yVal+30))
+        planeSprite.position = CGPoint(x: xVal, y: yVal)
+        planeLabel.position = CGPoint(x: xVal+50, y: yVal+30)
     }
     
     // start any queued commands
@@ -313,29 +331,29 @@ class Plane: BaseGameObject {
         if flying {
             switch currentHeading {
             case Direction.N:
-                locationY += 1
+                boardLocY += 1
             case Direction.S:
-                locationY -= 1
+                boardLocY -= 1
             case Direction.E:
-                locationX += 1
+                boardLocX += 1
             case Direction.W:
-                locationX -= 1
+                boardLocX -= 1
             case Direction.NE:
-                locationY += 1
-                locationX += 1
+                boardLocY += 1
+                boardLocX += 1
             case Direction.NW:
-                locationY += 1
-                locationX -= 1
+                boardLocY += 1
+                boardLocX -= 1
             case Direction.SE:
-                locationY -= 1
-                locationX += 1
+                boardLocY -= 1
+                boardLocX += 1
             case Direction.SW:
-                locationY -= 1
-                locationX -= 1
+                boardLocY -= 1
+                boardLocX -= 1
             }
             
             updated = true
-            print("plane \(ident) moved to: \(locationX),\(locationY)")
+            print("plane \(ident) moved to: \(boardLocX),\(boardLocY)")
         }
     }
 }
