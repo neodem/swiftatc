@@ -110,8 +110,8 @@ class DefaultGameManager : GameManager {
         
         // exits
         exits["0"] = Exit(ident: "0", boardX: boardScale/2, boardY: boardScale, direction: Direction.N, gridScale: boardScale)
-//        exits["1"] = Exit(ident: "1", boardX: boardScale, boardY: boardScale, direction: Direction.NE, gridScale: boardScale)
-//        exits["2"] = Exit(ident: "2", boardX: boardScale, boardY: boardScale/2, direction: Direction.E, gridScale: boardScale)
+    //    exits["1"] = Exit(ident: "1", boardX: boardScale, boardY: boardScale, direction: Direction.NE, gridScale: boardScale)
+        exits["2"] = Exit(ident: "2", boardX: boardScale, boardY: boardScale/2, direction: Direction.E, gridScale: boardScale)
 //        exits["3"] = Exit(ident: "3", boardX: boardScale, boardY: 0, direction: Direction.SE, gridScale: boardScale)
 //        exits["4"] = Exit(ident: "4", boardX: boardScale/2, boardY: 0, direction: Direction.S, gridScale: boardScale)
 //        exits["5"] = Exit(ident: "5", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
@@ -125,7 +125,7 @@ class DefaultGameManager : GameManager {
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale/2, startBoardY: boardScale-20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "0")
+        planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale/2, startBoardY: boardScale-20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "2")
         
         for (_,plane) in planes {
             plane.initializeScene(scene: scene!)
@@ -182,18 +182,27 @@ class DefaultGameManager : GameManager {
                     if destination == G.Destination.Airport {
                         //TODO not implemented yet
                     } else if destination == G.Destination.Exit {
-                        if let exit = exits[destinationId] {
+                        
+                        // check all exits (or we could check the destination exit and the radar bounds)
+                        for (ident,exit) in exits {
                             if exit.inExit(sprite: plane.planeSprite) {
-                                if plane.currentAltitude == 9000 {
-                                    print("plane \(plane.ident) exited")
-                                    safe += 1
-                                    scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
-                                    planeDisplay.removePlane(ident: plane.ident)
-                                    plane.planeSprite.removeFromParent()
-                                    plane.planeLabel.removeFromParent()
-                                    planes[plane.ident] = nil
+                                if ident == destinationId {
+                                    if plane.currentAltitude == 9000 {
+                                        print("plane \(plane.ident) exited")
+                                        safe += 1
+                                        scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
+                                        planeDisplay.removePlane(ident: plane.ident)
+                                        plane.planeSprite.removeFromParent()
+                                        plane.planeLabel.removeFromParent()
+                                        planes[plane.ident] = nil
+                                    } else {
+                                        let msg = "plane \(plane.ident) exited at an incorrect altitude: \(plane.currentAltitude)"
+                                        print(msg)
+                                        gameState = G.GameState.incorrectlyExited
+                                        commandDisplay.write(string: msg, row: 2)
+                                    }
                                 } else {
-                                    let msg = "plane \(plane.ident) exited at an incorrect altitude: \(plane.currentAltitude)"
+                                    let msg = "plane \(plane.ident) exited at the incorrect destination!"
                                     print(msg)
                                     gameState = G.GameState.incorrectlyExited
                                     commandDisplay.write(string: msg, row: 2)

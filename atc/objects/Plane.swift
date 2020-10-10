@@ -182,7 +182,7 @@ class Plane : BaseSceneAware {
         //print("updatePlaneSprite \(sprite.ident): \(xVal), \(yVal)")
         
         planeSprite.position = CGPoint(x: xVal, y: yVal)
-        planeLabel.position = CGPoint(x: xVal+50, y: yVal+30)
+        planeLabel.position = CGPoint(x: xVal+40, y: yVal+25)
     }
     
     // start any queued commands
