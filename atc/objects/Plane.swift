@@ -91,11 +91,11 @@ class Plane : BaseSceneAware {
         planeSprite.alpha = 1.0
         planeSprite.zPosition = G.ZPos.plane
         planeSprite.anchorPoint = CGPoint(x: 0.22, y: 0.0)
-        planeSprite.physicsBody = SKPhysicsBody(circleOfRadius: 10)
-        planeSprite.physicsBody!.affectedByGravity = false
-        planeSprite.physicsBody!.allowsRotation = false
-        planeSprite.physicsBody!.isDynamic = true
-        planeSprite.physicsBody!.categoryBitMask = PhysicsCategory.plane.rawValue
+//        planeSprite.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+//        planeSprite.physicsBody!.affectedByGravity = false
+//        planeSprite.physicsBody!.allowsRotation = false
+//        planeSprite.physicsBody!.isDynamic = false
+//        planeSprite.physicsBody!.categoryBitMask = PhysicsCategory.plane.rawValue
         
         
         planeLabel = SKLabelNode(fontNamed: "Andale Mono")
@@ -111,8 +111,6 @@ class Plane : BaseSceneAware {
         super.initializeScene(scene: scene)
         scene.addChild(planeSprite)
         scene.addChild(planeLabel)
-        
-
     }
     
     func queueCommand(_ cmd: Command) {
