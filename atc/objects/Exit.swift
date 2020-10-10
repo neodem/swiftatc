@@ -201,14 +201,9 @@ class Exit : BaseSceneAware {
         scene.addChild(leftGate)
         scene.addChild(rightGate)
         scene.addChild(exitLabel)
-        
-        boundingBox.initializeScene(scene: scene)
     }
     
     func inExit(sprite: SKNode) -> Bool {
-      //  print("checking exit bounds : \(ident) \(x),\(y) against \(exitBoundXMin) \(exitBoundXMax) \(exitBoundYMin) \(exitBoundYMax)")
-        // todo compute bounding box with angles
-     //   return x >= exitBoundXMin && x <= exitBoundXMax && y >= exitBoundYMin && y <= exitBoundYMax
-        return false
+        return boundingBox.isInside(point: sprite.position)
     }
 }

@@ -125,7 +125,7 @@ class DefaultGameManager : GameManager {
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
-        planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale/2, startBoardY: boardScale-10, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "8")
+        planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale/2, startBoardY: boardScale-20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "0")
         
         for (_,plane) in planes {
             plane.initializeScene(scene: scene!)
@@ -192,6 +192,11 @@ class DefaultGameManager : GameManager {
                                     plane.planeSprite.removeFromParent()
                                     plane.planeLabel.removeFromParent()
                                     planes[plane.ident] = nil
+                                } else {
+                                    let msg = "plane \(plane.ident) exited at an incorrect altitude: \(plane.currentAltitude)"
+                                    print(msg)
+                                    gameState = G.GameState.incorrectlyExited
+                                    commandDisplay.write(string: msg, row: 2)
                                 }
                             }
                         }

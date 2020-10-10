@@ -10,10 +10,8 @@
 
 import SpriteKit
 
-class BoundingBox : BaseSceneAware {
-    
-    let boxSprite: SKSpriteNode
-    
+class BoundingBox {
+
     let topLeft: CGPoint
     let topRight: CGPoint
     let bottomLeft: CGPoint
@@ -53,11 +51,6 @@ class BoundingBox : BaseSceneAware {
         self.init(topLeft: topLeft, topRight: CGPoint(x: bottomRight.x, y: topLeft.y), bottomLeft: CGPoint(x: topLeft.x, y: bottomRight.y), bottomRight: bottomRight)
     }
     
-    override func initializeScene(scene: SKScene) {
-        super.initializeScene(scene: scene)
-        scene.addChild(boxSprite)
-    }
-    
     func isInside(point: CGPoint) -> Bool {
         if rect {
             return isInsideRect(point: point)
@@ -65,19 +58,19 @@ class BoundingBox : BaseSceneAware {
         
         // else we need to ray cast
         let rayOrigin = CGPoint(x: xMin, y: 1 / point.y)
-        var intersections: Int
+        var intersections = 0
         
         if intersects(origin: rayOrigin, point: point, vertex1: topLeft, vertex2: topRight) {
-            intersections += 1
+            intersections = intersections + 1
         }
         if intersects(origin: rayOrigin, point: point, vertex1: topRight, vertex2: bottomRight) {
-            intersections += 1
+            intersections = intersections + 1
         }
         if intersects(origin: rayOrigin, point: point, vertex1: bottomRight, vertex2: bottomLeft) {
-            intersections += 1
+            intersections = intersections + 1
         }
         if intersects(origin: rayOrigin, point: point, vertex1: bottomLeft, vertex2: topLeft) {
-            intersections += 1
+            intersections = intersections + 1
         }
         
         return intersections % 2 != 0

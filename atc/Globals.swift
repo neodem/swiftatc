@@ -31,7 +31,7 @@ struct G {
     }
     
     enum GameState {
-        case active, preActive, crashed
+        case active, preActive, crashed, incorrectlyExited
     }
     
     struct PlaneDisplay {
