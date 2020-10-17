@@ -24,8 +24,8 @@ class DefaultIdentService: IdentService {
         nextIdent[G.GameObjectType.AIRPORT] = "0"
         nextIdent[G.GameObjectType.BEACON] = "0"
         nextIdent[G.GameObjectType.AIRWAY] = "0"
-        nextIdent[G.GameObjectType.JET] = "a"
-        nextIdent[G.GameObjectType.PROP] = "A"
+        nextIdent[G.GameObjectType.PLANE] = "A"
+//        nextIdent[G.GameObjectType.PROP] = "A"
         nextIdent[G.GameObjectType.DISPLAY] = "A"
     }
 
@@ -34,6 +34,7 @@ class DefaultIdentService: IdentService {
 
         var nextAscii = next.asciiValue! + 1
 
+        // handle rollovers
         if type == G.GameObjectType.AIRPORT || type == G.GameObjectType.BEACON || type == G.GameObjectType.AIRWAY {
             if nextAscii == 58 {
                 nextAscii = 48
@@ -43,6 +44,10 @@ class DefaultIdentService: IdentService {
                 nextAscii = 97
             }
         } else if type == G.GameObjectType.PROP {
+            if nextAscii == 91 {
+                nextAscii = 65
+            }
+        }else if type == G.GameObjectType.PLANE {
             if nextAscii == 91 {
                 nextAscii = 65
             }

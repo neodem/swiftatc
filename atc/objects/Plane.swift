@@ -50,6 +50,7 @@ class Plane: BaseSceneAware {
     var turning = false
     var updated = true
     var ignore = false
+    var immune = true
     var changingAltitude = false
 
     let boardScale: Int
@@ -141,6 +142,15 @@ class Plane: BaseSceneAware {
 
     func tick(clock: Bool) {
         ticks += 1
+
+        // all planes are immune in their first 10 clicks so they don't collide with the exit they
+        // are starting from
+        if ticks > 10 && planeType == G.GameObjectType.JET {
+            immune = false
+        }
+        if ticks > 20 && planeType == G.GameObjectType.PROP {
+            immune = false
+        }
 
 //        print("plane tick:\(ticks)")
 

@@ -16,10 +16,14 @@ enum PhysicsCategory: UInt32 {
     case beacon = 16
 }
 
+enum GameName {
+    case EASY, MEDIUM, HARD, KILLER, TEST
+}
+
 struct G {
 
     enum GameObjectType: CaseIterable {
-        case PROP, JET, AIRPORT, BEACON, AIRWAY, DISPLAY
+        case PROP, JET, AIRPORT, BEACON, AIRWAY, DISPLAY, PLANE
     }
 
     enum FlightLevel {

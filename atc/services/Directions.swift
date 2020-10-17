@@ -19,6 +19,10 @@ enum Direction: Int {
 
 extension Direction {
 
+    func opposite() -> Direction {
+        add(times: 4)
+    }
+
     // return the number of 45 degree turns clockwise to get to the other one
     func distance(to: Direction) -> Int {
         var from = self.rawValue
@@ -71,7 +75,7 @@ extension Direction {
 
     // will subtract 45 degrees (eg. counterclockwise)
     func sub() -> Direction {
-        return sub(times: 1)
+        sub(times: 1)
     }
 
     func sub(times: Int) -> Direction {

@@ -17,7 +17,7 @@ class DefaultGameManager: GameManager {
 
     let identService: IdentService
     var planes: [Character: Plane]
-    var exits: [Character: Exit]
+    var exits: [Int: Exit]
     var gameState: G.GameState
     var boardScale = 0
 
@@ -30,11 +30,21 @@ class DefaultGameManager: GameManager {
 
     var commandToDispatch: Command?
 
+    var ticks = 0
+    var gameClock = 0
+
+    var gameMode: GameName
+
+    var chanceOfNewPlane: Float = 0.0
+    var chanceOfStartingAtAirport: Float = 0.0
+
     init() {
         identService = DefaultIdentService()
         planes = [Character: Plane]()
-        exits = [Character: Exit]()
+        exits = [Int: Exit]()
         gameState = G.GameState.preActive
+
+        gameMode = GameName.EASY
 
         planeDisplay = PlaneDisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY), x: G.PlaneDisplay.x, y: G.PlaneDisplay.y - G.LetterSize.height, rows: 12, cols: 25)
         scoreDisplay = DisplayModule(ident: identService.getIdent(type: G.GameObjectType.DISPLAY), x: G.ScoreDisplay.x, y: G.ScoreDisplay.y - G.LetterSize.height, rows: 3, cols: 25)
@@ -51,7 +61,7 @@ class DefaultGameManager: GameManager {
 
         drawDisplay()
         initDisplayModules()
-        setupTest()
+        setupGame()
 
         gameState = G.GameState.active
     }
@@ -94,6 +104,19 @@ class DefaultGameManager: GameManager {
         scene.addChild(dot)
     }
 
+    func setupEasy() {
+        self.boardScale = 150
+        self.chanceOfNewPlane = 0.07
+        self.chanceOfStartingAtAirport = 0.20
+
+        // exits
+        exits[0] = Exit(ident: "0", boardX: 75, boardY: 150, direction: Direction.N, gridScale: boardScale)
+        exits[1] = Exit(ident: "1", boardX: 150, boardY: 150, direction: Direction.NE, gridScale: boardScale)
+        exits[2] = Exit(ident: "2", boardX: 125, boardY: 0, direction: Direction.SE, gridScale: boardScale)
+        exits[3] = Exit(ident: "3", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
+    }
+
+
     func setupTest() {
 
         // test dots for radar bounds
@@ -107,32 +130,21 @@ class DefaultGameManager: GameManager {
         // load the board/game smarts
 
         // exits
-        exits["0"] = Exit(ident: "0", boardX: boardScale / 2, boardY: boardScale, direction: Direction.N, gridScale: boardScale)
+        exits[0] = Exit(ident: "0", boardX: boardScale / 2, boardY: boardScale, direction: Direction.N, gridScale: boardScale)
         //    exits["1"] = Exit(ident: "1", boardX: boardScale, boardY: boardScale, direction: Direction.NE, gridScale: boardScale)
-        exits["2"] = Exit(ident: "2", boardX: boardScale, boardY: boardScale / 2, direction: Direction.E, gridScale: boardScale)
+        exits[2] = Exit(ident: "2", boardX: boardScale, boardY: boardScale / 2, direction: Direction.E, gridScale: boardScale)
 //        exits["3"] = Exit(ident: "3", boardX: boardScale, boardY: 0, direction: Direction.SE, gridScale: boardScale)
 //        exits["4"] = Exit(ident: "4", boardX: boardScale/2, boardY: 0, direction: Direction.S, gridScale: boardScale)
 //        exits["5"] = Exit(ident: "5", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
 //        exits["6"] = Exit(ident: "6", boardX: 0, boardY: boardScale/2, direction: Direction.W, gridScale: boardScale)
 //        exits["7"] = Exit(ident: "7", boardX: 0, boardY: boardScale, direction: Direction.NW, gridScale: boardScale)
 
-        for (_, exit) in exits {
-            exit.initializeScene(scene: scene!)
-        }
 
         // fake plane
         let planeType = G.GameObjectType.PROP
         let ident = identService.getIdent(type: planeType)
         planes[ident] = Plane(type: planeType, heading: Direction.N, identifier: ident, flying: true, startBoardX: boardScale / 2, startBoardY: boardScale - 20, boardScale: boardScale, destination: G.Destination.Exit, destinationId: "2")
-
-        for (_, plane) in planes {
-            plane.initializeScene(scene: scene!)
-            planeDisplay.addPlane(plane: plane)
-        }
     }
-
-    var ticks = 0
-    var gameClock = 0
 
     // called by GameScene every 0.1s
     func tick() {
@@ -141,80 +153,149 @@ class DefaultGameManager: GameManager {
 
         if gameState == G.GameState.active {
 
-            var clock = false
+            var advanceGameClock = false
 
             // every 5s the game clock advances
             if ticks % 50 == 0 {
                 gameClock += 1
-                clock = true
+                advanceGameClock = true
                 print("clock: \(gameClock)")
                 scoreDisplay.overWrite(string: "\(gameClock)", row: 0, col: 6)
+
+                if Float.random(in: 0..<1) < chanceOfNewPlane {
+                    addNewPlane()
+                }
             }
 
             // on every tick, if there is a command to dispatch, we send it to the plane's queue
-            if let cmd = commandToDispatch {
-                if let planeForCommand = planes[cmd.ident] {
-                    planeForCommand.queueCommand(cmd)
-                }
-
-                commandToDispatch = nil
-            }
+            dispatchCommand()
 
             // every 0.5s the the planes get a tick (1/10 of the game clock rate)
             if ticks % 5 == 0 {
-                for (_, plane) in planes {
-                    plane.tick(clock: clock)
-
-                    if plane.updated {
-                        planeDisplay.updatePlane(plane: plane)
-                        plane.updated = false
-                    }
-                }
+                movePlanes(advanceGameClock: advanceGameClock)
 
                 // after all planes moved, we check their state.. have they crashed? did they exit/land ok?
 
-                // lets see if they accomplised their goal. If so, we remove them and update the
+                // lets see if they accomplished their goal. If so, we remove them and update the
                 // score and the planeDisplay
-                for (_, plane) in planes {
-                    let (destination, destinationId) = plane.getDestination()
-                    if destination == G.Destination.Airport {
-                        //TODO not implemented yet
-                    } else if destination == G.Destination.Exit {
-
-                        // check all exits (or we could check the destination exit and the radar bounds)
-                        for (ident, exit) in exits {
-                            if exit.inExit(sprite: plane.planeSprite) {
-                                if ident == destinationId {
-                                    if plane.currentAltitude == 9000 {
-                                        print("plane \(plane.ident) exited")
-                                        safe += 1
-                                        scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
-                                        planeDisplay.removePlane(ident: plane.ident)
-                                        plane.planeSprite.removeFromParent()
-                                        plane.planeLabel.removeFromParent()
-                                        planes[plane.ident] = nil
-                                    } else {
-                                        let msg = "plane \(plane.ident) exited at an incorrect altitude: \(plane.currentAltitude)"
-                                        print(msg)
-                                        gameState = G.GameState.incorrectlyExited
-                                        commandDisplay.write(string: msg, row: 2)
-                                    }
-                                } else {
-                                    let msg = "plane \(plane.ident) exited at the incorrect destination!"
-                                    print(msg)
-                                    gameState = G.GameState.incorrectlyExited
-                                    commandDisplay.write(string: msg, row: 2)
-                                }
-                            }
-                        }
-                    }
-                }
+                checkPlaneGoals()
 
                 // did the any of the remaining planes crash in any way?
-                //                for (_,plane) in planes {
-                //                }
+                checkPlaneCollisions()
             }
         }
     }
 
+    private func checkPlaneCollisions() {
+        //                for (_,plane) in planes {
+        //                }
+    }
+
+    private func checkPlaneGoals() {
+        for (_, plane) in planes {
+            if !plane.immune {
+                let (destination, destinationId) = plane.getDestination()
+                if destination == G.Destination.Airport {
+                    //TODO not implemented yet
+                } else if destination == G.Destination.Exit {
+
+                    // check all exits (or we could check the destination exit and the radar bounds)
+                    for (ident, exit) in exits {
+                        if exit.inExit(sprite: plane.planeSprite) {
+                            if Character("\(ident)") == destinationId {
+                                if plane.currentAltitude == 9000 {
+                                    print("plane \(plane.ident) exited")
+                                    safe += 1
+                                    scoreDisplay.overWrite(string: "SAFE: \(safe)", row: 0, col: 11)
+                                    planeDisplay.removePlane(ident: plane.ident)
+                                    plane.planeSprite.removeFromParent()
+                                    plane.planeLabel.removeFromParent()
+                                    planes[plane.ident] = nil
+                                } else {
+                                    let msg = "plane \(plane.ident) exited at an incorrect altitude: \(plane.currentAltitude)"
+                                    print(msg)
+                                    gameState = G.GameState.incorrectlyExited
+                                    commandDisplay.write(string: msg, row: 2)
+                                }
+                            } else {
+                                let msg = "plane \(plane.ident) exited at the incorrect destination!"
+                                print(msg)
+                                gameState = G.GameState.incorrectlyExited
+                                commandDisplay.write(string: msg, row: 2)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func movePlanes(advanceGameClock: Bool) {
+        for (_, plane) in planes {
+            plane.tick(clock: advanceGameClock)
+
+            if plane.updated {
+                planeDisplay.updatePlane(plane: plane)
+                plane.updated = false
+            }
+        }
+    }
+
+    private func dispatchCommand() {
+        if let cmd = commandToDispatch {
+            if let planeForCommand = planes[cmd.ident] {
+                planeForCommand.queueCommand(cmd)
+            }
+
+            commandToDispatch = nil
+        }
+    }
+
+    private func setupGame() {
+        switch gameMode {
+        case GameName.EASY:
+            setupEasy()
+        case GameName.TEST:
+            setupTest()
+        default:
+            setupTest()
+        }
+
+        for (_, exit) in exits {
+            exit.initializeScene(scene: scene!)
+        }
+
+        addNewPlane()
+    }
+
+    // maybe we add a new plane
+    private func addNewPlane() {
+        let planeType = randomPlaneType()
+
+        // TODO ADD a start at an airport
+        let entry = Int.random(in: 0..<exits.count)
+        let entryX = exits[entry]!.boardX
+        let entryY = exits[entry]!.boardY
+        let heading = exits[entry]!.direction.opposite()
+
+        // TODO ADD an end at an airport
+        let destinationType = G.Destination.Exit
+        let dest = Int.random(in: 0..<exits.count)
+        let destId = Character("\(dest)")
+
+        let ident = identService.getIdent(type: G.GameObjectType.PLANE)
+        let newPlane = Plane(type: planeType, heading: heading, identifier: ident, flying: true, startBoardX: entryX, startBoardY: entryY, boardScale: boardScale, destination: destinationType, destinationId: destId)
+
+        planes[ident] = newPlane
+        newPlane.initializeScene(scene: scene!)
+        planeDisplay.addPlane(plane: newPlane)
+
+    }
+
+    private func randomPlaneType() -> G.GameObjectType {
+        if Bool.random() {
+            return G.GameObjectType.JET
+        }
+        return G.GameObjectType.PROP
+    }
 }

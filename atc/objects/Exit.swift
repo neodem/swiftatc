@@ -28,8 +28,16 @@ class Exit: BaseSceneAware {
 
     let ident: Character
 
+    let boardX: Int
+    let boardY: Int
+    let direction: Direction
+
     // outbound direction of the exit is `direction`
     init(ident: Character, boardX: Int, boardY: Int, direction: Direction, gridScale: Int) {
+
+        self.direction = direction
+        self.boardX = boardX
+        self.boardY = boardY
 
         self.ident = ident
 
