@@ -62,9 +62,9 @@ enum Key: CUnsignedShort {
     case Space = 0x31
     case Grave = 0x32
     case Delete = 0x33
-    
+
     case Escape = 0x35
-    
+
     case Command = 0x37
     case LeftShift = 0x38
     case CapsLock = 0x39
@@ -76,18 +76,18 @@ enum Key: CUnsignedShort {
     case Function = 0x3F
     case F17 = 0x40
     case KeypadDecimal = 0x41
-    
+
     case KeypadMultiply = 0x43
-    
+
     case KeypadPlus = 0x45
-    
+
     case KeypadClear = 0x47
     case VolumeUp = 0x48
     case VolumeDown = 0x49
     case Mute = 0x4A
     case KeypadDivide = 0x4B
     case KeypadEnter = 0x4C
-    
+
     case KeypadMinus = 0x4E
     case F18 = 0x4F
     case F19 = 0x50
@@ -103,7 +103,7 @@ enum Key: CUnsignedShort {
     case F20 = 0x5A
     case KeypadEight = 0x5B
     case KeypadNine = 0x5C
-    
+
     case F5 = 0x60
     case F6 = 0x61
     case F7 = 0x62
@@ -130,7 +130,7 @@ enum Key: CUnsignedShort {
     case Right = 0x7C
     case Down = 0x7D
     case Up = 0x7E // = 126
-    
+
     case Count = 0x7F
 }
 
@@ -141,7 +141,7 @@ extension Key {
         }
         return false
     }
-    
+
     func numberAsInt() -> Int {
         if self.rawValue == 0x1D {
             return 0
@@ -155,33 +155,33 @@ struct KeyState {
 }
 
 class Keyboard {
-    
+
     static let instance = Keyboard()
-    
+
     var prev: KeyState
     var curr: KeyState
     var keysPressed: Queue<Key>
-    
+
     init() {
         prev = KeyState()
         curr = KeyState()
         keysPressed = Queue()
     }
-    
+
     func handleKey(event: NSEvent, isDown: Bool) {
         if (isDown) {
-          //  print("down: \(event.keyCode)")
+            //  print("down: \(event.keyCode)")
             curr.keys[Int(event.keyCode)] = true
         } else {
-          //  print("up: \(event.keyCode)")
+            //  print("up: \(event.keyCode)")
             curr.keys[Int(event.keyCode)] = false
-            
+
             if let key = Key(rawValue: event.keyCode) {
                 keysPressed.enqueue(key)
             }
         }
     }
-    
+
     func justPressed(keys: Key...) -> Bool {
         for key in keys {
             if (curr.keys[Int(key.rawValue)] == true && prev.keys[Int(key.rawValue)] == false) {
@@ -190,7 +190,7 @@ class Keyboard {
         }
         return false
     }
-    
+
     func justReleased(keys: Key...) -> Bool {
         for key in keys {
             if (prev.keys[Int(key.rawValue)] == true && curr.keys[Int(key.rawValue)] == false) {
@@ -199,7 +199,7 @@ class Keyboard {
         }
         return false
     }
-    
+
     func pressed(keys: Key...) -> Bool {
         for key in keys {
             if (prev.keys[Int(key.rawValue)] == true && curr.keys[Int(key.rawValue)] == true) {
@@ -208,9 +208,9 @@ class Keyboard {
         }
         return false
     }
-    
+
     func update() {
         prev = curr
     }
-    
+
 }

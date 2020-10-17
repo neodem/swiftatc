@@ -5,24 +5,25 @@
 //  Created by Vincent Fumo on 9/13/20.
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
+
 import SpriteKit
 
-class CommandModule : DisplayModule {
-    
+class CommandModule: DisplayModule {
+
     var planeIdent: Character?
     var command: Command?
     let beepNode = SKNode()
     let beepAction = SKAction.playSoundFileNamed("Beep.wav", waitForCompletion: false)
-    
+
     override init(ident: Character, x: Int, y: Int, rows: Int, cols: Int) {
         super.init(ident: ident, x: x, y: y, rows: rows, cols: cols)
     }
-    
+
     func reset() {
         // clear command line on screen
         self.clear(row: 0)
         self.clear(row: 1)
-        
+
         // reset state
         planeIdent = nil
         command = nil
@@ -37,11 +38,11 @@ class CommandModule : DisplayModule {
     func beep() {
         beepNode.run(beepAction)
     }
-    
+
     public func inputKey(_ key: Key) -> Command? {
-        
+
         // print("command key: \(key)")
-        
+
         if key == Key.Escape {
             reset()
         } else if key == Key.Delete {
@@ -50,7 +51,7 @@ class CommandModule : DisplayModule {
             } else if command == nil {
                 reset()
             } else {
-               let result = command!.inputCharacter(key)
+                let result = command!.inputCharacter(key)
                 switch result {
                 case CommandInputResult.Illegal:
                     beep()
@@ -81,7 +82,7 @@ class CommandModule : DisplayModule {
             createCommand(key)
         } else {
             let result = command!.inputCharacter(key)
-            
+
             switch result {
             case CommandInputResult.Illegal:
                 beep()
@@ -93,12 +94,12 @@ class CommandModule : DisplayModule {
                     beep()
                 }
             }
-            
+
         }
-        
+
         return nil
     }
-    
+
     func createCommand(_ key: Key) {
         if key == Key.A {
             command = AltitudeCommand(ident: planeIdent!)
@@ -113,32 +114,32 @@ class CommandModule : DisplayModule {
         } else if key == Key.T {
             command = TurnCommand(ident: planeIdent!)
         }
-        
+
         if let commandString = command?.getCommandString() {
             // print command on screen
             self.overWrite(string: commandString, row: 0, col: 3)
         } else {
             beep()
         }
-        
+
     }
-    
+
     func createItent(_ key: Key) {
         // check to see if we have a valid letter from a-z
         // if not, we beep
-        
+
         let enumString = "\(key)"
-        
+
         planeIdent = Character(enumString)
-        
+
         drawIdent()
     }
-    
+
     func drawIdent() {
         // draw on screen (ex: "a: ")
         self.write(string: "\(planeIdent!):", row: 0)
     }
-    
+
     func handleEnter() -> Bool {
         if let _ = command?.complete {
             // check for errors
@@ -151,7 +152,7 @@ class CommandModule : DisplayModule {
         } else {
             // beep
         }
-        
+
         return false
     }
 }

@@ -6,28 +6,28 @@
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
 
-class TurnCommand : Command {
+class TurnCommand: Command {
     let ident: Character
-    
+
     var direction: Direction?
-    
+
     var complete = false
-    
+
     // relative turns
     var left = false
     var right = false
-    
+
     // turn towards
     var towards = false
     var destination: G.Destination?
     var destIdent: Character?
-    
+
     init(ident: Character) {
         self.ident = ident
     }
-    
+
     public func inputCharacter(_ key: Key) -> CommandInputResult {
-        
+
         if towards {
             switch key {
             case Key.Delete:
@@ -61,10 +61,10 @@ class TurnCommand : Command {
                     complete = true
                     return CommandInputResult.OK
                 }
-                
+
                 return CommandInputResult.Illegal
             }
-            
+
             return CommandInputResult.OK
         } else {
             // check for number or c or d
@@ -73,8 +73,7 @@ class TurnCommand : Command {
                 if direction != nil {
                     direction = nil
                     complete = false
-                }
-                else if left || right {
+                } else if left || right {
                     left = false
                     right = false
                 } else {
@@ -134,7 +133,7 @@ class TurnCommand : Command {
                 if left == true || right == true {
                     return CommandInputResult.Illegal
                 }
-                
+
                 if direction != nil {
                     return CommandInputResult.Illegal
                 }
@@ -152,21 +151,21 @@ class TurnCommand : Command {
             default:
                 return CommandInputResult.Illegal
             }
-            
+
             return CommandInputResult.OK
         }
     }
-    
+
     public func getErrorMessage() -> String? {
         return nil
     }
-    
+
     public func getCommandString() -> String? {
         var commandString = "turn "
-        
+
         if towards {
             commandString += "towards "
-            
+
             if let dest = destination {
                 switch dest {
                 case G.Destination.Airport:
@@ -177,11 +176,11 @@ class TurnCommand : Command {
                     commandString += "beacon: "
                 }
             }
-            
+
             if let destIdent = self.destIdent {
                 commandString += "\(destIdent)"
             }
-            
+
         } else {
             if left {
                 commandString += "left "
@@ -190,13 +189,13 @@ class TurnCommand : Command {
             } else if direction != nil {
                 commandString += "to "
             }
-            
+
             if direction != nil {
                 commandString += "\(direction!.rawValue)"
             }
         }
-        
+
         return commandString
     }
-    
+
 }

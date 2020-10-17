@@ -8,30 +8,28 @@
 
 import Foundation
 
-class AltitudeCommand : Command {
+class AltitudeCommand: Command {
     let ident: Character
     var complete = false
     var desiredAltitude: Int?
     var climb = false
     var descend = false
-    
+
     init(ident: Character) {
         self.ident = ident
     }
-    
+
     public func inputCharacter(_ key: Key) -> CommandInputResult {
 
-        
+
         // check for number or c or d
         switch key {
         case Key.Delete:
             if desiredAltitude != nil {
                 desiredAltitude = nil
-            }
-            else if climb == true {
+            } else if climb == true {
                 climb = false
-            }
-            else if descend == true {
+            } else if descend == true {
                 descend = false
             } else {
                 return CommandInputResult.Delete
@@ -68,41 +66,41 @@ class AltitudeCommand : Command {
             complete = true
         case Key.C:
             if climb == true || descend == true {
-             return CommandInputResult.Illegal
+                return CommandInputResult.Illegal
             }
             climb = true
             descend = false
         case Key.D:
             if climb == true || descend == true {
-             return CommandInputResult.Illegal
+                return CommandInputResult.Illegal
             }
             climb = false
             descend = true
         default:
-          return CommandInputResult.Illegal
+            return CommandInputResult.Illegal
         }
-        
+
         return CommandInputResult.OK
     }
-    
+
     public func getErrorMessage() -> String? {
         return nil
     }
-    
+
     public func getCommandString() -> String? {
         var commandString = "altitude:"
-        
+
         if climb {
             commandString += " climb"
         } else if descend {
             commandString += " descend"
         }
-        
+
         if let alt = desiredAltitude {
             commandString += " \(alt) feet"
         }
-        
+
         return commandString
     }
-    
+
 }

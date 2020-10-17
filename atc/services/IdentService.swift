@@ -11,15 +11,15 @@ protocol IdentService {
     func returnIdent(type: G.GameObjectType, ident: Character)
 }
 
-class DefaultIdentService : IdentService {
-    
+class DefaultIdentService: IdentService {
+
     var nextIdent = [G.GameObjectType: Character]()
-   
-    
+
+
     // TODO fix this so that the idents for jets/planes are sequential
     // and just vary in case.. eg: A, b, c, D, etc
-    
-    
+
+
     init() {
         nextIdent[G.GameObjectType.AIRPORT] = "0"
         nextIdent[G.GameObjectType.BEACON] = "0"
@@ -28,12 +28,12 @@ class DefaultIdentService : IdentService {
         nextIdent[G.GameObjectType.PROP] = "A"
         nextIdent[G.GameObjectType.DISPLAY] = "A"
     }
-    
+
     func getIdent(type: G.GameObjectType) -> Character {
         let next = nextIdent[type]!
-        
+
         var nextAscii = next.asciiValue! + 1
-        
+
         if type == G.GameObjectType.AIRPORT || type == G.GameObjectType.BEACON || type == G.GameObjectType.AIRWAY {
             if nextAscii == 58 {
                 nextAscii = 48
@@ -47,12 +47,12 @@ class DefaultIdentService : IdentService {
                 nextAscii = 65
             }
         }
-        
+
         nextIdent[type] = Character.init(UnicodeScalar(nextAscii))
-        
+
         return next
     }
-    
+
     func returnIdent(type: G.GameObjectType, ident: Character) {
         // not implemtned yet.. for now we simply overflow/loop
     }

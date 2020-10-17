@@ -9,16 +9,16 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
+
     let gameManager = DefaultGameManager()
     var lastFrameTime = TimeInterval(0)
-    
+
     override func didMove(to view: SKView) {
         self.anchorPoint = .zero
         self.physicsWorld.contactDelegate = self
         gameManager.initialize(scene: self)
     }
-    
+
     func didBegin(_ contact: SKPhysicsContact) {
         // the only thing that moves is a plane. Lets see what it collided with
         let otherBody: SKPhysicsBody
@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("contact with no game logic")
         }
     }
-    
+
     override func update(_ currentTime: TimeInterval) {
         let delta = currentTime - lastFrameTime
         if delta > 0.1 {
@@ -48,21 +48,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // approx every 0.1 second...
             gameManager.tick()
         }
-        
+
         if let key = Keyboard.instance.keysPressed.dequeue() {
             gameManager.handleKey(key)
         }
     }
-    
+
     override func didFinishUpdate() {
         Keyboard.instance.update()
     }
-    
+
     override func keyUp(with event: NSEvent) {
         //        print("keyUp: \(event)")
         Keyboard.instance.handleKey(event: event, isDown: false)
     }
-    
+
     override func keyDown(with event: NSEvent) {
         //        print("keyDown: \(event)")
         Keyboard.instance.handleKey(event: event, isDown: true)

@@ -13,10 +13,10 @@ protocol SceneAware {
     func initializeScene(scene: SKScene)
 }
 
-class BaseSceneAware : SceneAware {
+class BaseSceneAware: SceneAware {
 
     var scene: SKScene?
-    
+
     func initializeScene(scene: SKScene) {
         self.scene = scene
     }

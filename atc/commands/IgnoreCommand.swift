@@ -6,25 +6,25 @@
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
 
-class IgnoreCommand : Command {
+class IgnoreCommand: Command {
     let ident: Character
     var complete = true
-    
+
     init(ident: Character) {
         self.ident = ident
     }
-    
+
     public func inputCharacter(_ key: Key) -> CommandInputResult {
         return CommandInputResult.Illegal
     }
-    
+
     public func getErrorMessage() -> String? {
         return nil
     }
-    
+
     public func getCommandString() -> String? {
         let commandString = "ignore"
-        
+
         return commandString
     }
 }
