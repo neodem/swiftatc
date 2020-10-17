@@ -273,14 +273,14 @@ class DefaultGameManager: GameManager {
         let planeType = randomPlaneType()
 
         // TODO ADD a start at an airport
-        let entry = Int.random(in: 0..<exits.count)
+        let entry = chooseRandomExit()
         let entryX = exits[entry]!.boardX
         let entryY = exits[entry]!.boardY
         let heading = exits[entry]!.direction.opposite()
 
         // TODO ADD an end at an airport
         let destinationType = G.Destination.Exit
-        let dest = Int.random(in: 0..<exits.count)
+        let dest = chooseRandomExit(not: entry)
         let destId = Character("\(dest)")
 
         let ident = identService.getIdent(type: G.GameObjectType.PLANE)
@@ -290,6 +290,19 @@ class DefaultGameManager: GameManager {
         newPlane.initializeScene(scene: scene!)
         planeDisplay.addPlane(plane: newPlane)
 
+    }
+
+    private func chooseRandomExit() -> Int {
+        Int.random(in: 0..<exits.count)
+    }
+
+    private func chooseRandomExit(not: Int) -> Int {
+        var result = chooseRandomExit()
+        while result == not {
+            result = chooseRandomExit()
+        }
+
+        return result
     }
 
     private func randomPlaneType() -> G.GameObjectType {
