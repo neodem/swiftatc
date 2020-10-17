@@ -5,10 +5,14 @@
 //  Created by Vincent Fumo on 9/13/20.
 //  Copyright © 2020 Vincent Fumo. All rights reserved.
 //
+import SpriteKit
+
 class CommandModule : DisplayModule {
     
     var planeIdent: Character?
     var command: Command?
+    let beepNode = SKNode()
+    let beepAction = SKAction.playSoundFileNamed("Beep.wav", waitForCompletion: false)
     
     override init(ident: Character, x: Int, y: Int, rows: Int, cols: Int) {
         super.init(ident: ident, x: x, y: y, rows: rows, cols: cols)
@@ -22,6 +26,16 @@ class CommandModule : DisplayModule {
         // reset state
         planeIdent = nil
         command = nil
+    }
+
+    override func initialize(scene: SKScene) {
+        super.initialize(scene: scene)
+        scene.addChild(beepNode)
+    }
+
+    // on keyboard error we should beep
+    func beep() {
+        beepNode.run(beepAction)
     }
     
     public func inputKey(_ key: Key) -> Command? {
@@ -83,12 +97,6 @@ class CommandModule : DisplayModule {
         }
         
         return nil
-    }
-
-    
-    // on keyboard error we should beep
-    func beep() {
-        
     }
     
     func createCommand(_ key: Key) {
