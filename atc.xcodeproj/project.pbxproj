@@ -40,6 +40,7 @@
 		03FF45C5250C1A2500F1561D /* PlaneDisplayModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */; };
 		6AEF8106BFB7DED66C00E97B /* Beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6AEF887D3B86349CD6A8D316 /* Beep.wav */; };
 		6AEF84E4ECE63EA060DA8B19 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF813D747954D5190FC3C8 /* BoundingBox.swift */; };
+		6AEF8730C4D47DEA384E1819 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF849EED16F1EE7C898E1E /* Airport.swift */; };
 		6AEF8B336309A331F7AD90A6 /* SceneAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF8314A3B70E4BD4091B12 /* SceneAware.swift */; };
 		6AEF8F21140AD5F16C4CB343 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6AEF8AAAE97ED00C85C8D950 /* .gitignore */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		03FF45C4250C1A2500F1561D /* PlaneDisplayModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneDisplayModule.swift; sourceTree = "<group>"; };
 		6AEF813D747954D5190FC3C8 /* BoundingBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		6AEF8314A3B70E4BD4091B12 /* SceneAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneAware.swift; sourceTree = "<group>"; };
+		6AEF849EED16F1EE7C898E1E /* Airport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		6AEF887D3B86349CD6A8D316 /* Beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Beep.wav; sourceTree = "<group>"; };
 		6AEF8AAAE97ED00C85C8D950 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +206,7 @@
 				037CFE2E251D221600C86932 /* Gate.swift */,
 				6AEF8314A3B70E4BD4091B12 /* SceneAware.swift */,
 				6AEF813D747954D5190FC3C8 /* BoundingBox.swift */,
+				6AEF849EED16F1EE7C898E1E /* Airport.swift */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				03266932250ED4250010CCB5 /* AltitudeCommand.swift in Sources */,
 				6AEF8B336309A331F7AD90A6 /* SceneAware.swift in Sources */,
 				6AEF84E4ECE63EA060DA8B19 /* BoundingBox.swift in Sources */,
+				6AEF8730C4D47DEA384E1819 /* Airport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,7 +37,6 @@ class BoundingBox {
             rect = false
         }
 
-
         xMin = min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
         xMax = max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
         yMin = min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y)

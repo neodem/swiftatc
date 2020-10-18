@@ -67,7 +67,8 @@ struct G {
 
     struct ZPos {
         static let exit: CGFloat = 5
-        static let plane: CGFloat = 10
+        static let airport: CGFloat = 7
+        static let plane: CGFloat = 20
         static let overlay: CGFloat = 100
         static let debug: CGFloat = 1000
     }

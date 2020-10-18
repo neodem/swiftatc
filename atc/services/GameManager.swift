@@ -18,6 +18,7 @@ class DefaultGameManager: GameManager {
     let identService: IdentService
     var planes: [Character: Plane]
     var exits: [Int: Exit]
+    var airports: [Int: Airport]
     var gameState: G.GameState
     var boardScale = 0
 
@@ -42,6 +43,7 @@ class DefaultGameManager: GameManager {
         identService = DefaultIdentService()
         planes = [Character: Plane]()
         exits = [Int: Exit]()
+        airports = [Int: Airport]()
         gameState = G.GameState.preActive
 
         gameMode = GameName.EASY
@@ -114,6 +116,9 @@ class DefaultGameManager: GameManager {
         exits[1] = Exit(ident: "1", boardX: 150, boardY: 150, direction: Direction.NE, gridScale: boardScale)
         exits[2] = Exit(ident: "2", boardX: 125, boardY: 0, direction: Direction.SE, gridScale: boardScale)
         exits[3] = Exit(ident: "3", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
+
+        // 1 airport
+        airports[0] = Airport(ident: "1", boardX: 75, boardY: 65, direction: Direction.N, gridScale: boardScale)
     }
 
 
@@ -187,8 +192,11 @@ class DefaultGameManager: GameManager {
     }
 
     private func checkPlaneCollisions() {
-        //                for (_,plane) in planes {
-        //                }
+        for (_, plane) in planes {
+            if !plane.immune {
+
+            }
+        }
     }
 
     private func checkPlaneGoals() {
@@ -263,6 +271,10 @@ class DefaultGameManager: GameManager {
 
         for (_, exit) in exits {
             exit.initializeScene(scene: scene!)
+        }
+
+        for (_, airport) in airports {
+            airport.initializeScene(scene: scene!)
         }
 
         addNewPlane()
