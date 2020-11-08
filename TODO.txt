@@ -6,3 +6,5 @@
 - "ignore" command needs to dim the plane sprite
 - impl. collisions
 - impl. out of bounds
+- check to see what happens when the plane display has more than 12 items!
+- related to ^ : limit the number of simultanius planes
