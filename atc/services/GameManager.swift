@@ -120,7 +120,7 @@ class DefaultGameManager: GameManager {
         exits["3"] = Exit(ident: "3", boardX: 0, boardY: 0, direction: Direction.SW, gridScale: boardScale)
 
         // 1 airport
-        airports["0"] = Airport(ident: "1", boardX: 75, boardY: 65, direction: Direction.N, gridScale: boardScale)
+        airports["0"] = Airport(ident: "0", boardX: 75, boardY: 65, direction: Direction.N, gridScale: boardScale)
     }
 
     func setupTest() {

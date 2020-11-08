@@ -1,0 +1,8 @@
+- slow down turning?
+- implement/fix turn to command
+- add beacons
+- add a click sound for every command entry
+- fix plane graphic to be more simple
+- "ignore" command needs to dim the plane sprite
+- impl. collisions
+- impl. out of bounds

@@ -21,15 +21,15 @@ public class LinkedList<T> {
     private var tail: Node<T>?
 
     public var isEmpty: Bool {
-        return head == nil
+        head == nil
     }
 
     public var first: Node<T>? {
-        return head
+        head
     }
 
     public var last: Node<T>? {
-        return tail
+        tail
     }
 
     public func append(_ value: T) {

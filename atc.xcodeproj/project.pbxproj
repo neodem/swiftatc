@@ -97,6 +97,7 @@
 		6AEF849EED16F1EE7C898E1E /* Airport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		6AEF887D3B86349CD6A8D316 /* Beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Beep.wav; sourceTree = "<group>"; };
 		6AEF8AAAE97ED00C85C8D950 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = file.gitignore; path = .gitignore; sourceTree = "<group>"; };
+		6AEF8EFD08B1C0BA20902769 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +158,7 @@
 				036A21352513F4CD00CCFBAF /* atcTests */,
 				03FF45962508383C00F1561D /* Products */,
 				6AEF8AAAE97ED00C85C8D950 /* .gitignore */,
+				6AEF8EFD08B1C0BA20902769 /* TODO.txt */,
 			);
 			sourceTree = "<group>";
 		};
