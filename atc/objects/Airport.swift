@@ -11,6 +11,8 @@ class Airport: BaseSceneAware {
     let runwayLine: SKSpriteNode
     let airportLabel: SKLabelNode
 
+    let boundingBox: BoundingBox
+
     let labelOffset: CGFloat = 30
 
     let airportAlpha: CGFloat = 1.0
@@ -65,7 +67,6 @@ class Airport: BaseSceneAware {
             labelXloc = xOrigin
             labelYloc = yOrigin - labelOffset
 
-
         case Direction.SW:
             gateRotation = 3 * .pi / 4
             labelXloc = xOrigin
@@ -76,13 +77,16 @@ class Airport: BaseSceneAware {
             labelXloc = xOrigin
             labelYloc = yOrigin - labelOffset
 
-
         case Direction.NW:
             gateRotation = .pi / 4
             labelXloc = xOrigin
             labelYloc = yOrigin - labelOffset
-
         }
+
+        boundingBox = BoundingBox(
+                topLeft: CGPoint(x: xOrigin - 15, y: yOrigin + 15),
+                bottomRight: CGPoint(x: xOrigin + 15, y: yOrigin - 15)
+        )
 
         airportSprite = SKSpriteNode(color: NSColor.systemGreen, size: CGSize(width: 25, height: 25))
         airportSprite.colorBlendFactor = 1.0
@@ -98,7 +102,7 @@ class Airport: BaseSceneAware {
         runwayLine.zRotation = gateRotation
         runwayLine.zPosition = G.ZPos.airport
         runwayLine.anchorPoint = CGPoint(x: 0.5, y: 1)
-        runwayLine.position = CGPoint(x: xOrigin, y: yOrigin+20)
+        runwayLine.position = CGPoint(x: xOrigin, y: yOrigin + 20)
 
         airportLabel = SKLabelNode(fontNamed: "Andale Mono")
         airportLabel.text = "\(ident)"
@@ -116,5 +120,9 @@ class Airport: BaseSceneAware {
         scene.addChild(airportSprite)
         scene.addChild(runwayLine)
         scene.addChild(airportLabel)
+    }
+
+    func inAirport(sprite: SKNode) -> Bool {
+        boundingBox.isInside(point: sprite.position)
     }
 }

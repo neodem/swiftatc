@@ -212,6 +212,6 @@ class Exit: BaseSceneAware {
     }
 
     func inExit(sprite: SKNode) -> Bool {
-        return boundingBox.isInside(point: sprite.position)
+        boundingBox.isInside(point: sprite.position)
     }
 }
